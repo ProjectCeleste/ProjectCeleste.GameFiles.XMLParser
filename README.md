@@ -6,7 +6,7 @@ Visit Us: https://www.projectceleste.com/
 		
 -------------------------------------------------------------------------------
 
-Nuget Package: https://www.nuget.org/packages/ProjectCeleste.GameFiles.Tools/
+Nuget Package: https://www.nuget.org/packages/ProjectCeleste.GameFiles.XMLParser/
 
 Nigthly Build Nuget Feed: https://ci.appveyor.com/nuget/projectceleste-gamefiles-xmlpa-bmitagmx7gv9
 
