@@ -9,7 +9,9 @@ using System.Runtime.InteropServices;
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
 [assembly: AssemblyTitle("ProjectCeleste.GameFiles.XMLParser")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("GameFiles XML Parser For Age Of Empires Online Celeste Fan Project" + "\r\n" +
+                               "Visit Us: https://www.projectceleste.com/" + "\r\n" +
+                               "Age of Empires Online © Microsoft Corporation.Celeste Fan Project was created under Microsoft's Game Content Usage Rules using assets from Age of Empires Online, and it is not endorsed by or affiliated with Microsoft (See: https://www.xbox.com/en-us/developers/rules).")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ProjectCeleste.GameFiles.XMLParser")]
