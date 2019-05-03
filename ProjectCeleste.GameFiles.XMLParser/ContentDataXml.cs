@@ -18,6 +18,7 @@ using ProjectCeleste.GameFiles.XMLParser.Helpers;
 //TODO C# Attribute
 namespace ProjectCeleste.GameFiles.XMLParser
 {
+    [JsonObject(Title = "content", Description = "")]
     [XmlRoot(ElementName = "content")]
     public class ContentDataXmlContent
     {
@@ -51,6 +52,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public string Helpdisplayname { get; set; }
     }
 
+    [JsonObject(Title = "offertypes", Description = "")]
     [XmlRoot(ElementName = "offertypes")]
     public class ContentDataXmlOffertypes
     {
@@ -58,6 +60,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public HashSet<EOfferTypeEnum> Offertype { get; set; } = new HashSet<EOfferTypeEnum>();
     }
 
+    [JsonObject(Title = "dialog", Description = "")]
     [XmlRoot(ElementName = "dialog")]
     public class ContentDataXmlDialog
     {
@@ -74,6 +77,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public string Background { get; set; }
     }
 
+    [JsonObject(Title = "cost", Description = "")]
     [XmlRoot(ElementName = "cost")]
     public class ContentDataXmlCost
     {
@@ -88,6 +92,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public GameCurrencyTypeEnum Currencytype { get; set; }
     }
 
+    [JsonObject(Title = "currencycontent", Description = "")]
     [XmlRoot(ElementName = "currencycontent")]
     public class ContentDataXmlCurrencycontent : ContentDataXmlContent
     {
@@ -101,6 +106,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public int Quantity { get; set; }
     }
 
+    [JsonObject(Title = "contentinfo", Description = "")]
     [XmlRoot(ElementName = "contentinfo")]
     public class ContentDataXml
     {
