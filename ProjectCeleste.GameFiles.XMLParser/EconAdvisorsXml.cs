@@ -8,24 +8,25 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GameFiles.XMLParser.Common;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
 namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "techs", Description = "")]
     [XmlRoot(ElementName = "techs")]
-    public class EconAdvisorXmlTechs
+    public class EconAdvisorTechsXml
     {
-        public EconAdvisorXmlTechs()
+        public EconAdvisorTechsXml()
         {
         }
 
         [JsonConstructor]
-        public EconAdvisorXmlTechs([JsonProperty(PropertyName = "tech", Required = Required.Always)] string tech)
+        public EconAdvisorTechsXml([JsonProperty(PropertyName = "tech", Required = Required.Always)] string tech)
         {
             if (string.IsNullOrWhiteSpace(tech))
                 throw new ArgumentNullException(nameof(tech));
@@ -95,15 +96,15 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "displaydescriptionid")]
         public int DisplayDescriptionId { get; set; }
 
-        [DefaultValue(null)]
+        [DefaultValue(0)]
         [JsonProperty(PropertyName = "shortdescriptionid", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "shortdescriptionid")]
-        public string ShortDescriptionId { get; set; }
+        public int ShortDescriptionId { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
         [XmlElement(ElementName = "sellcostoverride")]
-        public ItemCost SellCostOverride { get; set; }
+        public ItemCostXml SellCostOverride { get; set; }
 
         [Required]
         [Range(0, 99)]
@@ -126,17 +127,18 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "techs", Required = Required.Always)]
         [XmlElement(ElementName = "techs")]
-        public EconAdvisorXmlTechs Techs { get; set; }
+        public EconAdvisorTechsXml Techs { get; set; }
 
+        [Required]
+        [JsonProperty(PropertyName = "sellable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsSellable { get; set; } = true;
 
         /// <summary>
         ///     Use IsSellable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [DefaultValue(null)]
-        [JsonProperty(PropertyName = "sellable", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonIgnore]
         [XmlElement(ElementName = "sellable")]
         public string SellableStrDoNotUse
         {
@@ -144,15 +146,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
             set => IsSellable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
+        [Required]
+        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsTradeable { get; set; } = true;
 
         /// <summary>
         ///     Use IsTradeable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [DefaultValue(null)]
-        [JsonProperty(PropertyName = "tradeable", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonIgnore]
         [XmlElement(ElementName = "tradeable")]
         public string TradeableStrDoNotUse
         {
@@ -160,15 +163,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
             set => IsTradeable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
+        [Required]
+        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsDestroyable { get; set; } = true;
 
         /// <summary>
         ///     Use IsDestroyable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [DefaultValue(null)]
-        [JsonProperty(PropertyName = "destroyable", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonIgnore]
         [XmlElement(ElementName = "destroyable")]
         public string DestroyableStrDoNotUse
         {
@@ -176,15 +180,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
             set => IsDestroyable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
+        [DefaultValue(false)]
+        [JsonProperty(PropertyName = "specialborder", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsSpecialBorder { get; set; }
 
         /// <summary>
         ///     Use IsSpecialBorder Bool Instead! Only only used for xml parsing.
         /// </summary>
         [DefaultValue("false")]
-        [JsonProperty(PropertyName = "specialborder", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonIgnore]
         [XmlElement(ElementName = "specialborder")]
         public string SpecialBorderStrDoNotUse
         {
@@ -198,13 +203,14 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "civilization")]
         public ECivilizationEnum Civilization { get; set; } = ECivilizationEnum.Any;
 
-
         [DefaultValue(EventEnum.None)]
+        [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "event", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "event")]
         public EventEnum Event { get; set; } = EventEnum.None;
 
         [DefaultValue(EAllianceEnum.None)]
+        [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "alliance", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "alliance")]
         public EAllianceEnum Alliance { get; set; } = EAllianceEnum.None;
@@ -214,17 +220,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
     [XmlRoot(ElementName = "advisors")]
     public class EconAdvisorsXml
     {
-        [Required]
-        [JsonProperty(PropertyName = "advisor", Required = Required.Always)]
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<string, EconAdvisorXml> Advisor { get; } =
+        public IDictionary<string, EconAdvisorXml> Advisor { get; } =
             new Dictionary<string, EconAdvisorXml>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         ///     Use Advisor Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "advisor", Required = Required.Always)]
         [XmlElement(ElementName = "advisor")]
         public EconAdvisorXml[] AdvisorArrayDoNotUse
         {
@@ -250,12 +255,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static EconAdvisorsXml FromFile(string file)
+        public static EconAdvisorsXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<EconAdvisorsXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

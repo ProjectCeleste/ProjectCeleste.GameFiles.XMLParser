@@ -10,6 +10,10 @@ using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
+//TODO JsonProperty
+//TODO C# Attribute
 namespace ProjectCeleste.GameFiles.XMLParser
 {
     [XmlRoot(ElementName = "agetech")]
@@ -412,12 +416,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "ignorecommandbutton")]
         public CivilizationXmlIgnorecommandbutton Ignorecommandbutton { get; set; }
 
-        public static CivilizationXml FromFile(string file)
+        public static CivilizationXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<CivilizationXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }
@@ -476,7 +480,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
             var civs = new CivilizationsXml();
             foreach (var file in Directory.GetFiles(folder, "*.xml", SearchOption.TopDirectoryOnly))
             {
-                var newClass = CivilizationXml.FromFile(file);
+                var newClass = CivilizationXml.FromXmlFile(file);
                 civs.Civilization.Add(newClass.Civid, newClass);
             }
             return civs;

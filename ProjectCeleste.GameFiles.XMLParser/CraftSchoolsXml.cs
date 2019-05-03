@@ -2,95 +2,145 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
 namespace ProjectCeleste.GameFiles.XMLParser
 {
+    [JsonObject(Title = "gear", Description = "")]
     [XmlRoot(ElementName = "gear")]
-    public class CraftSchoolXmlGear
+    public class CraftSchoolGearXml
     {
+        [Required]
+        [Range(0, int.MaxValue)]
+        [JsonProperty(PropertyName = "stringid", Required = Required.Always)]
         [XmlAttribute(AttributeName = "stringid")]
-        public string Stringid { get; set; }
+        public int StringId { get; set; }
 
+        [Required(AllowEmptyStrings = false)]
+        [JsonProperty(PropertyName = "icon", Required = Required.Always)]
         [XmlText]
-        public string Text { get; set; }
+        public string Icon { get; set; }
     }
 
+    [JsonObject(Title = "gearicons", Description = "")]
     [XmlRoot(ElementName = "gearicons")]
-    public class CraftschoolXmlGearIcons
+    public class CraftSchoolGearIconsXml
     {
+        [Required]
+        [JsonProperty(PropertyName = "gear", Required = Required.Always)]
         [XmlElement(ElementName = "gear")]
-        public List<CraftSchoolXmlGear> Gear { get; set; }
+        public List<CraftSchoolGearXml> Gear { get; set; }
     }
 
+    [JsonObject(Title = "items", Description = "")]
     [XmlRoot(ElementName = "items")]
-    public class CraftSchoolXmlItems
+    public class CraftSchoolItemsXml
     {
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "consumable", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "consumable")]
-        public List<string> Consumable { get; set; }
+        public HashSet<string> Consumable { get; set; }
 
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "advisor", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "advisor")]
-        public List<string> Advisor { get; set; }
+        public HashSet<string> Advisor { get; set; }
     }
 
+    [JsonObject(Title = "school", Description = "")]
     [XmlRoot(ElementName = "school")]
     public class CraftSchoolXml
     {
+        [Key]
+        [Required(AllowEmptyStrings = false)]
+        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty(PropertyName = "tag", Required = Required.Always)]
         [XmlElement(ElementName = "tag")]
-        public string Tag { get; set; }
+        public CraftSchoolEnum Tag { get; set; }
 
+        [JsonProperty(PropertyName = "displayname", Required = Required.Always)]
         [XmlElement(ElementName = "displayname")]
-        public string Displayname { get; set; }
+        public int DisplayName { get; set; }
 
+        [JsonProperty(PropertyName = "description", Required = Required.Always)]
         [XmlElement(ElementName = "description")]
-        public string Description { get; set; }
+        public int Description { get; set; }
 
+        [Required(AllowEmptyStrings = false)]
+        [JsonProperty(PropertyName = "startingblueprint", Required = Required.Always)]
         [XmlElement(ElementName = "startingblueprint")]
         public string StartingBlueprint { get; set; }
 
+        [Required(AllowEmptyStrings = false)]
+        [JsonProperty(PropertyName = "icon", Required = Required.Always)]
         [XmlElement(ElementName = "icon")]
         public string Icon { get; set; }
 
+        [Required]
+        [JsonProperty(PropertyName = "gearicons", Required = Required.Always)]
         [XmlElement(ElementName = "gearicons")]
-        public CraftschoolXmlGearIcons Gearicons { get; set; }
+        public CraftSchoolGearIconsXml GearIcons { get; set; }
 
+        [Required]
+        [JsonProperty(PropertyName = "items", Required = Required.Always)]
         [XmlElement(ElementName = "items")]
-        public CraftSchoolXmlItems Items { get; set; }
+        public CraftSchoolItemsXml Items { get; set; }
 
+        [Required(AllowEmptyStrings = false)]
+        [JsonProperty(PropertyName = "design", Required = Required.Always)]
         [XmlElement(ElementName = "design")]
         public string Design { get; set; }
 
+        [Required(AllowEmptyStrings = false)]
+        [JsonProperty(PropertyName = "craftingsound", Required = Required.Always)]
         [XmlElement(ElementName = "craftingsound")]
-        public string Craftingsound { get; set; }
+        public string CraftingSound { get; set; }
 
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "allowedcapitals", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "allowedcapitals")]
-        public CraftschoolXmlAllowedCapitals Allowedcapitals { get; set; }
+        public CraftschoolAllowedCapitalsXml AllowedCapitals { get; set; }
     }
 
+    [JsonObject(Title = "trait", Description = "")]
     [XmlRoot(ElementName = "allowedcapitals")]
-    public class CraftschoolXmlAllowedCapitals
+    public class CraftschoolAllowedCapitalsXml
     {
+        [Required(AllowEmptyStrings = false)]
+        [JsonProperty(PropertyName = "capital", Required = Required.Always)]
         [XmlElement(ElementName = "capital")]
         public string Capital { get; set; }
     }
 
+    [JsonObject(Title = "craftschools", Description = "")]
     [XmlRoot(ElementName = "craftschools")]
     public class CraftSchoolsXml
     {
-        /// <summary>
-        ///     Use Trait Dictionary Instead! Only only used for xml parsing.
-        /// </summary>
+        public CraftSchoolsXml()
+        {
+            School = new Dictionary<CraftSchoolEnum, CraftSchoolXml>();
+        }
+
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<string, CraftSchoolXml> School { get; } =
-            new Dictionary<string, CraftSchoolXml>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<CraftSchoolEnum, CraftSchoolXml> School { get; }
 
         /// <summary>
         ///     Use School Dictionary Instead! Only only used for xml parsing.
         /// </summary>
+        [Required]
+        [JsonProperty(PropertyName = "school", Required = Required.Always)]
         [XmlElement(ElementName = "school")]
         public CraftSchoolXml[] SchoolArrayDoNotUse
         {
@@ -115,12 +165,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static CraftSchoolsXml FromFile(string file)
+        public static CraftSchoolsXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<CraftSchoolsXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

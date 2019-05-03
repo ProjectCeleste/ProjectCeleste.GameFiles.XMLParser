@@ -12,6 +12,10 @@ using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
+//TODO JsonProperty
+//TODO C# Attribute
 namespace ProjectCeleste.GameFiles.XMLParser
 {
     [XmlRoot(ElementName = "content")]
@@ -170,13 +174,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-
-        public static ContentDataXml FromFile(string file)
+        public static ContentDataXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<ContentDataXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

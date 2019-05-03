@@ -8,12 +8,13 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GameFiles.XMLParser.Common;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
 namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "material", Description = "")]
@@ -65,15 +66,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "itemlevel")]
         public int ItemLevel { get; set; }
 
+        [Required]
+        [JsonProperty(PropertyName = "sellable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsSellable { get; set; }
 
         /// <summary>
         ///     Use IsSellable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "sellable", Required = Required.Always)]
+        [JsonIgnore]
         [XmlElement(ElementName = "sellable")]
         public string SellableStrDoNotUse
         {
@@ -81,15 +83,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
             set => IsSellable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
+        [Required]
+        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsTradeable { get; set; }
 
         /// <summary>
         ///     Use IsTradeable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
+        [JsonIgnore]
         [XmlElement(ElementName = "tradeable")]
         public string TradeableStrDoNotUse
         {
@@ -97,15 +100,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
             set => IsTradeable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
+        [Required]
+        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsDestroyable { get; set; }
 
         /// <summary>
         ///     Use IsDestroyable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
+        [JsonIgnore]
         [XmlElement(ElementName = "destroyable")]
         public string DestroyableStrDoNotUse
         {
@@ -116,7 +120,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
         [XmlElement(ElementName = "sellcostoverride")]
-        public ItemCost SellCostOverride { get; set; }
+        public ItemCostXml SellCostOverride { get; set; }
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -152,16 +156,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
     [XmlRoot(ElementName = "materials")]
     public class EconMaterialsXml
     {
+        [JsonIgnore]
         [XmlIgnore]
-        [JsonProperty(PropertyName = "material", Required = Required.Always)]
-        public Dictionary<string, EconMaterialXml> Material { get; } =
+        public IDictionary<string, EconMaterialXml> Material { get; } =
             new Dictionary<string, EconMaterialXml>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         ///     Use Consumable Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "material", Required = Required.Always)]
         [XmlElement(ElementName = "material")]
         public EconMaterialXml[] MaterialArrayDoNotUse
         {
@@ -185,12 +189,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static EconMaterialsXml FromFile(string file)
+        public static EconMaterialsXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<EconMaterialsXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

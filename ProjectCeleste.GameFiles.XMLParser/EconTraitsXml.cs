@@ -13,18 +13,20 @@ using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
 namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "visualfactor", Description = "")]
     [XmlRoot(ElementName = "visualfactor")]
-    public class TraitVisualFactorXml
+    public class TraitXmlVisualFactor
     {
-        public TraitVisualFactorXml()
+        public TraitXmlVisualFactor()
         {
         }
 
         [JsonConstructor]
-        public TraitVisualFactorXml(
+        public TraitXmlVisualFactor(
             [JsonConverter(typeof(StringEnumConverter))]
             [JsonProperty(PropertyName = "type", Required = Required.Always)] VisualFactorEnum type,
             [JsonProperty(PropertyName = "factor", Required = Required.Always)] double factor)
@@ -52,14 +54,14 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
     [JsonObject(Title = "target", Description = "")]
     [XmlRoot(ElementName = "target")]
-    public class TraitEffectTargetXml
+    public class TraitXmlEffectTarget
     {
-        public TraitEffectTargetXml()
+        public TraitXmlEffectTarget()
         {
         }
 
         [JsonConstructor]
-        public TraitEffectTargetXml(
+        public TraitXmlEffectTarget(
             [JsonConverter(typeof(StringEnumConverter))]
             [JsonProperty(PropertyName = "type", Required = Required.Always)] TargetTypeEnum type)
         {
@@ -78,12 +80,20 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
     [JsonObject(Title = "effect", Description = "")]
     [XmlRoot(ElementName = "effect")]
-    public class TraitEffectXml
+    public class TraitXmlEffect
     {
+        public TraitXmlEffect()
+        {
+            Resource = ResourceTypeEnum.Invalid;
+            UnitType = EffectUnitTypeEnum.Invalid;
+            DamageType = DamageTypeEnum.None;
+            Action = EffectActionTypeEnum.Invalid;
+        }
+
         [Required]
         [JsonProperty(PropertyName = "target", Required = Required.Always)]
         [XmlElement(ElementName = "target")]
-        public TraitEffectTargetXml Target { get; set; }
+        public TraitXmlEffectTarget Target { get; set; }
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -91,15 +101,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlAttribute(AttributeName = "type")]
         public EffectTypeEnum Type { get; set; }
 
+        [Required]
+        [JsonProperty(PropertyName = "bonus", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsBonus { get; set; }
 
         /// <summary>
         ///     Use IsBonus Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonProperty(PropertyName = "bonus", Required = Required.Always)]
+        [JsonIgnore]
         [XmlAttribute(AttributeName = "bonus")]
         public string BonusStrDoNotUse
         {
@@ -111,7 +122,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "action", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "action")]
-        public EffectActionTypeEnum Action { get; set; } = EffectActionTypeEnum.Invalid;
+        public EffectActionTypeEnum Action { get; set; }
 
         [Required]
         [Range(0, double.MaxValue)]
@@ -131,15 +142,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlAttribute(AttributeName = "subtype")]
         public EffectSubTypeEnum SubType { get; set; }
 
+        [Required]
+        [JsonProperty(PropertyName = "visible", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsVisible { get; set; }
 
         /// <summary>
         ///     Use IsVisible Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonProperty(PropertyName = "visible", Required = Required.Always)]
+        [JsonIgnore]
         [XmlAttribute(AttributeName = "visible")]
         public string VisibleStrDoNotUse
         {
@@ -151,13 +163,13 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "damagetype", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "damagetype")]
-        public DamageTypeEnum DamageType { get; set; } = DamageTypeEnum.None;
+        public DamageTypeEnum DamageType { get; set; }
 
         [DefaultValue(EffectUnitTypeEnum.Invalid)]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "unittype", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "unittype")]
-        public EffectUnitTypeEnum UnitType { get; set; } = EffectUnitTypeEnum.Invalid;
+        public EffectUnitTypeEnum UnitType { get; set; }
 
         [DefaultValue(0)]
         [Range(0, 1)]
@@ -169,7 +181,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "resource", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "resource")]
-        public ResourceTypeEnum Resource { get; set; } = ResourceTypeEnum.Invalid;
+        public ResourceTypeEnum Resource { get; set; }
 
         [DefaultValue(0)]
         [Range(0, 4)]
@@ -186,29 +198,37 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
     [JsonObject(Title = "effects", Description = "")]
     [XmlRoot(ElementName = "effects")]
-    public class TraitEffectsXml
+    public class TraitXmlEffects
     {
-        public TraitEffectsXml()
+        public TraitXmlEffects()
         {
         }
 
         [JsonConstructor]
-        public TraitEffectsXml(
-            [JsonProperty(PropertyName = "effect", Required = Required.Always)] List<TraitEffectXml> effect)
+        public TraitXmlEffects(
+            [JsonProperty(PropertyName = "effect", Required = Required.Always)] IEnumerable<TraitXmlEffect> effect)
         {
-            Effect = effect;
+            Effect = effect.ToList();
         }
 
         [Required]
         [JsonProperty(PropertyName = "effect", Required = Required.Always)]
         [XmlElement(ElementName = "effect")]
-        public List<TraitEffectXml> Effect { get; set; } = new List<TraitEffectXml>();
+        public List<TraitXmlEffect> Effect { get; set; }
     }
 
     [JsonObject(Title = "trait", Description = "")]
     [XmlRoot(ElementName = "trait")]
     public class TraitXml
     {
+        public TraitXml()
+        {
+            Event = EventEnum.None;
+            ItemLevels = new HashSet<int>();
+            VisualFactor = new Dictionary<VisualFactorEnum, TraitXmlVisualFactor>();
+            Alliance = EAllianceEnum.None;
+        }
+
         [Key]
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
@@ -251,7 +271,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [DefaultValue(EAllianceEnum.None)]
         [JsonProperty(PropertyName = "alliance", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "alliance")]
-        public EAllianceEnum Alliance { get; set; } = EAllianceEnum.None;
+        public EAllianceEnum Alliance { get; set; }
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -261,8 +281,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
         [XmlIgnore]
         [JsonIgnore]
-        public Dictionary<VisualFactorEnum, TraitVisualFactorXml> VisualFactor { get; } =
-            new Dictionary<VisualFactorEnum, TraitVisualFactorXml>();
+        public IDictionary<VisualFactorEnum, TraitXmlVisualFactor> VisualFactor { get; }
 
         /// <summary>
         ///     Use VisualFactor Dictionary Instead! Only only used for xml parsing.
@@ -270,7 +289,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "visualfactor", Required = Required.Always)]
         [XmlElement(ElementName = "visualfactor")]
-        public TraitVisualFactorXml[] VisualFactorArrayDoNotUse
+        public TraitXmlVisualFactor[] VisualFactorArrayDoNotUse
         {
             get => VisualFactor.Values.ToArray();
             set
@@ -287,7 +306,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "itemlevels", Required = Required.Always)]
         [XmlIgnore]
-        public HashSet<int> ItemLevels { get; set; } = new HashSet<int>();
+        public HashSet<int> ItemLevels { get; set; }
 
         /// <summary>
         ///     Use ItemLevels HashSet Instead! Only only used for xml parsing.
@@ -325,66 +344,67 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "equipsoundset")]
         public string EquipSoundSet { get; set; }
 
+        [Required]
+        [JsonProperty(PropertyName = "sellable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsSellable { get; set; }
 
         /// <summary>
         ///     Use IsSellable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "sellable", Required = Required.Always)]
+        [JsonIgnore]
         [XmlElement(ElementName = "sellable")]
         public string SellableStrDoNotUse
         {
             get => IsSellable ? "1" : "0";
-            set => IsSellable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) ||
-                                string.Equals(value, "1", StringComparison.Ordinal);
+            set => IsSellable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
+        [Required]
+        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsTradeable { get; set; }
 
         /// <summary>
         ///     Use IsTradeable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
+        [JsonIgnore]
         [XmlElement(ElementName = "tradeable")]
         public string TradeableStrDoNotUse
         {
             get => IsTradeable ? "1" : "0";
-            set => IsTradeable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) ||
-                                 string.Equals(value, "1", StringComparison.Ordinal);
+            set => IsTradeable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
+        [Required]
+        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsDestroyable { get; set; }
 
         /// <summary>
         ///     Use IsDestroyable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
+        [JsonIgnore]
         [XmlElement(ElementName = "destroyable")]
         public string DestroyableStrDoNotUse
         {
             get => IsDestroyable ? "1" : "0";
-            set => IsDestroyable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) ||
-                                   string.Equals(value, "1", StringComparison.Ordinal);
+            set => IsDestroyable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
+        [Required]
+        [JsonProperty(PropertyName = "canbestoredingearhall", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool CanBeStoredInGearHall { get; set; }
 
         /// <summary>
         ///     Use CanBeStoredInGearHall Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonProperty(PropertyName = "canbestoredingearhall", Required = Required.Always)]
+        [JsonIgnore]
         [XmlElement(ElementName = "canbestoredingearhall")]
         public string CanBeStoredInGearHallStrDoNotUse
         {
@@ -393,33 +413,35 @@ namespace ProjectCeleste.GameFiles.XMLParser
                                            string.Equals(value, "1", StringComparison.Ordinal);
         }
 
-
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "effects", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "effects")]
-        public TraitEffectsXml Effects { get; set; }
+        public TraitXmlEffects Effects { get; set; }
 
         [DefaultValue(EventEnum.None)]
         [JsonProperty(PropertyName = "event", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "event")]
-        public EventEnum Event { get; set; } = EventEnum.None;
+        public EventEnum Event { get; set; }
     }
 
     [JsonObject(Title = "trait", Description = "")]
     [XmlRoot(ElementName = "traits")]
     public class TraitsXml
     {
-        [Required]
-        [JsonProperty(PropertyName = "trait", Required = Required.Always)]
+        public TraitsXml()
+        {
+            Trait = new Dictionary<string, TraitXml>(StringComparer.OrdinalIgnoreCase);
+        }
+
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<string, TraitXml> Trait { get; } =
-            new Dictionary<string, TraitXml>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, TraitXml> Trait { get; }
 
         /// <summary>
         ///     Use Trait Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "trait", Required = Required.Always)]
         [XmlElement(ElementName = "trait")]
         public TraitXml[] TraitArrayDoNotUse
         {
@@ -444,12 +466,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static TraitsXml FromFile(string file)
+        public static TraitsXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<TraitsXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

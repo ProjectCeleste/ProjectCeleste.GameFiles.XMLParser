@@ -5,25 +5,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GameFiles.XMLParser.Common;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
 namespace ProjectCeleste.GameFiles.XMLParser
 {
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum BluePrintTagEnum
-    {
-        [XmlEnum("None")] [EnumMember(Value = "None")] Invalid = 0,
-        [XmlEnum("Blueprint")] [EnumMember(Value = "Blueprint")] Blueprint = 1
-    }
-
     [JsonObject(Title = "material", Description = "")]
     [XmlRoot(ElementName = "material")]
     public class EconBluePrintXmlCostMaterial
@@ -65,6 +58,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
     {
         public EconBluePrintXmlCost()
         {
+            Material = new Dictionary<string, EconBluePrintXmlCostMaterial>(StringComparer.OrdinalIgnoreCase);
         }
 
         [JsonConstructor]
@@ -72,18 +66,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             [JsonProperty(PropertyName = "material", Required = Required.Always)]
             IEnumerable<EconBluePrintXmlCostMaterial> econBluePrintXmlCostMaterials)
         {
-            var enumerable = econBluePrintXmlCostMaterials as EconBluePrintXmlCostMaterial[] ??
-                             econBluePrintXmlCostMaterials.ToArray();
-            if (!enumerable.Any())
-                return;
-            foreach (var item in enumerable)
-                Material.Add(item.Id, item);
+            Material = econBluePrintXmlCostMaterials.ToDictionary(key => key.Id, StringComparer.OrdinalIgnoreCase);
         }
 
         [XmlIgnore]
         [JsonIgnore]
-        public Dictionary<string, EconBluePrintXmlCostMaterial> Material { get; } =
-            new Dictionary<string, EconBluePrintXmlCostMaterial>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, EconBluePrintXmlCostMaterial> Material { get; }
 
         /// <summary>
         ///     Use Material Dictionary Instead! Only only used for xml parsing.
@@ -109,6 +97,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
     [XmlRoot(ElementName = "blueprint")]
     public class EconBlueprintXml
     {
+        public EconBlueprintXml()
+        {
+            Event = EventEnum.None;
+            Alliance = EAllianceEnum.None;
+        }
+
         [Key]
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
@@ -150,15 +144,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "itemlevel")]
         public int ItemLevel { get; set; }
 
+        [Required]
+        [JsonProperty(PropertyName = "sellable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsSellable { get; set; }
 
         /// <summary>
         ///     Use IsSellable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "sellable", Required = Required.Always)]
+        [JsonIgnore]
         [XmlElement(ElementName = "sellable")]
         public string SellableStrDoNotUse
         {
@@ -166,15 +161,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
             set => IsSellable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
+        [Required]
+        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsTradeable { get; set; }
 
         /// <summary>
         ///     Use IsTradeable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
+        [JsonIgnore]
         [XmlElement(ElementName = "tradeable")]
         public string TradeableStrDoNotUse
         {
@@ -182,15 +178,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
             set => IsTradeable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
+        [Required]
+        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsDestroyable { get; set; }
 
         /// <summary>
         ///     Use IsDestroyable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
+        [JsonIgnore]
         [XmlElement(ElementName = "destroyable")]
         public string DestroyableStrDoNotUse
         {
@@ -201,7 +198,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
         [XmlElement(ElementName = "sellcostoverride")]
-        public ItemCost SellCostOverride { get; set; }
+        public ItemCostXml SellCostOverride { get; set; }
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -229,29 +226,33 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "alliance", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "alliance")]
-        public EAllianceEnum Alliance { get; set; } = EAllianceEnum.None;
+        public EAllianceEnum Alliance { get; set; }
 
         [DefaultValue(EventEnum.None)]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "event", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "event")]
-        public EventEnum Event { get; set; } = EventEnum.None;
+        public EventEnum Event { get; set; }
     }
 
     [JsonObject(Title = "blueprints", Description = "")]
     [XmlRoot(ElementName = "blueprints")]
     public class EconBlueprintsXml
     {
-        [JsonProperty(PropertyName = "blueprint", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public EconBlueprintsXml()
+        {
+            Blueprint = new Dictionary<string, EconBlueprintXml>(StringComparer.OrdinalIgnoreCase);
+        }
+
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<string, EconBlueprintXml> Blueprint { get; } =
-            new Dictionary<string, EconBlueprintXml>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, EconBlueprintXml> Blueprint { get; }
 
         /// <summary>
         ///     Use BluePrint Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "blueprint", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "blueprint")]
         public EconBlueprintXml[] BluePrintArrayDoNotUse
         {
@@ -276,12 +277,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static EconBlueprintsXml FromFile(string file)
+        public static EconBlueprintsXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<EconBlueprintsXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

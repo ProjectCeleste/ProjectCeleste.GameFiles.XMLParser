@@ -7,13 +7,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using ProjectCeleste.GameFiles.XMLParser.Common;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
 namespace ProjectCeleste.GameFiles.XMLParser
 {
+    [JsonObject(Title = "iteminfo", Description = "")]
     public class VendorXmlItemInfo
     {
         [Key]
@@ -35,6 +37,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public int Level { get; set; }
     }
 
+    [JsonObject(Title = "purchase", Description = "")]
     [XmlRoot(ElementName = "purchase")]
     public class VendorXmlPurchase
     {
@@ -122,6 +125,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         }
     }
 
+    [JsonObject(Title = "item", Description = "")]
     [XmlRoot(ElementName = "item")]
     public class VendorXmlItem
     {
@@ -133,20 +137,26 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "cost", Required = Required.Always)]
         [XmlElement(ElementName = "cost")]
-        public ItemCost Cost { get; set; }
+        public ItemCostXml Cost { get; set; }
     }
 
+    [JsonObject(Title = "items", Description = "")]
     [XmlRoot(ElementName = "items")]
     public class VendorXmlItems
     {
-        [Required]
-        [XmlIgnore]
-        [JsonProperty(PropertyName = "item", Required = Required.Always)]
-        public Dictionary<string, VendorXmlItem> Item { get; } =
-            new Dictionary<string, VendorXmlItem>(StringComparer.OrdinalIgnoreCase);
+        public VendorXmlItems()
+        {
+            Item = new Dictionary<string, VendorXmlItem>(StringComparer.OrdinalIgnoreCase);
+        }
 
         [Required]
         [JsonIgnore]
+        [XmlIgnore]
+        public IDictionary<string, VendorXmlItem> Item { get; }
+
+        [Required]
+        [JsonIgnore]
+        [JsonProperty(PropertyName = "item", Required = Required.Always)]
         [XmlElement(ElementName = "item")]
         public VendorXmlItem[] ItemArray
         {
@@ -173,6 +183,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         }
     }
 
+    [JsonObject(Title = "itemset", Description = "")]
     [XmlRoot(ElementName = "itemset")]
     public class VendorXmlItemset
     {
@@ -181,7 +192,6 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "items")]
         public VendorXmlItems Items { get; set; }
 
-
         [Required]
         [Range(0, 255)]
         [JsonProperty(PropertyName = "regionid", Required = Required.Always)]
@@ -189,6 +199,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public int Regionid { get; set; }
     }
 
+    [JsonObject(Title = "itemsets", Description = "")]
     [XmlRoot(ElementName = "itemsets")]
     public class VendorXmlItemsets
     {
@@ -198,6 +209,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public VendorXmlItemset Itemset { get; set; }
     }
 
+    [JsonObject(Title = "vendor", Description = "")]
     [XmlRoot(ElementName = "vendor")]
     public class VendorXml
     {
@@ -221,12 +233,13 @@ namespace ProjectCeleste.GameFiles.XMLParser
     [XmlRoot(ElementName = "vendors")]
     public class VendorsXml
     {
-        [JsonProperty(PropertyName = "vendor", Required = Required.Always)]
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<string, VendorXml> Vendor { get; } =
+        public IDictionary<string, VendorXml> Vendor { get; } =
             new Dictionary<string, VendorXml>(StringComparer.OrdinalIgnoreCase);
 
-        [JsonIgnore]
+        [Required]
+        [JsonProperty(PropertyName = "vendor", Required = Required.Always)]
         [XmlElement(ElementName = "vendor")]
         public VendorXml[] VendorArray
         {
@@ -250,12 +263,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static VendorsXml FromFile(string file)
+        public static VendorsXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<VendorsXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

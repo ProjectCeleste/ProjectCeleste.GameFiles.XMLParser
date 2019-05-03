@@ -14,8 +14,10 @@ using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
 namespace ProjectCeleste.GameFiles.XMLParser
 {
+    [JsonObject(Title = "Region", Description = "")]
     [XmlRoot(ElementName = "Region")]
     public class RegionXml
     {
@@ -24,8 +26,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
         }
 
         [JsonConstructor]
-        public RegionXml([JsonProperty(PropertyName = "ID", Required = Required.Always)] int id,
-            [JsonProperty(PropertyName = "hidden", DefaultValueHandling = DefaultValueHandling.Ignore)] bool isHidden,
+        public RegionXml([JsonProperty(PropertyName = "Id", Required = Required.Always)] int id,
+            [JsonProperty(PropertyName = "Hidden", DefaultValueHandling = DefaultValueHandling.Ignore)] bool isHidden,
             [JsonProperty(PropertyName = "Name", Required = Required.Always)] string name,
             [JsonProperty(PropertyName = "Alliance", DefaultValueHandling = DefaultValueHandling.Ignore)]
             bool isAlliance,
@@ -48,20 +50,24 @@ namespace ProjectCeleste.GameFiles.XMLParser
         {
             Id = id;
             IsHidden = isHidden;
-            Name = name;
+            Name = !string.IsNullOrWhiteSpace(name) ? name : throw new ArgumentNullException(nameof(name));
             IsAlliance = isAlliance;
             CivId = civId;
-            MapName = mapName;
+            MapName = !string.IsNullOrWhiteSpace(mapName) ? mapName : throw new ArgumentNullException(nameof(mapName));
             MapLocationX = mapLocationX;
             MapLocationY = mapLocationY;
-            MapMarker = mapMarker;
-            MapPage = mapPage;
-            LoadScreen = loadScreen;
+            MapMarker = !string.IsNullOrWhiteSpace(mapMarker)
+                ? mapMarker
+                : throw new ArgumentNullException(nameof(mapMarker));
+            MapPage = !string.IsNullOrWhiteSpace(mapPage) ? mapPage : throw new ArgumentNullException(nameof(mapPage));
+            LoadScreen = !string.IsNullOrWhiteSpace(loadScreen)
+                ? loadScreen
+                : throw new ArgumentNullException(nameof(loadScreen));
             DescriptionStringId = descriptionStringId;
             DisplayNameStringId = displayNameStringId;
-            AvatarShield = avatarShield;
-            FlagIcon = flagIcon;
-            PlayList = playList;
+            AvatarShield = !string.IsNullOrWhiteSpace(avatarShield) ? avatarShield : null;
+            FlagIcon = !string.IsNullOrWhiteSpace(flagIcon) ? flagIcon : null;
+            PlayList = !string.IsNullOrWhiteSpace(playList) ? playList : null;
         }
 
         [JsonIgnore]
@@ -76,21 +82,21 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Key]
         [Required]
         [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "ID", Required = Required.Always)]
+        [JsonProperty(PropertyName = "Id", Required = Required.Always)]
         [XmlAttribute(AttributeName = "ID")]
         public int Id { get; set; }
 
         [DefaultValue(false)]
-        [JsonProperty(PropertyName = "hidden", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "Hidden", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlIgnore]
         public bool IsHidden { get; set; }
 
-        [DefaultValue(null)]
+        [DefaultValue("false")]
         [JsonIgnore]
         [XmlAttribute(AttributeName = "hidden")]
         public string HiddenStrDoNotUse
         {
-            get => IsHidden ? "true" : null;
+            get => IsHidden ? "true" : "false";
             set => IsHidden = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
@@ -99,12 +105,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlIgnore]
         public bool IsAlliance { get; set; }
 
-        [DefaultValue(null)]
+        [DefaultValue("false")]
         [JsonIgnore]
         [XmlElement(ElementName = "Alliance")]
         public string AllianceStrDoNotUse
         {
-            get => IsAlliance ? "true" : null;
+            get => IsAlliance ? "true" : "false";
             set => IsAlliance = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
@@ -173,19 +179,20 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "PlayList")]
         public string PlayList { get; set; }
 
-        public static RegionXml FromFile(string file)
+        public static RegionXml FromXmlFile(string file)
         {
             var newClass = XmlUtils.FromXmlFile<RegionXml>(file);
             newClass.FileName = Path.GetFileNameWithoutExtension(file);
             return newClass;
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }
     }
 
+    [JsonObject(Title = "Regions", Description = "")]
     [XmlRoot(ElementName = "Regions")]
     public class RegionsXml
     {
@@ -194,28 +201,29 @@ namespace ProjectCeleste.GameFiles.XMLParser
             Region = new Dictionary<int, RegionXml>();
         }
 
-        [JsonConstructor]
-        public RegionsXml(
-            [JsonProperty(PropertyName = "Region", Required = Required.Always)] IDictionary<int, RegionXml> regions)
+        public RegionsXml(IDictionary<int, RegionXml> regions)
         {
             Region = new Dictionary<int, RegionXml>(regions);
         }
 
+        [JsonConstructor]
         public RegionsXml(
-            [JsonProperty(PropertyName = "Region", Required = Required.Always)] IEnumerable<RegionXml> regions)
+            [JsonProperty(PropertyName = "Region", Required = Required.Always, Order = 1)]
+            IEnumerable<RegionXml> regions)
         {
             Region = regions.ToDictionary(key => key.Id);
         }
 
-        [JsonProperty(PropertyName = "Region", Required = Required.Always)]
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<int, RegionXml> Region { get; }
+        public IDictionary<int, RegionXml> Region { get; }
 
         /// <summary>
         ///     Use Region Dictionary Instead! Only only used for xml parsing.
         /// </summary>
-        [JsonIgnore]
-        [XmlElement(ElementName = "Region")]
+        [Required]
+        [JsonProperty(PropertyName = "Region", Required = Required.Always, Order = 1)]
+        [XmlElement(ElementName = "Region", Order = 1)]
         public RegionXml[] RegionArrayDoNotUse
         {
             get => Region.Values.ToArray();
@@ -241,8 +249,23 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
         public static RegionsXml RegionsFromFolder(string regionFolder)
         {
-            return new RegionsXml(Directory.GetFiles(regionFolder, "*.region", SearchOption.AllDirectories)
-                .Select(RegionXml.FromFile));
+            var regionsXml = new RegionsXml();
+            var excs = new List<Exception>();
+            foreach (var file in Directory.GetFiles(regionFolder, "*.region", SearchOption.AllDirectories))
+                try
+                {
+                    var newClass = RegionXml.FromXmlFile(file);
+                    regionsXml.Region.Add(newClass.Id, newClass);
+                }
+                catch (Exception e)
+                {
+                    excs.Add(new Exception($"Item '{file}'", e));
+                }
+
+            if (excs.Count > 0)
+                throw new AggregateException(excs);
+
+            return regionsXml;
         }
     }
 }

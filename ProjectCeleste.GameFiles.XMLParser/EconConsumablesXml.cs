@@ -5,39 +5,28 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GameFiles.XMLParser.Common;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
 namespace ProjectCeleste.GameFiles.XMLParser
 {
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum EconConsumableUsableEnum
-    {
-        [XmlEnum("None")] [EnumMember(Value = "None")] None = 0,
-        [XmlEnum("CapitalCity")] [EnumMember(Value = "CapitalCity")] CapitalCity = 1,
-        [XmlEnum("PVP")] [EnumMember(Value = "PVP")] Pvp = 2,
-        [XmlEnum("Quest")] [EnumMember(Value = "Quest")] Quest = 3,
-        [XmlEnum("SharedRegions")] [EnumMember(Value = "SharedRegions")] SharedRegions = 4
-    }
-
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum EconConsumableTypeEnum
-    {
-        [XmlEnum("Client")] [EnumMember(Value = "Client")] Client = 0,
-        [XmlEnum("Server")] [EnumMember(Value = "Server")] Server = 1
-    }
-
     [JsonObject(Title = "consumable", Description = "")]
     [XmlRoot(ElementName = "consumable")]
     public class EconConsumableXml
     {
+        public EconConsumableXml()
+        {
+            Event = EventEnum.None;
+            Type = EconConsumableTypeEnum.Client;
+        }
+
         [Key]
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
@@ -48,7 +37,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "type", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "type")]
-        public EconConsumableTypeEnum Type { get; set; } = EconConsumableTypeEnum.Client;
+        public EconConsumableTypeEnum Type { get; set; }
 
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "icon", Required = Required.Always)]
@@ -90,15 +79,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "itemlevel")]
         public int ItemLevel { get; set; }
 
+        [Required]
+        [JsonProperty(PropertyName = "sellable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsSellable { get; set; }
 
         /// <summary>
         ///     Use IsSellable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "sellable", Required = Required.Always)]
+        [JsonIgnore]
         [XmlElement(ElementName = "sellable")]
         public string SellableStrDoNotUse
         {
@@ -106,15 +96,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
             set => IsSellable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
+        [Required]
+        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsTradeable { get; set; }
 
         /// <summary>
         ///     Use IsTradeable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
+        [JsonIgnore]
         [XmlElement(ElementName = "tradeable")]
         public string TradeableStrDoNotUse
         {
@@ -122,15 +113,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
             set => IsTradeable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
         }
 
+        [Required]
+        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
         [XmlIgnore]
-        [JsonIgnore]
         public bool IsDestroyable { get; set; }
 
         /// <summary>
         ///     Use IsDestroyable Bool Instead! Only only used for xml parsing.
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
+        [JsonIgnore]
         [XmlElement(ElementName = "destroyable")]
         public string DestroyableStrDoNotUse
         {
@@ -141,7 +133,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
         [XmlElement(ElementName = "sellcostoverride")]
-        public ItemCost SellCostOverride { get; set; }
+        public ItemCostXml SellCostOverride { get; set; }
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -178,23 +170,27 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "event", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "event")]
-        public EventEnum Event { get; set; } = EventEnum.None;
+        public EventEnum Event { get; set; }
     }
 
     [JsonObject(Title = "consumables", Description = "")]
     [XmlRoot(ElementName = "consumables")]
     public class EconConsumablesXml
     {
-        [JsonProperty(PropertyName = "consumable", Required = Required.Always)]
+        public EconConsumablesXml()
+        {
+            Consumable = new Dictionary<string, EconConsumableXml>(StringComparer.OrdinalIgnoreCase);
+        }
+
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<string, EconConsumableXml> Consumable { get; } =
-            new Dictionary<string, EconConsumableXml>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, EconConsumableXml> Consumable { get; }
 
         /// <summary>
         ///     Use Consumable Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "consumable", Required = Required.Always)]
         [XmlElement(ElementName = "consumable")]
         public EconConsumableXml[] ConsumableArrayDoNotUse
         {
@@ -218,12 +214,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static EconConsumablesXml FromFile(string file)
+        public static EconConsumablesXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<EconConsumablesXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

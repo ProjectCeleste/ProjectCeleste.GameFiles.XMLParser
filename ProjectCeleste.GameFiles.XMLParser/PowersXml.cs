@@ -9,6 +9,10 @@ using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
+//TODO JsonProperty
+//TODO C# Attribute
 namespace ProjectCeleste.GameFiles.XMLParser
 {
     [XmlRoot(ElementName = "minimapeventtime")]
@@ -234,9 +238,13 @@ namespace ProjectCeleste.GameFiles.XMLParser
     [XmlRoot(ElementName = "powers")]
     public class PowersXml
     {
+        public PowersXml()
+        {
+            Power = new Dictionary<string, PowerXml>(StringComparer.OrdinalIgnoreCase);
+        }
+
         [XmlIgnore]
-        public Dictionary<string, PowerXml> Power { get; } =
-            new Dictionary<string, PowerXml>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, PowerXml> Power { get; }
 
         /// <summary>
         ///     Use Power Dictionary Instead! Only only used for xml parsing.
@@ -265,12 +273,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static PowersXml FromFile(string file)
+        public static PowersXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<PowersXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

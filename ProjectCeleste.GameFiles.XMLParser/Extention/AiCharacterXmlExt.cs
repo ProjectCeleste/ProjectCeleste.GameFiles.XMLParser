@@ -1,6 +1,7 @@
 ﻿#region Using directives
 
 using System;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
 
 #endregion
 
@@ -8,15 +9,15 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
 {
     public static class AiCharacterXmlExt
     {
-        public static bool AddOrUpdate(this AiTechsXml techs, string techId, string techStatut)
+        public static bool AddOrUpdate(this AiCharacterXmlTechs techs, string techId, TechStatusEnum techStatut)
         {
             if (string.IsNullOrWhiteSpace(techId))
                 throw new ArgumentNullException(nameof(techId));
 
-            if (string.IsNullOrWhiteSpace(techStatut))
-                throw new ArgumentNullException(nameof(techStatut));
+            if (techStatut == TechStatusEnum.Invalid)
+                throw new ArgumentOutOfRangeException(nameof(techStatut), techStatut, string.Empty);
 
-            if (techs.Tech.TryGetValue(techId, out AiTechXml tech))
+            if (techs.Tech.TryGetValue(techId, out AiCharacterXmlTechsTech tech))
             {
                 tech.Status = techStatut;
                 tech.PersistentCityStatus = techStatut;
@@ -24,7 +25,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
                 return true;
             }
 
-            var newTech = new AiTechXml
+            var newTech = new AiCharacterXmlTechsTech
             {
                 TechId = techId,
                 Status = techStatut,

@@ -13,6 +13,8 @@ using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
 namespace ProjectCeleste.GameFiles.XMLParser
 {
     [XmlRoot(ElementName = "Decay")]
@@ -271,6 +273,13 @@ namespace ProjectCeleste.GameFiles.XMLParser
     [XmlRoot(ElementName = "Command")]
     public class ProtoAge4XmlUnitCommand
     {
+        public ProtoAge4XmlUnitCommand()
+        {
+            Column = -1;
+            Page = -1;
+            Row = -1;
+        }
+
         [Key]
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -282,23 +291,30 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "row", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "row")]
-        public int Row { get; set; } = -1;
+        public int Row { get; set; }
 
         [DefaultValue(-1)]
         [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "page", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "page")]
-        public int Page { get; set; } = -1;
+        public int Page { get; set; }
 
         [DefaultValue(-1)]
         [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "column", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "column")]
-        public int Column { get; set; } = -1;
+        public int Column { get; set; }
     }
 
     public class ProtoAge4XmlRowPageColumn
     {
+        public ProtoAge4XmlRowPageColumn()
+        {
+            Row = -1;
+            Page = -1;
+            Column = -1;
+        }
+
         [Key]
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
@@ -309,19 +325,19 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "row", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "row")]
-        public int Row { get; set; } = -1;
+        public int Row { get; set; }
 
         [DefaultValue(-1)]
         [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "page", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "page")]
-        public int Page { get; set; } = -1;
+        public int Page { get; set; }
 
         [DefaultValue(-1)]
         [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "column", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "column")]
-        public int Column { get; set; } = -1;
+        public int Column { get; set; }
     }
 
     [XmlRoot(ElementName = "Rate")]
@@ -329,7 +345,6 @@ namespace ProjectCeleste.GameFiles.XMLParser
     {
         [Key]
         [Required]
-        //[JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "type", Required = Required.Always)]
         [XmlAttribute(AttributeName = "type")]
         public string Type { get; set; }
@@ -376,6 +391,24 @@ namespace ProjectCeleste.GameFiles.XMLParser
     [XmlRoot(ElementName = "Unit")]
     public class ProtoAge4XmlUnit
     {
+        public ProtoAge4XmlUnit()
+        {
+            TurnRadius = -1;
+            CorpseDecalTime = -1;
+            PopulationCount = -1;
+            Train = new Dictionary<string, ProtoAge4XmlRowPageColumn>(StringComparer.OrdinalIgnoreCase);
+            Tech = new Dictionary<string, ProtoAge4XmlRowPageColumn>(StringComparer.OrdinalIgnoreCase);
+            CarryCapacity = new Dictionary<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity>();
+            Cost = new Dictionary<ResourceTypeFixEnum, ProtoAge4XmlUnitCost>();
+            Command = new Dictionary<UnitCommandEnum, ProtoAge4XmlUnitCommand>();
+            AllowedAge = -1;
+            BuildPoints = -1;
+            PopulationCapAddition = -1;
+            Event = new Dictionary<EventEnum, ProtoAge4XmlUnitEvent>();
+            Bounty = -1;
+            VisualScale = -1;
+        }
+
         [Key]
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
@@ -483,7 +516,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "VisualScale", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "VisualScale")]
-        public double VisualScale { get; set; } = -1;
+        public double VisualScale { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "UnitType", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -522,7 +555,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "Bounty", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Bounty")]
-        public double Bounty { get; set; } = -1;
+        public double Bounty { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "InitialResource", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -563,36 +596,25 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "UnitAIType")]
         public string UnitAiType { get; set; }
 
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "Event", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<EventEnum, ProtoAge4XmlUnitEvent> Event { get; private set; }
+        public IDictionary<EventEnum, ProtoAge4XmlUnitEvent> Event { get; }
 
         /// <summary>
         ///     Use Event Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [DefaultValue(null)]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "Event", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Event")]
         public ProtoAge4XmlUnitEvent[] EventArrayDoNotUse
         {
-            get => Event?.Count > 0 ? Event.Values.ToArray() : null;
+            get => Event.Count > 0 ? Event.Values.ToArray() : null;
             set
             {
-                Event?.Clear();
+                Event.Clear();
 
                 if (value == null)
-                {
-                    if (Event != null)
-                        Event = null;
-
                     return;
-                }
-
-                if (Event == null)
-                    Event = new Dictionary<EventEnum, ProtoAge4XmlUnitEvent>();
-                else
-                    Event.Clear();
 
                 var excs = new List<Exception>();
                 foreach (var item in value)
@@ -645,7 +667,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "PopulationCapAddition", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "PopulationCapAddition")]
-        public int PopulationCapAddition { get; set; } = -1;
+        public int PopulationCapAddition { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "PlacementFile", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -656,7 +678,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "BuildPoints", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "BuildPoints")]
-        public double BuildPoints { get; set; } = -1;
+        public double BuildPoints { get; set; }
 
         [DefaultValue(0)]
         [Range(0, int.MaxValue)]
@@ -668,7 +690,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Range(-1, 3)]
         [JsonProperty(PropertyName = "AllowedAge", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "AllowedAge")]
-        public int AllowedAge { get; set; } = -1;
+        public int AllowedAge { get; set; }
 
         [DefaultValue(0)]
         [Range(0, int.MaxValue)]
@@ -686,36 +708,25 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "Contain")]
         public HashSet<UnitTypeEnum> Contain { get; set; }
 
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "Command", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<UnitCommandEnum, ProtoAge4XmlUnitCommand> Command { get; private set; }
+        public IDictionary<UnitCommandEnum, ProtoAge4XmlUnitCommand> Command { get; }
 
         /// <summary>
         ///     Use Command Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [DefaultValue(null)]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "Command", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Command")]
         public ProtoAge4XmlUnitCommand[] CommandArrayDoNotUse
         {
-            get => Command?.Count > 0 ? Command.Values.ToArray() : null;
+            get => Command.Count > 0 ? Command.Values.ToArray() : null;
             set
             {
-                Command?.Clear();
+                Command.Clear();
 
                 if (value == null)
-                {
-                    if (Command != null)
-                        Command = null;
-
                     return;
-                }
-
-                if (Command == null)
-                    Command = new Dictionary<UnitCommandEnum, ProtoAge4XmlUnitCommand>();
-                else
-                    Command.Clear();
 
                 var excs = new List<Exception>();
                 foreach (var item in value)
@@ -778,36 +789,25 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "VanTrait3")]
         public string VanTrait3 { get; set; }
 
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "Cost", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<ResourceTypeFixEnum, ProtoAge4XmlUnitCost> Cost { get; private set; }
+        public IDictionary<ResourceTypeFixEnum, ProtoAge4XmlUnitCost> Cost { get; }
 
         /// <summary>
         ///     Use Cost Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [DefaultValue(null)]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "Cost", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Cost")]
         public ProtoAge4XmlUnitCost[] CostArrayDoNotUse
         {
-            get => Cost?.Count > 0 ? Cost.Values.ToArray() : null;
+            get => Cost.Count > 0 ? Cost.Values.ToArray() : null;
             set
             {
-                Cost?.Clear();
+                Cost.Clear();
 
                 if (value == null)
-                {
-                    if (Cost != null)
-                        Cost = null;
-
                     return;
-                }
-
-                if (Cost == null)
-                    Cost = new Dictionary<ResourceTypeFixEnum, ProtoAge4XmlUnitCost>();
-                else
-                    Cost.Clear();
 
                 var excs = new List<Exception>();
                 foreach (var item in value)
@@ -824,36 +824,25 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "CarryCapacity", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity> CarryCapacity { get; private set; }
+        public IDictionary<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity> CarryCapacity { get; }
 
         /// <summary>
         ///     Use CarryCapacity Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [DefaultValue(null)]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "CarryCapacity", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "CarryCapacity")]
         public ProtoAge4XmlUnitCarryCapacity[] CarryCapacityArrayDoNotUse
         {
-            get => CarryCapacity?.Count > 0 ? CarryCapacity.Values.ToArray() : null;
+            get => CarryCapacity.Count > 0 ? CarryCapacity.Values.ToArray() : null;
             set
             {
-                CarryCapacity?.Clear();
+                CarryCapacity.Clear();
 
                 if (value == null)
-                {
-                    if (CarryCapacity != null)
-                        CarryCapacity = null;
-
                     return;
-                }
-
-                if (CarryCapacity == null)
-                    CarryCapacity = new Dictionary<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity>();
-                else
-                    CarryCapacity.Clear();
 
                 var excs = new List<Exception>();
                 foreach (var item in value)
@@ -876,36 +865,25 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "RepairPoints")]
         public double RepairPoints { get; set; }
 
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "Tech", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<string, ProtoAge4XmlRowPageColumn> Tech { get; private set; }
+        public IDictionary<string, ProtoAge4XmlRowPageColumn> Tech { get; }
 
         /// <summary>
         ///     Use Tech Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [DefaultValue(null)]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "Tech", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Tech")]
         public ProtoAge4XmlRowPageColumn[] TechArrayDoNotUse
         {
-            get => Tech?.Count > 0 ? Tech.Values.ToArray() : null;
+            get => Tech.Count > 0 ? Tech.Values.ToArray() : null;
             set
             {
-                Tech?.Clear();
+                Tech.Clear();
 
                 if (value == null)
-                {
-                    if (Tech != null)
-                        Tech = null;
-
                     return;
-                }
-
-                if (Tech == null)
-                    Tech = new Dictionary<string, ProtoAge4XmlRowPageColumn>(StringComparer.OrdinalIgnoreCase);
-                else
-                    Tech.Clear();
 
                 var excs = new List<Exception>();
                 foreach (var item in value)
@@ -966,36 +944,25 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "InputContext")]
         public string InputContext { get; set; }
 
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "Train", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<string, ProtoAge4XmlRowPageColumn> Train { get; private set; }
+        public IDictionary<string, ProtoAge4XmlRowPageColumn> Train { get; }
 
         /// <summary>
         ///     Use Train Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [DefaultValue(null)]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "Train", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Train")]
         public ProtoAge4XmlRowPageColumn[] TrainArrayDoNotUse
         {
-            get => Train?.Count > 0 ? Train.Values.ToArray() : null;
+            get => Train.Count > 0 ? Train.Values.ToArray() : null;
             set
             {
-                Train?.Clear();
+                Train.Clear();
 
                 if (value == null)
-                {
-                    if (Train != null)
-                        Train = null;
-
                     return;
-                }
-
-                if (Train == null)
-                    Train = new Dictionary<string, ProtoAge4XmlRowPageColumn>(StringComparer.OrdinalIgnoreCase);
-                else
-                    Train.Clear();
 
                 var excs = new List<Exception>();
                 foreach (var item in value)
@@ -1016,13 +983,13 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "PopulationCount", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "PopulationCount")]
-        public int PopulationCount { get; set; } = -1;
+        public int PopulationCount { get; set; }
 
         [DefaultValue(-1)]
         [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "CorpseDecalTime", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "CorpseDecalTime")]
-        public double CorpseDecalTime { get; set; } = -1;
+        public double CorpseDecalTime { get; set; }
 
         [DefaultValue(-1)]
         [Range(-1, int.MaxValue)]
@@ -1040,7 +1007,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "TurnRadius", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "TurnRadius")]
-        public double TurnRadius { get; set; } = -1;
+        public double TurnRadius { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "HeightBob", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -1061,24 +1028,27 @@ namespace ProjectCeleste.GameFiles.XMLParser
     [XmlRoot(ElementName = "Proto")]
     public class ProtoAge4Xml
     {
+        public ProtoAge4Xml()
+        {
+            Unit = new Dictionary<string, ProtoAge4XmlUnit>(StringComparer.OrdinalIgnoreCase);
+        }
+
         [Required]
         [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "version", Required = Required.Always)]
+        [JsonProperty(PropertyName = "version", Required = Required.Always, Order = 1)]
         [XmlAttribute(AttributeName = "version")]
         public int Version { get; set; }
 
-        [Required]
-        [JsonProperty(PropertyName = "Unit", Required = Required.Always)]
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<string, ProtoAge4XmlUnit> Unit { get; } =
-            new Dictionary<string, ProtoAge4XmlUnit>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, ProtoAge4XmlUnit> Unit { get; }
 
         /// <summary>
         ///     Use Unit Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonIgnore]
-        [XmlElement(ElementName = "Unit")]
+        [JsonProperty(PropertyName = "Unit", Required = Required.Always, Order = 2)]
+        [XmlElement(ElementName = "Unit", Order = 2)]
         public ProtoAge4XmlUnit[] UnitArrayDoNotUse
         {
             get => Unit.Values.ToArray();
@@ -1102,12 +1072,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static ProtoAge4Xml FromFile(string file)
+        public static ProtoAge4Xml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<ProtoAge4Xml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

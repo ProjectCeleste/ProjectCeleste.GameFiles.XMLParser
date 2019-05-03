@@ -13,11 +13,13 @@ using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
 namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "modifiertype", Description = "")]
     [XmlRoot(ElementName = "modifiertype")]
-    public class CharacterModifiersXmlModifiertype
+    public class CharacterModifierXmlModifierType
     {
         [Key]
         [Required]
@@ -30,25 +32,29 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "tooltipstringid", Required = Required.Always)]
         [XmlElement(ElementName = "tooltipstringid")]
-        public int Tooltipstringid { get; set; }
+        public int TooltipStringId { get; set; }
     }
 
     [JsonObject(Title = "modifiertypedata", Description = "")]
     [XmlRoot(ElementName = "modifiertypedata")]
-    public class CharacterModifiersXmlModifiertypedata
+    public class CharacterModifierXmlModifierTypeData
     {
-        [JsonProperty(PropertyName = "modifiertype", Required = Required.Always)]
+        public CharacterModifierXmlModifierTypeData()
+        {
+            ModifierType = new Dictionary<CharacterModifierTypeEnum, CharacterModifierXmlModifierType>();
+        }
+
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<CharacterModifierTypeEnum, CharacterModifiersXmlModifiertype> ModifierType { get; } =
-            new Dictionary<CharacterModifierTypeEnum, CharacterModifiersXmlModifiertype>();
+        public IDictionary<CharacterModifierTypeEnum, CharacterModifierXmlModifierType> ModifierType { get; }
 
         /// <summary>
         ///     Use ModifierType Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "modifiertype", Required = Required.Always)]
         [XmlElement(ElementName = "modifiertype")]
-        public CharacterModifiersXmlModifiertype[] ModifierTypeArrayDoNotUse
+        public CharacterModifierXmlModifierType[] ModifierTypeArrayDoNotUse
         {
             get => ModifierType.Values.ToArray();
             set
@@ -56,15 +62,25 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 ModifierType.Clear();
                 if (value == null)
                     return;
+                var excs = new List<Exception>();
                 foreach (var item in value)
-                    ModifierType.Add(item.Type, item);
+                    try
+                    {
+                        ModifierType.Add(item.Type, item);
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(new Exception($"Item '{item.Type}'", e));
+                    }
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
             }
         }
     }
 
     [JsonObject(Title = "modify", Description = "")]
     [XmlRoot(ElementName = "modify")]
-    public class CharacterModifiersXmlModify
+    public class CharacterModifierXmlModify
     {
         [Key]
         [JsonIgnore]
@@ -90,21 +106,28 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public double Amount { get; set; }
 
         [DefaultValue(null)]
-        [JsonProperty(PropertyName = "category", Required = Required.Default,
-            DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "category", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "category")]
         public string Category { get; set; }
 
+        [DefaultValue(true)]
+        [JsonProperty(PropertyName = "visible", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlIgnore]
+        public bool IsVisible { get; set; } = true;
+
         [DefaultValue("true")]
-        [JsonProperty(PropertyName = "visible", Required = Required.Default,
-            DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore]
         [XmlAttribute(AttributeName = "visible")]
-        public string Visible { get; set; }
+        public string VisibletrDoNotUse
+        {
+            get => IsVisible ? "true" : "false";
+            set => IsVisible = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
+        }
     }
 
     [JsonObject(Title = "modifier", Description = "")]
     [XmlRoot(ElementName = "modifier")]
-    public class CharacterModifiersXmlModifier
+    public class CharacterModifierXml
     {
         [Key]
         [Required(AllowEmptyStrings = false)]
@@ -120,15 +143,13 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
         [DefaultValue(0)]
         [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "descriptionid", Required = Required.Default,
-            DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "descriptionid", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "descriptionid")]
         public int Descriptionid { get; set; }
 
         [DefaultValue(0)]
         [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "displaynameid", Required = Required.Default,
-            DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "displaynameid", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "displaynameid")]
         public int Displaynameid { get; set; }
 
@@ -141,43 +162,40 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public string DurationXml
         {
             get => Duration.ToString();
-            set => Duration = TimeSpan.Parse(value);
+            set => Duration = string.IsNullOrWhiteSpace(value) ? TimeSpan.Zero : TimeSpan.Parse(value);
         }
 
-
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "duration", Required = Required.Default,
-            DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [Required]
+        [JsonProperty(PropertyName = "duration", Required = Required.Always)]
         [XmlIgnore]
         public TimeSpan Duration { get; set; }
 
-
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "icon", Required = Required.Default,
-            DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+            DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "icon")]
         public string Icon { get; set; }
 
         [DefaultValue(CharacterModifierStackingBehaviorEnum.None)]
         [JsonConverter(typeof(StringEnumConverter))]
-        [JsonProperty(PropertyName = "stackingbehavior", Required = Required.Default,
-            DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "stackingbehavior", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "stackingbehavior")]
         public CharacterModifierStackingBehaviorEnum StackingBehavior { get; set; } =
             CharacterModifierStackingBehaviorEnum.None;
 
-        [JsonProperty(PropertyName = "modify", Required = Required.Always)]
+        [Required]
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<string, CharacterModifiersXmlModify> Modify { get; } =
-            new Dictionary<string, CharacterModifiersXmlModify>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, CharacterModifierXmlModify> Modify { get; } =
+            new Dictionary<string, CharacterModifierXmlModify>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         ///     Use Modify Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "modify", Required = Required.Always)]
         [XmlElement(ElementName = "modify")]
-        public CharacterModifiersXmlModify[] ModifyArrayDoNotUse
+        public CharacterModifierXmlModify[] ModifyArrayDoNotUse
         {
             get => Modify.Values.ToArray();
             set
@@ -185,28 +203,43 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 Modify.Clear();
                 if (value == null)
                     return;
+
+                var excs = new List<Exception>();
                 foreach (var item in value)
-                    Modify.Add(item.UnikId, item);
+                    try
+                    {
+                        Modify.Add(item.UnikId, item);
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(new Exception($"Item '{item.UnikId}'", e));
+                    }
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
             }
         }
     }
 
     [JsonObject(Title = "modifiers", Description = "")]
     [XmlRoot(ElementName = "modifiers")]
-    public class CharacterModifiersXmlModifiers
+    public class CharacterModifiersModifiersXml
     {
-        [JsonProperty(PropertyName = "modifier", Required = Required.Always)]
+        public CharacterModifiersModifiersXml()
+        {
+            Modifier = new Dictionary<string, CharacterModifierXml>(StringComparer.OrdinalIgnoreCase);
+        }
+
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<string, CharacterModifiersXmlModifier> Modifier { get; } =
-            new Dictionary<string, CharacterModifiersXmlModifier>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, CharacterModifierXml> Modifier { get; }
 
         /// <summary>
         ///     Use Modify Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "modifier", Required = Required.Always)]
         [XmlElement(ElementName = "modifier")]
-        public CharacterModifiersXmlModifier[] ModifierArrayDoNotUse
+        public CharacterModifierXml[] ModifierArrayDoNotUse
         {
             get => Modifier.Values.ToArray();
             set
@@ -214,8 +247,19 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 Modifier.Clear();
                 if (value == null)
                     return;
+
+                var excs = new List<Exception>();
                 foreach (var item in value)
-                    Modifier.Add(item.Id, item);
+                    try
+                    {
+                        Modifier.Add(item.Id, item);
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(new Exception($"Item '{item.Id}'", e));
+                    }
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
             }
         }
     }
@@ -224,24 +268,27 @@ namespace ProjectCeleste.GameFiles.XMLParser
     [XmlRoot(ElementName = "charactermodifiers")]
     public class CharacterModifiersXml
     {
+        public CharacterModifiersXml()
+        {
+            Modifiertypedata = new CharacterModifierXmlModifierTypeData();
+        }
+
         [Required]
         [JsonProperty(PropertyName = "modifiertypedata", Required = Required.Always)]
         [XmlElement(ElementName = "modifiertypedata")]
-        public CharacterModifiersXmlModifiertypedata Modifiertypedata { get; set; } =
-            new CharacterModifiersXmlModifiertypedata();
+        public CharacterModifierXmlModifierTypeData Modifiertypedata { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "modifiers", Required = Required.Always)]
         [XmlElement(ElementName = "modifiers")]
-        public CharacterModifiersXmlModifiers Modifiers { get; set; } = new CharacterModifiersXmlModifiers();
+        public CharacterModifiersModifiersXml Modifiers { get; set; } = new CharacterModifiersModifiersXml();
 
-
-        public static CharacterModifiersXml FromFile(string file)
+        public static CharacterModifiersXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<CharacterModifiersXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

@@ -13,6 +13,8 @@ using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
 namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "summary", Description = "")]
@@ -42,6 +44,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
     {
         public EconQuestXml()
         {
+            Event = EventEnum.None;
+            Alliance = EAllianceEnum.None;
         }
 
         [JsonConstructor]
@@ -146,29 +150,33 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "alliance", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "alliance")]
-        public EAllianceEnum Alliance { get; set; } = EAllianceEnum.None;
+        public EAllianceEnum Alliance { get; set; }
 
         [DefaultValue(EventEnum.None)]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "event", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "event")]
-        public EventEnum Event { get; set; } = EventEnum.None;
+        public EventEnum Event { get; set; }
     }
 
     [JsonObject(Title = "quests", Description = "")]
     [XmlRoot(ElementName = "quests")]
     public class EconQuestsXml
     {
-        [JsonProperty(PropertyName = "quest", Required = Required.Always)]
+        public EconQuestsXml()
+        {
+            Quest = new Dictionary<string, EconQuestXml>(StringComparer.OrdinalIgnoreCase);
+        }
+
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<string, EconQuestXml> Quest { get; } =
-            new Dictionary<string, EconQuestXml>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, EconQuestXml> Quest { get; }
 
         /// <summary>
         ///     Use EconQuest Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "quest", Required = Required.Always)]
         [XmlElement(ElementName = "quest")]
         public EconQuestXml[] EconQuestArrayDoNotUse
         {
@@ -193,12 +201,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static EconQuestsXml FromFile(string file)
+        public static EconQuestsXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<EconQuestsXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

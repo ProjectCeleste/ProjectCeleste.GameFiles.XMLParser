@@ -10,18 +10,18 @@ using ProjectCeleste.GameFiles.XMLParser.Enum;
 
 #endregion
 
-namespace ProjectCeleste.GameFiles.XMLParser.Common
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "gamecurrency", Description = "")]
     [XmlRoot(ElementName = "gamecurrency")]
-    public class ItemCostGameCurrency
+    public class ItemCostGameCurrencyXml
     {
-        public ItemCostGameCurrency()
+        public ItemCostGameCurrencyXml()
         {
         }
 
         [JsonConstructor]
-        public ItemCostGameCurrency(
+        public ItemCostGameCurrencyXml(
             [JsonConverter(typeof(StringEnumConverter))]
             [JsonProperty(PropertyName = "type", Required = Required.Always)] GameCurrencyTypeEnum type,
             [JsonProperty(PropertyName = "quantity", Required = Required.Always)] double quantity)
@@ -30,30 +30,30 @@ namespace ProjectCeleste.GameFiles.XMLParser.Common
             Quantity = quantity;
         }
 
-        [Required]
-        [Range(0, double.MaxValue)]
-        [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
-        [XmlAttribute(AttributeName = "quantity")]
-        public double Quantity { get; set; }
-
         [Key]
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "type", Required = Required.Always)]
         [XmlText]
         public GameCurrencyTypeEnum Type { get; set; }
+
+        [Required]
+        [Range(0, double.MaxValue)]
+        [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
+        [XmlAttribute(AttributeName = "quantity")]
+        public double Quantity { get; set; }
     }
 
     [JsonObject(Title = "capitalresource", Description = "")]
     [XmlRoot(ElementName = "capitalresource")]
-    public class ItemCostCapitalResource
+    public class ItemCostCapitalResourceXml
     {
-        public ItemCostCapitalResource()
+        public ItemCostCapitalResourceXml()
         {
         }
 
         [JsonConstructor]
-        public ItemCostCapitalResource(
+        public ItemCostCapitalResourceXml(
             [JsonConverter(typeof(StringEnumConverter))]
             [JsonProperty(PropertyName = "type", Required = Required.Always)] CapitalResourceTypeEnum type,
             [JsonProperty(PropertyName = "quantity", Required = Required.Always)] double quantity)
@@ -62,48 +62,48 @@ namespace ProjectCeleste.GameFiles.XMLParser.Common
             Quantity = quantity;
         }
 
-        [Required]
-        [Range(0, double.MaxValue)]
-        [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
-        [XmlAttribute(AttributeName = "quantity")]
-        public double Quantity { get; set; }
-
         [Key]
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "type", Required = Required.Always)]
         [XmlText]
         public CapitalResourceTypeEnum Type { get; set; }
+
+        [Required]
+        [Range(0, double.MaxValue)]
+        [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
+        [XmlAttribute(AttributeName = "quantity")]
+        public double Quantity { get; set; }
     }
 
     [JsonObject(Title = "Cost", Description = "")]
     [XmlRoot(ElementName = "Cost")]
-    public class ItemCost
+    public class ItemCostXml
     {
-        public ItemCost()
+        public ItemCostXml()
         {
             CapitalResource = null;
             GameCurrency = null;
         }
 
-        public ItemCost(CapitalResourceTypeEnum capitalResource, double quantity)
+        public ItemCostXml(CapitalResourceTypeEnum capitalResource, double quantity)
         {
-            CapitalResource = new ItemCostCapitalResource(capitalResource, quantity);
+            CapitalResource = new ItemCostCapitalResourceXml(capitalResource, quantity);
             GameCurrency = null;
         }
 
-        public ItemCost(GameCurrencyTypeEnum gameCurrency, double quantity)
+        public ItemCostXml(GameCurrencyTypeEnum gameCurrency, double quantity)
         {
             CapitalResource = null;
-            GameCurrency = new ItemCostGameCurrency(gameCurrency, quantity);
+            GameCurrency = new ItemCostGameCurrencyXml(gameCurrency, quantity);
         }
 
         [JsonConstructor]
-        public ItemCost(
+        public ItemCostXml(
             [JsonProperty(PropertyName = "capitalresource", DefaultValueHandling = DefaultValueHandling.Ignore)]
-            ItemCostCapitalResource capitalResource,
+            ItemCostCapitalResourceXml capitalResource,
             [JsonProperty(PropertyName = "gamecurrency", DefaultValueHandling = DefaultValueHandling.Ignore)]
-            ItemCostGameCurrency gameCurrency)
+            ItemCostGameCurrencyXml gameCurrency)
         {
             if (capitalResource == null && gameCurrency == null)
                 throw new ArgumentNullException();
@@ -118,11 +118,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Common
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "capitalresource", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "capitalresource")]
-        public ItemCostCapitalResource CapitalResource { get; set; }
+        public ItemCostCapitalResourceXml CapitalResource { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "gamecurrency", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "gamecurrency")]
-        public ItemCostGameCurrency GameCurrency { get; set; }
+        public ItemCostGameCurrencyXml GameCurrency { get; set; }
     }
 }

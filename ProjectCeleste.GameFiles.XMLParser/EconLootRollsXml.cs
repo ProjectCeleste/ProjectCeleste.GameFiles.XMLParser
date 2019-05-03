@@ -13,6 +13,8 @@ using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
 namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "lootroll", Description = "")]
@@ -21,6 +23,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
     {
         public EconLootRollXml()
         {
+            Event = EventEnum.None;
+            Alliance = EAllianceEnum.None;
         }
 
         [JsonConstructor]
@@ -94,29 +98,33 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [DefaultValue(EAllianceEnum.None)]
         [JsonProperty(PropertyName = "alliance", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "alliance")]
-        public EAllianceEnum Alliance { get; set; } = EAllianceEnum.None;
+        public EAllianceEnum Alliance { get; set; }
 
         [DefaultValue(EventEnum.None)]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "event", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "event")]
-        public EventEnum Event { get; set; } = EventEnum.None;
+        public EventEnum Event { get; set; }
     }
 
     [JsonObject(Title = "lootrolls", Description = "")]
     [XmlRoot(ElementName = "lootrolls")]
     public class EconLootRollsXml
     {
-        [JsonProperty(PropertyName = "lootroll", Required = Required.Always)]
+        public EconLootRollsXml()
+        {
+            LootRoll = new Dictionary<string, EconLootRollXml>(StringComparer.OrdinalIgnoreCase);
+        }
+
+        [JsonIgnore]
         [XmlIgnore]
-        public Dictionary<string, EconLootRollXml> LootRoll { get; } =
-            new Dictionary<string, EconLootRollXml>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, EconLootRollXml> LootRoll { get; }
 
         /// <summary>
         ///     Use LootRoll Dictionary Instead! Only only used for xml parsing.
         /// </summary>
         [Required]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "lootroll", Required = Required.Always)]
         [XmlElement(ElementName = "lootroll")]
         public EconLootRollXml[] EconLootRollArrayDoNotUse
         {
@@ -141,12 +149,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static EconLootRollsXml FromFile(string file)
+        public static EconLootRollsXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<EconLootRollsXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

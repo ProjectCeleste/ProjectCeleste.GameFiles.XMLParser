@@ -299,12 +299,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static TechTreeXml FromFile(string file)
+        public static TechTreeXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<TechTreeXml>(file);
         }
 
-        public void SaveToFile(string file)
+        public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
         }

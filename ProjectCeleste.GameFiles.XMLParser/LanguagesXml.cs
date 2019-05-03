@@ -12,6 +12,7 @@ using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
+//TODO ORDER
 namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "string", Description = "")]
@@ -62,15 +63,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
     {
         public LanguageXml()
         {
+            LanguageString = new Dictionary<int, LanguageStringXml>();
         }
 
         [JsonConstructor]
         public LanguageXml([JsonProperty(PropertyName = "name", Required = Required.Always)] string name,
             [JsonProperty(PropertyName = "string", Required = Required.Always)]
-            Dictionary<int, LanguageStringXml> languageString)
+            IDictionary<int, LanguageStringXml> languageString)
         {
             Name = name;
-            LanguageString = languageString;
+            LanguageString = new Dictionary<int, LanguageStringXml>(languageString);
         }
 
         [Key]
@@ -81,7 +83,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
         [XmlIgnore]
         [JsonProperty(PropertyName = "string", Required = Required.Always)]
-        public Dictionary<int, LanguageStringXml> LanguageString { get; } = new Dictionary<int, LanguageStringXml>();
+        public IDictionary<int, LanguageStringXml> LanguageString { get; }
 
         /// <summary>
         ///     Use LanguageString Dictionary Instead! Only only used for xml parsing.
@@ -118,6 +120,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
     {
         public StringTableXml()
         {
+            Language = new Dictionary<string, LanguageXml>(StringComparer.OrdinalIgnoreCase);
         }
 
         [JsonConstructor]
@@ -127,14 +130,14 @@ namespace ProjectCeleste.GameFiles.XMLParser
             , [JsonProperty(PropertyName = "locend", DefaultValueHandling = DefaultValueHandling.Ignore)] int locend
             , [JsonProperty(PropertyName = "loccurrent", DefaultValueHandling = DefaultValueHandling.Ignore)]
             int loccurrent
-            , [JsonProperty(PropertyName = "language", Required = Required.Always)] Dictionary<string, LanguageXml> language)
+            , [JsonProperty(PropertyName = "language", Required = Required.Always)] IDictionary<string, LanguageXml> language)
         {
             Version = version;
             Id = id;
             Locstart = locstart;
             Locend = locend;
             Loccurrent = loccurrent;
-            Language = language;
+            Language = new Dictionary<string, LanguageXml>(language, StringComparer.OrdinalIgnoreCase);
         }
 
         [Key]
@@ -169,8 +172,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
         [JsonProperty(PropertyName = "language", Required = Required.Always)]
         [XmlIgnore]
-        public Dictionary<string, LanguageXml> Language { get; } =
-            new Dictionary<string, LanguageXml>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, LanguageXml> Language { get; }
 
         [Required]
         [JsonIgnore]
@@ -197,7 +199,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static StringTableXml FromFile(string file)
+        public static StringTableXml FromXmlFile(string file)
         {
             var languageXml = XmlUtils.FromXmlFile<StringTableXml>(file);
 
@@ -236,20 +238,20 @@ namespace ProjectCeleste.GameFiles.XMLParser
     {
         public LanguagesXml()
         {
+            Language = new Dictionary<string, StringTableXml>(StringComparer.OrdinalIgnoreCase);
         }
 
         [JsonConstructor]
         public LanguagesXml(
             [JsonProperty(PropertyName = "stringtable", Required = Required.Always)]
-            Dictionary<string, StringTableXml> language)
+            IDictionary<string, StringTableXml> language)
         {
-            Language = language;
+            Language = new Dictionary<string, StringTableXml>(language, StringComparer.OrdinalIgnoreCase);
         }
 
         [JsonProperty(PropertyName = "stringtable", Required = Required.Always)]
         [XmlIgnore]
-        public Dictionary<string, StringTableXml> Language { get; } =
-            new Dictionary<string, StringTableXml>(StringComparer.OrdinalIgnoreCase);
+        public IDictionary<string, StringTableXml> Language { get; }
 
         /// <summary>
         ///     Use Language Dictionary Instead! Only only used for xml parsing.
@@ -279,7 +281,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
             }
         }
 
-        public static LanguagesXml LanguagesFromFiles(string languagesFolder)
+        public static LanguagesXml LanguagesFromXmlFiles(string languagesFolder)
         {
             var listFile = new List<string>
             {
@@ -294,7 +296,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
             foreach (var langFile in listFile)
             {
                 var fileName = Path.Combine(languagesFolder, langFile);
-                var newClass = StringTableXml.FromFile(fileName);
+                var newClass = StringTableXml.FromXmlFile(fileName);
                 foreach (var newLang in newClass.Language.Values)
                     if (!languages.Language.ContainsKey(langFile.Replace(".xml", string.Empty)))
                         languages.Language.Add(langFile.Replace(".xml", string.Empty), newClass);
@@ -309,7 +311,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
             foreach (var langFile in listFile)
             {
                 var fileName = Path.Combine(languagesFolder, $"{prefix}-{langFile}");
-                var newClass = StringTableXml.FromFile(fileName);
+                var newClass = StringTableXml.FromXmlFile(fileName);
                 var languageXml = new LanguageXml();
                 var lng = languages.Language[langFile.Replace(".xml", string.Empty)].Language["English"];
                 languageXml.Name = newClass.Language.Values.First().Name;
