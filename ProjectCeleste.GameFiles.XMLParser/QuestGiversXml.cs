@@ -450,16 +450,16 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
         [JsonConstructor]
         public QuestGiverXmlManager(
-            [JsonProperty(PropertyName = "questgivers", Required = Required.Always, Order = 2)]
+            [JsonProperty(PropertyName = "questgivers", Required = Required.Always, Order = 1)]
             QuestGiversXml questgivers)
         {
             QuestGivers = questgivers ?? throw new ArgumentNullException(nameof(questgivers));
         }
 
-        //[Required]
-        //[JsonProperty(PropertyName = "questgivertemplates", Required = Required.Always, Order = 1)]
-        //[XmlElement(ElementName = "questgivertemplates", Order = 1)]
-        //public string Questgivertemplates { get; set; }
+        [Required]
+        [JsonProperty(PropertyName = "questgivertemplates", Required = Required.Always, Order = 1)]
+        [XmlElement(ElementName = "questgivertemplates", Order = 1)]
+        public string QuestGiverTemplates { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "questgivers", Required = Required.Always, Order = 2)]
