@@ -57,12 +57,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [DefaultValue(0)]
         [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "xp", DefaultValueHandling = DefaultValueHandling.Ignore, Order = 3)]
-        [XmlElement(ElementName = "xp", Order = 3)]
+        [XmlElement(ElementName = "xp")]
         public int Xp { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "capitalresource", DefaultValueHandling = DefaultValueHandling.Ignore, Order = 4)]
-        [XmlElement(ElementName = "capitalresource", Order = 4)]
+        [XmlElement(ElementName = "capitalresource")]
         public RewardTableXmlRewardsCapitalResource CapitalResource { get; set; }
     }
 
@@ -105,7 +105,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         /// </summary>
         [Required]
         [JsonProperty(PropertyName = "rewards", Required = Required.Always, Order = 2)]
-        [XmlElement(ElementName = "rewards", Order = 2)]
+        [XmlElement(ElementName = "rewards")]
         public RewardTableXmlRewards[] RewardTableArrayDoNotUse
         {
             get => Rewards.Values.ToArray();
@@ -210,7 +210,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         /// </summary>
         [Required]
         [JsonProperty(PropertyName = "rewardtable", Required = Required.Always, Order = 1)]
-        [XmlElement(ElementName = "rewardtable", Order = 1)]
+        [XmlElement(ElementName = "rewardtable")]
         public RewardTableXml[] RewardTableArrayDoNotUse
         {
             get => RewardTable.Values.ToArray();

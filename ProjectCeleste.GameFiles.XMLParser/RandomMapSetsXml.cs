@@ -202,7 +202,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         /// </summary>
         [Required]
         [JsonProperty(PropertyName = "randomMaps", Required = Required.Always, Order = 1)]
-        [XmlElement(ElementName = "randomMaps", Order = 1)]
+        [XmlElement(ElementName = "randomMaps")]
         public RandomMapSetXml[] RmArrayDoNotUse
         {
             get => RandomMaps.Values.ToArray();

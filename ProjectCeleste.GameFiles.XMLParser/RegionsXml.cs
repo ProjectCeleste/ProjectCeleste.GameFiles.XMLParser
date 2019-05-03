@@ -223,7 +223,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         /// </summary>
         [Required]
         [JsonProperty(PropertyName = "Region", Required = Required.Always, Order = 1)]
-        [XmlElement(ElementName = "Region", Order = 1)]
+        [XmlElement(ElementName = "Region")]
         public RegionXml[] RegionArrayDoNotUse
         {
             get => Region.Values.ToArray();

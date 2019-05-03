@@ -59,7 +59,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         /// </summary>
         [DefaultValue("false")]
         [JsonIgnore]
-        [XmlElement(ElementName = "ismaininventory", Order = 2)]
+        [XmlElement(ElementName = "ismaininventory")]
         public string IsMainInventoryStrDoNotUse
         {
             get => IsMainInventory ? "true" : "false";
@@ -70,20 +70,20 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "numinventoryslots", DefaultValueHandling = DefaultValueHandling.Ignore,
             Order = 3)]
-        [XmlElement(ElementName = "numinventoryslots", Order = 3)]
+        [XmlElement(ElementName = "numinventoryslots")]
         public int NumInventorySlots { get; set; }
 
         [DefaultValue(0)]
         [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "maxstacksize", DefaultValueHandling = DefaultValueHandling.Ignore, Order = 4)]
-        [XmlElement(ElementName = "maxstacksize", Order = 4)]
+        [XmlElement(ElementName = "maxstacksize")]
         public int MaxStackSize { get; set; }
 
         [DefaultValue(BuildingLimitTypeEnum.None)]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "buildinglimittype", DefaultValueHandling = DefaultValueHandling.Ignore,
             Order = 5)]
-        [XmlElement(ElementName = "buildinglimittype", Order = 5)]
+        [XmlElement(ElementName = "buildinglimittype")]
         public BuildingLimitTypeEnum BuildingLimitType { get; set; }
     }
 

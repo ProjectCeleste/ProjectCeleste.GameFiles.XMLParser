@@ -35,12 +35,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [Key]
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "key", Required = Required.Always, Order = 1)]
-        [XmlElement(ElementName = "key", Order = 1)]
+        [XmlElement(ElementName = "key")]
         public string Key { get; set; }
 
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "value", Required = Required.Always, Order = 2)]
-        [XmlElement(ElementName = "value", Order = 2)]
+        [XmlElement(ElementName = "value")]
         public string Value { get; set; }
     }
 
@@ -75,7 +75,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         /// </summary>
         [Required]
         [JsonProperty(PropertyName = "override", Required = Required.Always, Order = 1)]
-        [XmlElement(ElementName = "override", Order = 1)]
+        [XmlElement(ElementName = "override")]
         public QuestGiverXmlOverride[] OverrideArrayDoNotUse
         {
             get => Override.Values.ToArray();
@@ -125,18 +125,18 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "nearunittype", Required = Required.Always, Order = 1)]
-        [XmlElement(ElementName = "nearunittype", Order = 1)]
+        [XmlElement(ElementName = "nearunittype")]
         public string NearUnitType { get; set; }
 
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "preferredoffset", Required = Required.Always, Order = 2)]
-        [XmlElement(ElementName = "preferredoffset", Order = 2)]
+        [XmlElement(ElementName = "preferredoffset")]
         public string PreferredOffset { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "radius", Required = Required.Always, Order = 3)]
-        [XmlElement(ElementName = "radius", Order = 3)]
+        [XmlElement(ElementName = "radius")]
         public int Radius { get; set; }
 
         [Required]
@@ -146,7 +146,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
         [Required(AllowEmptyStrings = false)]
         [JsonIgnore]
-        [XmlElement(ElementName = "useboneposition", Order = 4)]
+        [XmlElement(ElementName = "useboneposition")]
         public string UseBonePositionStrDoNotUse
         {
             get => IsUseBonePosition ? "true" : "false";
@@ -172,7 +172,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
         [Required]
         [JsonProperty(PropertyName = "nearbuilding", Required = Required.Always, Order = 1)]
-        [XmlElement(ElementName = "nearbuilding", Order = 1)]
+        [XmlElement(ElementName = "nearbuilding")]
         public QuestGiverXmlNearBuilding NearBuilding { get; set; }
     }
 
@@ -201,18 +201,18 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "countunittype", Required = Required.Always, Order = 1)]
-        [XmlElement(ElementName = "countunittype", Order = 1)]
+        [XmlElement(ElementName = "countunittype")]
         public string CountUnitType { get; set; }
 
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "comparetype", Required = Required.Always, Order = 2)]
-        [XmlElement(ElementName = "comparetype", Order = 2)]
+        [XmlElement(ElementName = "comparetype")]
         public string CompareType { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "count", Required = Required.Always, Order = 3)]
-        [XmlElement(ElementName = "count", Order = 3)]
+        [XmlElement(ElementName = "count")]
         public int Count { get; set; }
     }
 
@@ -415,7 +415,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         /// </summary>
         [Required]
         [JsonProperty(PropertyName = "questgiver", Required = Required.Always, Order = 1)]
-        [XmlElement(ElementName = "questgiver", Order = 1)]
+        [XmlElement(ElementName = "questgiver")]
         public QuestGiverXml[] QuestGiverArrayDoNotUse
         {
             get => QuestGiver.Values.ToArray();
@@ -456,14 +456,14 @@ namespace ProjectCeleste.GameFiles.XMLParser
             QuestGivers = questgivers ?? throw new ArgumentNullException(nameof(questgivers));
         }
 
-        [Required]
-        [JsonProperty(PropertyName = "questgivertemplates", Required = Required.Always, Order = 1)]
-        [XmlElement(ElementName = "questgivertemplates", Order = 1)]
-        public string QuestGiverTemplates { get; set; }
+        //[Required]
+        //[JsonProperty(PropertyName = "questgivertemplates", Required = Required.Always, Order = 1)]
+        //[XmlElement(ElementName = "questgivertemplates")]
+        //public string QuestGiverTemplates { get; set; }
 
         [Required]
-        [JsonProperty(PropertyName = "questgivers", Required = Required.Always, Order = 2)]
-        [XmlElement(ElementName = "questgivers", Order = 2)]
+        [JsonProperty(PropertyName = "questgivers", Required = Required.Always, Order = 1)]
+        [XmlElement(ElementName = "questgivers")]
         public QuestGiversXml QuestGivers { get; set; }
 
         public static QuestGiverXmlManager FromXmlFile(string file)
