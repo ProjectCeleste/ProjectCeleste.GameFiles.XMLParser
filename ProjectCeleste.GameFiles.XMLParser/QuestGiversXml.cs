@@ -288,8 +288,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
             [JsonProperty(PropertyName = "despawntrigger", Required = Required.AllowNull)]
             QuestGiverXmlSpawnTrigger despawntrigger,
             [JsonProperty(PropertyName = "greetingstringid", Required = Required.Always)] int greetingstringid,
-            [JsonProperty(PropertyName = "greetingsoundset", Required = Required.Always)] string greetingsoundset,
-            [JsonProperty(PropertyName = "farewellsoundset", Required = Required.Always)] string farewellsoundset,
+            [JsonProperty(PropertyName = "greetingsoundset", Required = Required.AllowNull)] string greetingsoundset,
+            [JsonProperty(PropertyName = "farewellsoundset", Required = Required.AllowNull)] string farewellsoundset,
             [JsonProperty(PropertyName = "artset", Required = Required.Always)] string artset,
             [JsonProperty(PropertyName = "region", Required = Required.Always)] int region,
             [JsonProperty(PropertyName = "altregion", Required = Required.Always)] int altregion,
@@ -368,13 +368,13 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "greetingstringid")]
         public int GreetingStringId { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "greetingsoundset", Required = Required.Always)]
+        [Required]
+        [JsonProperty(PropertyName = "greetingsoundset", Required = Required.AllowNull)]
         [XmlElement(ElementName = "greetingsoundset")]
         public string GreetingSoundSet { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "farewellsoundset", Required = Required.Always)]
+        [Required]
+        [JsonProperty(PropertyName = "farewellsoundset", Required = Required.AllowNull)]
         [XmlElement(ElementName = "farewellsoundset")]
         public string FarewellSoundSet { get; set; }
 
