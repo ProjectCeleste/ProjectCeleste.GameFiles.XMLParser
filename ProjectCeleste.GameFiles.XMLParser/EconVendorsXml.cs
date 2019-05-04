@@ -148,14 +148,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
         {
             Item = new Dictionary<string, VendorXmlItem>(StringComparer.OrdinalIgnoreCase);
         }
-
-        [Required]
+        
         [JsonIgnore]
         [XmlIgnore]
         public IDictionary<string, VendorXmlItem> Item { get; }
 
         [Required]
-        [JsonIgnore]
         [JsonProperty(PropertyName = "item", Required = Required.Always)]
         [XmlElement(ElementName = "item")]
         public VendorXmlItem[] ItemArray
