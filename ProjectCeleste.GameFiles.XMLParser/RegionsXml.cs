@@ -36,7 +36,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
             [JsonProperty(PropertyName = "MapName", Required = Required.AllowNull)] string mapName,
             [JsonProperty(PropertyName = "MapLocationX", Required = Required.Always)] double mapLocationX,
             [JsonProperty(PropertyName = "MapLocationY", Required = Required.Always)] double mapLocationY,
-            [JsonProperty(PropertyName = "MapMarker", Required = Required.Always)] string mapMarker,
+            [JsonProperty(PropertyName = "MapMarker", Required = Required.AllowNull)] string mapMarker,
             [JsonProperty(PropertyName = "MapPage", Required = Required.Always)] string mapPage,
             [JsonProperty(PropertyName = "LoadScreen", Required = Required.Always)] string loadScreen,
             [JsonProperty(PropertyName = "DescriptionStringID", Required = Required.Always)] int descriptionStringId,
@@ -56,9 +56,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
             MapName = mapName;
             MapLocationX = mapLocationX;
             MapLocationY = mapLocationY;
-            MapMarker = !string.IsNullOrWhiteSpace(mapMarker)
-                ? mapMarker
-                : throw new ArgumentNullException(nameof(mapMarker));
+            MapMarker = mapMarker;
             MapPage = !string.IsNullOrWhiteSpace(mapPage) ? mapPage : throw new ArgumentNullException(nameof(mapPage));
             LoadScreen = !string.IsNullOrWhiteSpace(loadScreen)
                 ? loadScreen
@@ -137,8 +135,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "MapLocationY")]
         public double MapLocationY { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "MapMarker", Required = Required.Always)]
+        [Required]
+        [JsonProperty(PropertyName = "MapMarker", Required = Required.AllowNull)]
         [XmlElement(ElementName = "MapMarker")]
         public string MapMarker { get; set; }
 
