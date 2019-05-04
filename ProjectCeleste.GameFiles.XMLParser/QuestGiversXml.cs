@@ -164,14 +164,14 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
         [JsonConstructor]
         public QuestGiverXmlLocation(
-            [JsonProperty(PropertyName = "nearbuilding", Required = Required.Always, Order = 1)]
+            [JsonProperty(PropertyName = "nearbuilding", Required = Required.AllowNull, Order = 1)]
             QuestGiverXmlNearBuilding nearbuilding)
         {
-            NearBuilding = nearbuilding ?? throw new ArgumentNullException(nameof(nearbuilding));
+            NearBuilding = nearbuilding;
         }
 
         [Required]
-        [JsonProperty(PropertyName = "nearbuilding", Required = Required.Always, Order = 1)]
+        [JsonProperty(PropertyName = "nearbuilding", Required = Required.AllowNull, Order = 1)]
         [XmlElement(ElementName = "nearbuilding")]
         public QuestGiverXmlNearBuilding NearBuilding { get; set; }
     }
