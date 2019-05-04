@@ -38,7 +38,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
             [JsonProperty(PropertyName = "MapLocationY", Required = Required.Always)] double mapLocationY,
             [JsonProperty(PropertyName = "MapMarker", Required = Required.AllowNull)] string mapMarker,
             [JsonProperty(PropertyName = "MapPage", Required = Required.Always)] string mapPage,
-            [JsonProperty(PropertyName = "LoadScreen", Required = Required.Always)] string loadScreen,
+            [JsonProperty(PropertyName = "LoadScreen", Required = Required.AllowNull)] string loadScreen,
             [JsonProperty(PropertyName = "DescriptionStringID", Required = Required.Always)] int descriptionStringId,
             [JsonProperty(PropertyName = "DisplayNameStringID", Required = Required.Always)] int displayNameStringId,
             [JsonProperty(PropertyName = "AvatarShield", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -146,7 +146,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public string MapPage { get; set; }
 
         [Required]
-        [JsonProperty(PropertyName = "LoadScreen", Required = Required.Always)]
+        [JsonProperty(PropertyName = "LoadScreen", Required = Required.AllowNull)]
         [XmlElement(ElementName = "LoadScreen")]
         public string LoadScreen { get; set; }
 
@@ -157,7 +157,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public int DescriptionStringId { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue)]
+        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "DisplayNameStringID", Required = Required.Always)]
         [XmlElement(ElementName = "DisplayNameStringID")]
         public int DisplayNameStringId { get; set; }
