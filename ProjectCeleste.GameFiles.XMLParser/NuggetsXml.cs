@@ -37,6 +37,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
             Guardianunit = new Dictionary<string, NuggetXmlAnimNuggetGuardianUnit>(StringComparer.OrdinalIgnoreCase);
         }
 
+        [Required]
         [XmlElement(ElementName = "nuggetunit")]
         public string Nuggetunit { get; set; }
 
