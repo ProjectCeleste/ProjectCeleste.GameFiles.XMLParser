@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
@@ -15,6 +16,7 @@ using ProjectCeleste.GameFiles.XMLParser.Helpers;
 //TODO C# Attribute
 namespace ProjectCeleste.GameFiles.XMLParser
 {
+    [JsonObject(Title = "minimapeventtime", Description = "")]
     [XmlRoot(ElementName = "minimapeventtime")]
     public class PowerXmlMinimapeventtime
     {
@@ -25,6 +27,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public int Text { get; set; }
     }
 
+    [JsonObject(Title = "tempunitmodify", Description = "")]
     [XmlRoot(ElementName = "tempunitmodify")]
     public class PowerXmlTempunitmodify
     {
@@ -32,6 +35,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public string Attachmodel { get; set; }
     }
 
+    [JsonObject(Title = "createunit", Description = "")]
     [XmlRoot(ElementName = "createunit")]
     public class PowerXmlCreateunit
     {
@@ -69,6 +73,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public string Forceselectiononfirstunit { get; set; }
     }
 
+    [JsonObject(Title = "placement", Description = "")]
     [XmlRoot(ElementName = "placement")]
     public class PowerXmlPlacement
     {
@@ -79,6 +84,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public string Text { get; set; }
     }
 
+    [JsonObject(Title = "rangeindicatorprotoid", Description = "")]
     [XmlRoot(ElementName = "rangeindicatorprotoid")]
     public class PowerXmlRangeindicatorprotoid
     {
@@ -95,6 +101,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public string Text { get; set; }
     }
 
+    [JsonObject(Title = "unitmodify", Description = "")]
     [XmlRoot(ElementName = "unitmodify")]
     public class PowerXmlUnitmodify
     {
@@ -111,6 +118,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public string Text { get; set; }
     }
 
+    [JsonObject(Title = "cost", Description = "")]
     [XmlRoot(ElementName = "cost")]
     public class PowerXmlCost
     {
@@ -127,6 +135,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public int Wood { get; set; }
     }
 
+    [JsonObject(Title = "power", Description = "")]
     [XmlRoot(ElementName = "power")]
     public class PowerXml
     {
@@ -235,6 +244,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public int Resource { get; set; }
     }
 
+    [JsonObject(Title = "powers", Description = "")]
     [XmlRoot(ElementName = "powers")]
     public class PowersXml
     {
