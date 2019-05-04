@@ -33,7 +33,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
             bool isAlliance,
             [JsonProperty(PropertyName = "CivID", DefaultValueHandling = DefaultValueHandling.Ignore)]
             CivilizationEnum civId,
-            [JsonProperty(PropertyName = "MapName", Required = Required.Always)] string mapName,
+            [JsonProperty(PropertyName = "MapName", Required = Required.AllowNull)] string mapName,
             [JsonProperty(PropertyName = "MapLocationX", Required = Required.Always)] double mapLocationX,
             [JsonProperty(PropertyName = "MapLocationY", Required = Required.Always)] double mapLocationY,
             [JsonProperty(PropertyName = "MapMarker", Required = Required.Always)] string mapMarker,
@@ -53,7 +53,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
             Name = !string.IsNullOrWhiteSpace(name) ? name : throw new ArgumentNullException(nameof(name));
             IsAlliance = isAlliance;
             CivId = civId;
-            MapName = !string.IsNullOrWhiteSpace(mapName) ? mapName : throw new ArgumentNullException(nameof(mapName));
+            MapName = mapName;
             MapLocationX = mapLocationX;
             MapLocationY = mapLocationY;
             MapMarker = !string.IsNullOrWhiteSpace(mapMarker)
@@ -121,7 +121,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public CivilizationEnum CivId { get; set; } = CivilizationEnum.Any;
 
         [Required]
-        [JsonProperty(PropertyName = "MapName", Required = Required.Always)]
+        [JsonProperty(PropertyName = "MapName", Required = Required.AllowNull)]
         [XmlElement(ElementName = "MapName")]
         public string MapName { get; set; }
 
