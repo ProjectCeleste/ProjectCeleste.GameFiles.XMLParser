@@ -358,7 +358,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public string SellableStrDoNotUse
         {
             get => IsSellable ? "1" : "0";
-            set => IsSellable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
+            set => IsSellable = string.Equals(value, "1", StringComparison.OrdinalIgnoreCase);
         }
 
         [Required]
@@ -375,7 +375,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public string TradeableStrDoNotUse
         {
             get => IsTradeable ? "1" : "0";
-            set => IsTradeable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
+            set => IsTradeable = string.Equals(value, "1", StringComparison.OrdinalIgnoreCase);
         }
 
         [Required]
@@ -392,7 +392,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
         public string DestroyableStrDoNotUse
         {
             get => IsDestroyable ? "1" : "0";
-            set => IsDestroyable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
+            set => IsDestroyable = string.Equals(value, "1", StringComparison.OrdinalIgnoreCase);
         }
 
         [Required]
