@@ -7,15 +7,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
 //TODO ORDER
 //TODO JsonConstructor
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "equipment", Description = "")]
     [XmlRoot(ElementName = "equipment")]
@@ -210,7 +210,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
             IEnumerable<EquipmentDataXmlEquipment> equipments) : base(equipments, key => key.Id)
         {
         }
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]

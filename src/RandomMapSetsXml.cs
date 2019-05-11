@@ -8,13 +8,13 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Container.Interface;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "map", Description = "")]
     [XmlRoot(ElementName = "map")]
@@ -50,9 +50,10 @@ namespace ProjectCeleste.GamesFiles.XMLParser
     {
         public RandomMapSetXml()
         {
-            Map = new DictionaryContainer<string, RandomMapSetXmlMap>(key => key.Path, StringComparer.OrdinalIgnoreCase);
+            Map = new DictionaryContainer<string, RandomMapSetXmlMap>(key => key.Path,
+                StringComparer.OrdinalIgnoreCase);
         }
-        
+
         [JsonConstructor]
         public RandomMapSetXml([JsonProperty(PropertyName = "id", Required = Required.Always, Order = 1)] string id,
             [JsonProperty(PropertyName = "displayNameID", Required = Required.Always, Order = 1)] int displayNameId,
@@ -68,8 +69,9 @@ namespace ProjectCeleste.GamesFiles.XMLParser
                 ? imagepath
                 : throw new ArgumentNullException(nameof(imagepath));
             HelpTextId = helpTextId;
-            IsCannotReplace = isCannotReplace;
-            Map = new DictionaryContainer<string, RandomMapSetXmlMap>(map, key => key.Path, StringComparer.OrdinalIgnoreCase);
+            CannotReplace = isCannotReplace;
+            Map = new DictionaryContainer<string, RandomMapSetXmlMap>(map, key => key.Path,
+                StringComparer.OrdinalIgnoreCase);
         }
 
         [Key]
@@ -98,8 +100,8 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "cannotReplace", Required = Required.Always, Order = 5)]
         [XmlAttribute(AttributeName = "cannotReplace")]
-        public bool IsCannotReplace { get; set; }
-        
+        public bool CannotReplace { get; set; }
+
         [JsonIgnore]
         [XmlIgnore]
         public IDictionaryContainer<string, RandomMapSetXmlMap> Map { get; }
@@ -162,7 +164,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
             IEnumerable<RandomMapSetXml> randomMaps) : base(randomMaps, key => key.Id, StringComparer.OrdinalIgnoreCase)
         {
         }
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]

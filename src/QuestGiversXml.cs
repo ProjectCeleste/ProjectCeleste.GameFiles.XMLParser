@@ -7,14 +7,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
 //TODO ORDER
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "override", Description = "")]
     [XmlRoot(ElementName = "override")]
@@ -56,10 +56,11 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [JsonConstructor]
         public QuestGiverXmlOverrides(
             [JsonProperty(PropertyName = "override", Required = Required.Always, Order = 1)]
-            IEnumerable<QuestGiverXmlOverride> @override) : base(@override, key => key.Key, StringComparer.OrdinalIgnoreCase)
+            IEnumerable<QuestGiverXmlOverride> @override) : base(@override, key => key.Key,
+            StringComparer.OrdinalIgnoreCase)
         {
         }
-            
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
@@ -383,7 +384,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
             IEnumerable<QuestGiverXml> questgiver) : base(questgiver, key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
         }
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]

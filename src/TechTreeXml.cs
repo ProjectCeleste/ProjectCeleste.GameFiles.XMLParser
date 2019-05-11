@@ -8,14 +8,14 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Container.Interface;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [XmlRoot(ElementName = "Cost")]
     public class TechTreeXmCost
@@ -263,19 +263,18 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
         [JsonConstructor]
         public TechTreeXml([JsonProperty(PropertyName = "version", Required = Required.Always, Order = 1)] int version,
-            [JsonProperty(PropertyName = "Tech", Required = Required.Always)]
-            IEnumerable<TechTreeXmlTech> tech) : base(tech, key => key.Name, StringComparer.OrdinalIgnoreCase)
+            [JsonProperty(PropertyName = "Tech", Required = Required.Always)] IEnumerable<TechTreeXmlTech> tech) : base(
+            tech, key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
             Version = version;
         }
-
 
         [Required]
         [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "version", Required = Required.Always)]
         [XmlAttribute(AttributeName = "version")]
         public int Version { get; set; }
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]

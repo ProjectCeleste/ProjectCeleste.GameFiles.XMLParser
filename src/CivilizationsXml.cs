@@ -8,9 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
@@ -18,7 +18,7 @@ using ProjectCeleste.GamesFiles.XMLParser.Helpers;
 //TODO JsonConstructor
 //TODO JsonProperty
 //TODO C# Attribute
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [XmlRoot(ElementName = "agetech")]
     public class CivilizationXmlAgetech

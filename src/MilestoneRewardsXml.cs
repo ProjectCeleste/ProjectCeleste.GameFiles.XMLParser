@@ -7,15 +7,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
 //TODO ORDER
 //TODO JsonConstructor
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "reward", Description = "")]
     [XmlRoot(ElementName = "reward")]
@@ -54,10 +54,11 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [JsonConstructor]
         public MilestoneRewardDataXmlRewards(
             [JsonProperty(PropertyName = "reward", Required = Required.Always)]
-            IEnumerable<MilestoneRewardDataXmlReward> rewards) : base(rewards, key => key.Id, StringComparer.OrdinalIgnoreCase)
+            IEnumerable<MilestoneRewardDataXmlReward> rewards) : base(rewards, key => key.Id,
+            StringComparer.OrdinalIgnoreCase)
         {
         }
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]

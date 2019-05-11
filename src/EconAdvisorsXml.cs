@@ -8,15 +8,15 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
 //TODO ORDER
 //TODO JsonConstructor
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "techs", Description = "")]
     [XmlRoot(ElementName = "techs")]
@@ -132,67 +132,23 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
         [Required]
         [JsonProperty(PropertyName = "sellable", Required = Required.Always)]
-        [XmlIgnore]
-        public bool IsSellable { get; set; } = true;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(null)]
-        [JsonIgnore]
         [XmlElement(ElementName = "sellable")]
-        public string SellableStrDoNotUse
-        {
-            get => IsSellable ? "true" : "false";
-            set => IsSellable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        }
+        public bool Sellable { get; set; } = true;
 
         [Required]
         [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
-        [XmlIgnore]
-        public bool IsTradeable { get; set; } = true;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(null)]
-        [JsonIgnore]
         [XmlElement(ElementName = "tradeable")]
-        public string TradeableStrDoNotUse
-        {
-            get => IsTradeable ? "true" : "false";
-            set => IsTradeable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        }
+        public bool Tradeable { get; set; } = true;
 
         [Required]
         [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
-        [XmlIgnore]
-        public bool IsDestroyable { get; set; } = true;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(null)]
-        [JsonIgnore]
         [XmlElement(ElementName = "destroyable")]
-        public string DestroyableStrDoNotUse
-        {
-            get => IsDestroyable ? "true" : "false";
-            set => IsDestroyable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        }
+        public bool Destroyable { get; set; } = true;
 
         [DefaultValue(false)]
         [JsonProperty(PropertyName = "specialborder", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlIgnore]
-        public bool IsSpecialBorder { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue("false")]
-        [JsonIgnore]
         [XmlElement(ElementName = "specialborder")]
-        public string SpecialBorderStrDoNotUse
-        {
-            get => IsSpecialBorder ? "true" : "false";
-            set => IsSpecialBorder = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        }
+        public bool IsSpecialBorder { get; set; }
 
         [DefaultValue(ECivilizationEnum.Any)]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -223,8 +179,8 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
         [JsonConstructor]
         public EconAdvisorsXml(
-            [JsonProperty(PropertyName = "advisor", Required = Required.Always)]
-            IEnumerable<EconAdvisorXml> advisor) : base(advisor, key => key.Name, StringComparer.OrdinalIgnoreCase)
+            [JsonProperty(PropertyName = "advisor", Required = Required.Always)] IEnumerable<EconAdvisorXml> advisor) :
+            base(advisor, key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
         }
 

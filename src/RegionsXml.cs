@@ -9,14 +9,14 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
 //TODO ORDER
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "Region", Description = "")]
     [XmlRoot(ElementName = "Region")]
@@ -90,12 +90,12 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [XmlAttribute(AttributeName = "hidden")]
         [XmlIgnore]
         public bool Hidden { get; set; }
-        
+
         [DefaultValue(false)]
         [JsonProperty(PropertyName = "Alliance", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Alliance")]
         public bool Alliance { get; set; }
-        
+
         [DefaultValue(CivilizationEnum.Any)]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "CivID", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -188,7 +188,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
             IEnumerable<RegionXml> region) : base(region, key => key.Id)
         {
         }
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]

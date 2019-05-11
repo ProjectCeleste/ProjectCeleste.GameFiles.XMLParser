@@ -8,14 +8,14 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
 //TODO ORDER
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "lootroll", Description = "")]
     [XmlRoot(ElementName = "lootroll")]
@@ -121,7 +121,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
             IEnumerable<EconLootRollXml> lootrolls) : base(lootrolls, key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
         }
-   
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]

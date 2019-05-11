@@ -8,14 +8,14 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Container.Interface;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "rewards", Description = "")]
     [XmlRoot(ElementName = "rewards")]
@@ -76,16 +76,18 @@ namespace ProjectCeleste.GamesFiles.XMLParser
     {
         public RewardTableXml()
         {
-            Rewards = new DictionaryContainer<string, RewardTableXmlRewards>(key=>key.Key, StringComparer.OrdinalIgnoreCase);
+            Rewards = new DictionaryContainer<string, RewardTableXmlRewards>(key => key.Key,
+                StringComparer.OrdinalIgnoreCase);
         }
-        
+
         [JsonConstructor]
         public RewardTableXml([JsonProperty(PropertyName = "name", Required = Required.Always, Order = 1)] string name,
             [JsonProperty(PropertyName = "rewards", Required = Required.Always, Order = 2)]
             IEnumerable<RewardTableXmlRewards> rewards)
         {
             Name = name;
-            Rewards = new DictionaryContainer<string, RewardTableXmlRewards>(rewards, key => key.Key, StringComparer.OrdinalIgnoreCase);
+            Rewards = new DictionaryContainer<string, RewardTableXmlRewards>(rewards, key => key.Key,
+                StringComparer.OrdinalIgnoreCase);
         }
 
         [Key]
@@ -177,10 +179,11 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [JsonConstructor]
         public RewardTablesXml(
             [JsonProperty(PropertyName = "rewardtable", Required = Required.Always)]
-            IEnumerable<RewardTableXml> rewardtable) : base(rewardtable, key => key.Name, StringComparer.OrdinalIgnoreCase)
+            IEnumerable<RewardTableXml> rewardtable) : base(rewardtable, key => key.Name,
+            StringComparer.OrdinalIgnoreCase)
         {
         }
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]

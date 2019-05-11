@@ -7,10 +7,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Container.Interface;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
@@ -18,7 +18,7 @@ using ProjectCeleste.GamesFiles.XMLParser.Helpers;
 //TODO JsonConstructor
 //TODO JsonProperty
 //TODO C# Attribute
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [XmlRoot(ElementName = "guardianunit")]
     public class NuggetXmlAnimNuggetGuardianUnit
@@ -36,7 +36,9 @@ namespace ProjectCeleste.GamesFiles.XMLParser
     {
         public NuggetXmlAnimNugget()
         {
-            GuardianUnit = new DictionaryContainer<string, NuggetXmlAnimNuggetGuardianUnit>(key => key.Attachdummy, StringComparer.OrdinalIgnoreCase);
+            GuardianUnit =
+                new DictionaryContainer<string, NuggetXmlAnimNuggetGuardianUnit>(key => key.Attachdummy,
+                    StringComparer.OrdinalIgnoreCase);
         }
 
         [Required]
@@ -45,7 +47,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
         [XmlElement(ElementName = "guardianrevivaltime")]
         public double Guardianrevivaltime { get; set; }
-        
+
         [JsonIgnore]
         [XmlIgnore]
         public IDictionaryContainer<string, NuggetXmlAnimNuggetGuardianUnit> GuardianUnit { get; }
@@ -122,7 +124,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         public string Key => $"{Minlevel}-{Maxlevel}";
 
         [XmlElement(ElementName = "nuggetref")]
-        public HashSet<int> Nuggetref { get; set; } 
+        public HashSet<int> Nuggetref { get; set; }
 
         [XmlAttribute(AttributeName = "minlevel")]
         public int Minlevel { get; set; }
@@ -136,18 +138,20 @@ namespace ProjectCeleste.GamesFiles.XMLParser
     {
         public NuggetLogicXmlRandomMapRegion()
         {
-            QuestLevel = new DictionaryContainer<string, NuggetLogicXmlQuestlevel>(key=> key.Key, StringComparer.OrdinalIgnoreCase);
+            QuestLevel =
+                new DictionaryContainer<string, NuggetLogicXmlQuestlevel>(key => key.Key,
+                    StringComparer.OrdinalIgnoreCase);
         }
 
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
-    
+
         [JsonIgnore]
         [XmlIgnore]
         public IDictionaryContainer<string, NuggetLogicXmlQuestlevel> QuestLevel { get; }
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
@@ -203,7 +207,8 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         public NuggetLogicXmlEventNuggetOverride()
         {
             NuggetOverride =
-                new DictionaryContainer<string, NuggetLogicXmlEventNuggetOverrideOverride>(key => key.Id, StringComparer.OrdinalIgnoreCase);
+                new DictionaryContainer<string, NuggetLogicXmlEventNuggetOverrideOverride>(key => key.Id,
+                    StringComparer.OrdinalIgnoreCase);
         }
 
         [Browsable(false)]
@@ -264,7 +269,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
             IEnumerable<NuggetXml> nugget) : base(nugget, key => key.Dbid)
         {
         }
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
@@ -299,15 +304,28 @@ namespace ProjectCeleste.GamesFiles.XMLParser
     {
         public NuggetLogicXml()
         {
-            RandomMapRegion = new DictionaryContainer<string, NuggetLogicXmlRandomMapRegion>(key=> key.Name, StringComparer.OrdinalIgnoreCase);
-            EventNuggetOverride = new DictionaryContainer<string, NuggetLogicXmlEventNuggetOverride>(key => key.Key, StringComparer.OrdinalIgnoreCase);
+            RandomMapRegion =
+                new DictionaryContainer<string, NuggetLogicXmlRandomMapRegion>(key => key.Name,
+                    StringComparer.OrdinalIgnoreCase);
+            EventNuggetOverride =
+                new DictionaryContainer<string, NuggetLogicXmlEventNuggetOverride>(key => key.Key,
+                    StringComparer.OrdinalIgnoreCase);
         }
 
         [JsonConstructor]
-        public NuggetLogicXml([JsonProperty(PropertyName = "randommapregion", Required = Required.Always)] IEnumerable<NuggetLogicXmlRandomMapRegion> list, [JsonProperty(PropertyName = "eventnuggetoverride", Required = Required.Always)] IEnumerable<NuggetLogicXmlEventNuggetOverride> eventNuggetOverrideList)
+        public NuggetLogicXml(
+            [JsonProperty(PropertyName = "randommapregion", Required = Required.Always)]
+            IEnumerable<NuggetLogicXmlRandomMapRegion> list,
+            [JsonProperty(PropertyName = "eventnuggetoverride", Required = Required.Always)]
+            IEnumerable<NuggetLogicXmlEventNuggetOverride> eventNuggetOverrideList)
         {
-            RandomMapRegion = new DictionaryContainer<string, NuggetLogicXmlRandomMapRegion>(list, key => key.Name, StringComparer.OrdinalIgnoreCase); ;
-            EventNuggetOverride =  new DictionaryContainer<string, NuggetLogicXmlEventNuggetOverride>(eventNuggetOverrideList, key => key.Key, StringComparer.OrdinalIgnoreCase);
+            RandomMapRegion =
+                new DictionaryContainer<string, NuggetLogicXmlRandomMapRegion>(list, key => key.Name,
+                    StringComparer.OrdinalIgnoreCase);
+            ;
+            EventNuggetOverride =
+                new DictionaryContainer<string, NuggetLogicXmlEventNuggetOverride>(eventNuggetOverrideList,
+                    key => key.Key, StringComparer.OrdinalIgnoreCase);
         }
 
         [JsonIgnore]
@@ -341,7 +359,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
                     throw new AggregateException(excs);
             }
         }
-        
+
         [JsonIgnore]
         [XmlIgnore]
         public IDictionaryContainer<string, NuggetLogicXmlEventNuggetOverride> EventNuggetOverride { get; }

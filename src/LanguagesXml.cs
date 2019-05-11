@@ -8,12 +8,13 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
 //TODO ORDER
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "string", Description = "")]
     [XmlRoot(ElementName = "string")]
@@ -235,42 +236,37 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
     [JsonObject(Title = "languages", Description = "")]
     [XmlRoot(ElementName = "languages")]
-    public class LanguagesXml
+    public class LanguagesXml : DictionaryContainer<string, StringTableXml>
     {
-        public LanguagesXml()
+        public LanguagesXml() : base(key => key.Id, StringComparer.OrdinalIgnoreCase)
         {
-            Language = new Dictionary<string, StringTableXml>(StringComparer.OrdinalIgnoreCase);
         }
 
         [JsonConstructor]
         public LanguagesXml(
             [JsonProperty(PropertyName = "stringtable", Required = Required.Always)]
-            IDictionary<string, StringTableXml> language)
+            IEnumerable<StringTableXml> stringtable) : base(stringtable, key => key.Id,
+            StringComparer.OrdinalIgnoreCase)
         {
-            Language = new Dictionary<string, StringTableXml>(language, StringComparer.OrdinalIgnoreCase);
         }
-
-        [JsonProperty(PropertyName = "stringtable", Required = Required.Always)]
-        [XmlIgnore]
-        public IDictionary<string, StringTableXml> Language { get; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "stringtable", Required = Required.Always)]
         [XmlElement(ElementName = "stringtable")]
-        public StringTableXml[] LanguageArrayDoNotUse
+        public StringTableXml[] LanguageArray
         {
-            get => Language.Values.ToArray();
+            get => Gets().ToArray();
             set
             {
-                Language.Clear();
+                Clear();
                 if (value == null) return;
                 var excs = new List<Exception>();
                 foreach (var item in value)
                     try
                     {
-                        Language.Add(item.Id, item);
+                        Add(item);
                     }
                     catch (Exception e)
                     {
@@ -298,11 +294,11 @@ namespace ProjectCeleste.GamesFiles.XMLParser
                 var fileName = Path.Combine(languagesFolder, langFile);
                 var newClass = StringTableXml.FromXmlFile(fileName);
                 foreach (var newLang in newClass.Language.Values)
-                    if (!languages.Language.ContainsKey(langFile.Replace(".xml", string.Empty)))
-                        languages.Language.Add(langFile.Replace(".xml", string.Empty), newClass);
+                    if (!languages.ContainsKey(newClass.Id))
+                        languages.Add(newClass);
                     else
                         foreach (var languageString in newLang.LanguageString.Values.ToArray())
-                            languages.Language[langFile.Replace(".xml", string.Empty)].Language[newLang.Name]
+                            languages[newClass.Id].Language[newLang.Name]
                                 .LanguageString
                                 .Add(languageString.LocId, languageString);
             }
@@ -313,14 +309,14 @@ namespace ProjectCeleste.GamesFiles.XMLParser
                 var fileName = Path.Combine(languagesFolder, $"{prefix}-{langFile}");
                 var newClass = StringTableXml.FromXmlFile(fileName);
                 var languageXml = new LanguageXml();
-                var lng = languages.Language[langFile.Replace(".xml", string.Empty)].Language["English"];
+                var lng = languages[newClass.Id].Language["English"];
                 languageXml.Name = newClass.Language.Values.First().Name;
                 foreach (var newLang in lng.LanguageString.Values.ToArray())
                     languageXml.LanguageString.Add(newLang.LocId,
                         newClass.Language[languageXml.Name].LanguageString.ContainsKey(newLang.LocId)
                             ? newClass.Language[languageXml.Name].LanguageString[newLang.LocId]
                             : throw new KeyNotFoundException(newLang.LocId.ToString()));
-                languages.Language[langFile.Replace(".xml", string.Empty)].Language.Add(languageXml.Name, languageXml);
+                languages[newClass.Id].Language.Add(languageXml.Name, languageXml);
             }
 
             return languages;

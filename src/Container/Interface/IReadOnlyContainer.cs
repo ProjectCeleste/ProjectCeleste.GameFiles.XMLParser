@@ -1,7 +1,11 @@
+#region Using directives
+
 using System;
 using System.Collections.Generic;
 
-namespace ProjectCeleste.GamesFiles.XMLParser.Container.Interface
+#endregion
+
+namespace ProjectCeleste.GameFiles.XMLParser.Container.Interface
 {
     public interface IReadOnlyContainer<T1, T2>
     {

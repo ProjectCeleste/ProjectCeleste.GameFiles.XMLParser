@@ -8,16 +8,16 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Container.Interface;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
 //TODO ORDER
 //TODO JsonConstructor
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "output", Description = "")]
     [XmlRoot(ElementName = "output")]
@@ -287,17 +287,19 @@ namespace ProjectCeleste.GamesFiles.XMLParser
     [XmlRoot(ElementName = "input")]
     public class EconDesignXmlInput
     {
-        public EconDesignXmlInput() 
+        public EconDesignXmlInput()
         {
-            Material = new DictionaryContainer<string, EconDesignXmlMaterial>(key => key.Id, StringComparer.OrdinalIgnoreCase);
+            Material = new DictionaryContainer<string, EconDesignXmlMaterial>(key => key.Id,
+                StringComparer.OrdinalIgnoreCase);
         }
 
         [JsonConstructor]
         public EconDesignXmlInput(
             [JsonProperty(PropertyName = "material", Required = Required.Always)]
-            IEnumerable<EconDesignXmlMaterial> materials) 
+            IEnumerable<EconDesignXmlMaterial> materials)
         {
-            Material = new DictionaryContainer<string, EconDesignXmlMaterial>(materials, key => key.Id, StringComparer.OrdinalIgnoreCase);
+            Material = new DictionaryContainer<string, EconDesignXmlMaterial>(materials, key => key.Id,
+                StringComparer.OrdinalIgnoreCase);
         }
 
         [JsonIgnore]
@@ -376,51 +378,18 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
         [Required]
         [JsonProperty(PropertyName = "sellable", Required = Required.Always)]
-        [XmlIgnore]
-        public bool IsSellable { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required(AllowEmptyStrings = false)]
-        [JsonIgnore]
         [XmlElement(ElementName = "sellable")]
-        public string SellableStrDoNotUse
-        {
-            get => IsSellable ? "true" : "false";
-            set => IsSellable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        }
+        public bool Sellable { get; set; } = true;
 
         [Required]
         [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
-        [XmlIgnore]
-        public bool IsTradeable { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required(AllowEmptyStrings = false)]
-        [JsonIgnore]
         [XmlElement(ElementName = "tradeable")]
-        public string TradeableStrDoNotUse
-        {
-            get => IsTradeable ? "true" : "false";
-            set => IsTradeable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        }
+        public bool Tradeable { get; set; } = true;
 
         [Required]
         [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
-        [XmlIgnore]
-        public bool IsDestroyable { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required(AllowEmptyStrings = false)]
-        [JsonIgnore]
         [XmlElement(ElementName = "destroyable")]
-        public string DestroyableStrDoNotUse
-        {
-            get => IsDestroyable ? "true" : "false";
-            set => IsDestroyable = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        }
+        public bool Destroyable { get; set; } = true;
 
         [Required]
         [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
@@ -457,84 +426,28 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
         [Required]
         [JsonProperty(PropertyName = "autolearn", Required = Required.Always)]
-        [XmlIgnore]
-        public bool IsAutoLearn { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required(AllowEmptyStrings = false)]
-        [JsonIgnore]
         [XmlElement(ElementName = "autolearn")]
-        public string AutoLearnStrDoNotUse
-        {
-            get => IsAutoLearn ? "true" : "false";
-            set => IsAutoLearn = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        }
+        public bool AutoLearn { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "autorepeat", Required = Required.Always)]
-        [XmlIgnore]
-        public bool IsAutoRepeat { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required(AllowEmptyStrings = false)]
-        [JsonIgnore]
         [XmlElement(ElementName = "autorepeat")]
-        public string AutoRepeatStrDoNotUse
-        {
-            get => IsAutoRepeat ? "true" : "false";
-            set => IsAutoRepeat = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        }
+        public bool AutoRepeat { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "tohopper", Required = Required.Always)]
-        [XmlIgnore]
-        public bool IsToHopper { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required(AllowEmptyStrings = false)]
-        [JsonIgnore]
         [XmlElement(ElementName = "tohopper")]
-        public string ToHopperStrDoNotUse
-        {
-            get => IsToHopper ? "true" : "false";
-            set => IsToHopper = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        }
+        public bool ToHopper { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "ignoreschool", Required = Required.Always)]
-        [XmlIgnore]
-        [JsonIgnore]
-        public bool IsIgnoreSchool { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required(AllowEmptyStrings = false)]
-        [JsonIgnore]
         [XmlElement(ElementName = "ignoreschool")]
-        public string IgnoreSchoolStrDoNotUse
-        {
-            get => IsIgnoreSchool ? "true" : "false";
-            set => IsIgnoreSchool = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        }
+        public bool IgnoreSchool { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "advanced", Required = Required.Always)]
-        [XmlIgnore]
-        public bool IsAdvanced { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required(AllowEmptyStrings = false)]
-        [JsonIgnore]
         [XmlElement(ElementName = "advanced")]
-        public string AdvancedStrDoNotUse
-        {
-            get => IsAdvanced ? "true" : "false";
-            set => IsAdvanced = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        }
+        public bool Advanced { get; set; }
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -572,7 +485,8 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [JsonConstructor]
         public EconDesignsXml(
             [JsonProperty(PropertyName = "econdesign", Required = Required.Always)]
-            IEnumerable<EconDesignXml> econdesigns) : base(econdesigns, key => key.Name, StringComparer.OrdinalIgnoreCase)
+            IEnumerable<EconDesignXml> econdesigns) : base(econdesigns, key => key.Name,
+            StringComparer.OrdinalIgnoreCase)
         {
         }
 

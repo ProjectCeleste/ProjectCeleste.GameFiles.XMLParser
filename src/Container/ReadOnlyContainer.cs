@@ -6,17 +6,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using ProjectCeleste.GamesFiles.XMLParser.Container.Interface;
+using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
 
 #endregion
 
-namespace ProjectCeleste.GamesFiles.XMLParser.Container
+namespace ProjectCeleste.GameFiles.XMLParser.Container
 {
     public class ReadOnlyContainer<T1, T2> : IReadOnlyContainer<T1, T2>
     {
-        [XmlIgnore]
-        [JsonIgnore]
-        private readonly IReadOnlyDictionary<T1, T2> _values;
+        [XmlIgnore] [JsonIgnore] private readonly IReadOnlyDictionary<T1, T2> _values;
 
         public ReadOnlyContainer(IDictionary<T1, T2> values)
         {

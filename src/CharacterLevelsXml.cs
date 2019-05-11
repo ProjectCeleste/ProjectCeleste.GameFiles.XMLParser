@@ -7,14 +7,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
 //TODO ORDER
 //TODO JsonConstructor
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "gamecurrencyeffect", Description = "")]
     [XmlRoot(ElementName = "gamecurrencyeffect")]
@@ -114,12 +114,14 @@ namespace ProjectCeleste.GamesFiles.XMLParser
             return 2108858624 + Id.GetHashCode();
         }
 
-        public static bool operator ==(CharacterLevelXmlUnlockRegionEffect effect1, CharacterLevelXmlUnlockRegionEffect effect2)
+        public static bool operator ==(CharacterLevelXmlUnlockRegionEffect effect1,
+            CharacterLevelXmlUnlockRegionEffect effect2)
         {
             return EqualityComparer<CharacterLevelXmlUnlockRegionEffect>.Default.Equals(effect1, effect2);
         }
 
-        public static bool operator !=(CharacterLevelXmlUnlockRegionEffect effect1, CharacterLevelXmlUnlockRegionEffect effect2)
+        public static bool operator !=(CharacterLevelXmlUnlockRegionEffect effect1,
+            CharacterLevelXmlUnlockRegionEffect effect2)
         {
             return !(effect1 == effect2);
         }
@@ -134,8 +136,9 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         }
 
         [JsonConstructor]
-        public CharacterLevelsXml([JsonProperty(PropertyName = "maxlevel", Required = Required.Always)]int maxLevel,
-            [JsonProperty(PropertyName = "level", Required = Required.Always)] IEnumerable<CharacterLevelXml> levels) : base(levels, key => key.Level)
+        public CharacterLevelsXml([JsonProperty(PropertyName = "maxlevel", Required = Required.Always)] int maxLevel,
+            [JsonProperty(PropertyName = "level", Required = Required.Always)]
+            IEnumerable<CharacterLevelXml> levels) : base(levels, key => key.Level)
         {
             MaxLevel = maxLevel;
         }

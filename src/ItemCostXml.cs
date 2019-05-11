@@ -6,11 +6,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
 
 #endregion
 
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "gamecurrency", Description = "")]
     [XmlRoot(ElementName = "gamecurrency")]

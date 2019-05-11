@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 #endregion
 
-namespace ProjectCeleste.GamesFiles.XMLParser.Helpers
+namespace ProjectCeleste.GameFiles.XMLParser.Helpers
 {
     internal class Utf8StringWriter : StringWriter
     {
@@ -93,7 +93,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser.Helpers
             var xmls = new XmlSerializer(typeof(T));
             using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
             {
-                output = (T)xmls.Deserialize(ms);
+                output = (T) xmls.Deserialize(ms);
             }
             return output;
         }

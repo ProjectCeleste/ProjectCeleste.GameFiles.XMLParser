@@ -8,27 +8,27 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Container.Interface;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
 //TODO ORDER
 //TODO JsonConstructor
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "visualfactor", Description = "")]
     [XmlRoot(ElementName = "visualfactor")]
-    public class TraitXmlVisualFactor
+    public class EconTraitXmlVisualFactor
     {
-        public TraitXmlVisualFactor()
+        public EconTraitXmlVisualFactor()
         {
         }
 
         [JsonConstructor]
-        public TraitXmlVisualFactor(
+        public EconTraitXmlVisualFactor(
             [JsonConverter(typeof(StringEnumConverter))]
             [JsonProperty(PropertyName = "type", Required = Required.Always)] VisualFactorEnum type,
             [JsonProperty(PropertyName = "factor", Required = Required.Always)] double factor)
@@ -56,14 +56,14 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
     [JsonObject(Title = "target", Description = "")]
     [XmlRoot(ElementName = "target")]
-    public class TraitXmlEffectTarget
+    public class EconTraitXmlEffectTarget
     {
-        public TraitXmlEffectTarget()
+        public EconTraitXmlEffectTarget()
         {
         }
 
         [JsonConstructor]
-        public TraitXmlEffectTarget(
+        public EconTraitXmlEffectTarget(
             [JsonConverter(typeof(StringEnumConverter))]
             [JsonProperty(PropertyName = "type", Required = Required.Always)] TargetTypeEnum type)
         {
@@ -82,9 +82,9 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
     [JsonObject(Title = "effect", Description = "")]
     [XmlRoot(ElementName = "effect")]
-    public class TraitXmlEffect
+    public class EconTraitXmlEffect
     {
-        public TraitXmlEffect()
+        public EconTraitXmlEffect()
         {
             Resource = ResourceTypeEnum.Invalid;
             UnitType = EffectUnitTypeEnum.Invalid;
@@ -95,7 +95,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "target", Required = Required.Always)]
         [XmlElement(ElementName = "target")]
-        public TraitXmlEffectTarget Target { get; set; }
+        public EconTraitXmlEffectTarget Target { get; set; }
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -198,15 +198,15 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
     [JsonObject(Title = "effects", Description = "")]
     [XmlRoot(ElementName = "effects")]
-    public class TraitXmlEffects
+    public class EconTraitXmlEffects
     {
-        public TraitXmlEffects()
+        public EconTraitXmlEffects()
         {
         }
 
         [JsonConstructor]
-        public TraitXmlEffects(
-            [JsonProperty(PropertyName = "effect", Required = Required.Always)] IEnumerable<TraitXmlEffect> effect)
+        public EconTraitXmlEffects(
+            [JsonProperty(PropertyName = "effect", Required = Required.Always)] IEnumerable<EconTraitXmlEffect> effect)
         {
             Effect = effect.ToList();
         }
@@ -214,18 +214,18 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "effect", Required = Required.Always)]
         [XmlElement(ElementName = "effect")]
-        public List<TraitXmlEffect> Effect { get; set; }
+        public List<EconTraitXmlEffect> Effect { get; set; }
     }
 
     [JsonObject(Title = "trait", Description = "")]
     [XmlRoot(ElementName = "trait")]
-    public class TraitXml
+    public class EconTraitXml
     {
-        public TraitXml()
+        public EconTraitXml()
         {
             Event = EventEnum.None;
             ItemLevels = new HashSet<int>();
-            VisualFactor = new DictionaryContainer<VisualFactorEnum, TraitXmlVisualFactor>(key => key.Type);
+            VisualFactor = new DictionaryContainer<VisualFactorEnum, EconTraitXmlVisualFactor>(key => key.Type);
             Alliance = EAllianceEnum.None;
         }
 
@@ -281,14 +281,14 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
         [XmlIgnore]
         [JsonIgnore]
-        public IDictionaryContainer<VisualFactorEnum, TraitXmlVisualFactor> VisualFactor { get; }
+        public IDictionaryContainer<VisualFactorEnum, EconTraitXmlVisualFactor> VisualFactor { get; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
         [JsonProperty(PropertyName = "visualfactor", Required = Required.Always)]
         [XmlElement(ElementName = "visualfactor")]
-        public TraitXmlVisualFactor[] VisualFactorArray
+        public EconTraitXmlVisualFactor[] VisualFactorArray
         {
             get => VisualFactor.Gets().ToArray();
             set
@@ -413,7 +413,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "effects", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "effects")]
-        public TraitXmlEffects Effects { get; set; }
+        public EconTraitXmlEffects Effects { get; set; }
 
         [DefaultValue(EventEnum.None)]
         [JsonProperty(PropertyName = "event", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -423,25 +423,25 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
     [JsonObject(Title = "trait", Description = "")]
     [XmlRoot(ElementName = "traits")]
-    public class TraitsXml : DictionaryContainer<string, TraitXml>
+    public class EconTraitsXml : DictionaryContainer<string, EconTraitXml>
     {
-        public TraitsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
+        public EconTraitsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
         }
 
         [JsonConstructor]
-        public TraitsXml(
-            [JsonProperty(PropertyName = "trait", Required = Required.Always)]
-            IEnumerable<TraitXml> traits) : base(traits, key => key.Name, StringComparer.OrdinalIgnoreCase)
+        public EconTraitsXml(
+            [JsonProperty(PropertyName = "trait", Required = Required.Always)] IEnumerable<EconTraitXml> traits) : base(
+            traits, key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
         }
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
         [JsonProperty(PropertyName = "trait", Required = Required.Always)]
         [XmlElement(ElementName = "trait")]
-        public TraitXml[] TraitArray
+        public EconTraitXml[] TraitArray
         {
             get => Gets().ToArray();
             set
@@ -464,9 +464,9 @@ namespace ProjectCeleste.GamesFiles.XMLParser
             }
         }
 
-        public static TraitsXml FromXmlFile(string file)
+        public static EconTraitsXml FromXmlFile(string file)
         {
-            return XmlUtils.FromXmlFile<TraitsXml>(file);
+            return XmlUtils.FromXmlFile<EconTraitsXml>(file);
         }
 
         public void SaveToXmlFile(string file)

@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region Using directives
 
-namespace ProjectCeleste.GamesFiles.XMLParser.Container.Interface
+using System;
+
+#endregion
+
+namespace ProjectCeleste.GameFiles.XMLParser.Container.Interface
 {
     public interface IDictionaryContainer<T1, T2> : IReadOnlyContainer<T1, T2>
     {

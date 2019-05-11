@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 #endregion
 
-namespace ProjectCeleste.GamesFiles.XMLParser.Enum
+namespace ProjectCeleste.GameFiles.XMLParser.Enum
 {
     public enum SchoolTagEnum
     {

@@ -7,8 +7,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
@@ -16,7 +16,7 @@ using ProjectCeleste.GamesFiles.XMLParser.Helpers;
 //TODO JsonConstructor
 //TODO JsonProperty
 //TODO C# Attribute
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "minimapeventtime", Description = "")]
     [XmlRoot(ElementName = "minimapeventtime")]
@@ -256,11 +256,11 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
         [JsonConstructor]
         public PowersXml(
-            [JsonProperty(PropertyName = "power", Required = Required.Always)]
-            IEnumerable<PowerXml> power) : base(power, key => key.Name, StringComparer.OrdinalIgnoreCase)
+            [JsonProperty(PropertyName = "power", Required = Required.Always)] IEnumerable<PowerXml> power) : base(
+            power, key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
         }
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]

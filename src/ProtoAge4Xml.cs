@@ -8,16 +8,16 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Container.Interface;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
 //TODO ORDER
 //TODO JsonConstructor
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [XmlRoot(ElementName = "Decay")]
     public class ProtoAge4XmlUnitDecay
@@ -398,15 +398,18 @@ namespace ProjectCeleste.GamesFiles.XMLParser
             TurnRadius = -1;
             CorpseDecalTime = -1;
             PopulationCount = -1;
-            Train = new DictionaryContainer<string, ProtoAge4XmlRowPageColumn>(key => key.Name, StringComparer.OrdinalIgnoreCase);
-            Tech = new DictionaryContainer<string, ProtoAge4XmlRowPageColumn>(key => key.Name, StringComparer.OrdinalIgnoreCase);
-            CarryCapacity = new DictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity>(key => key.ResourceType);
+            Train = new DictionaryContainer<string, ProtoAge4XmlRowPageColumn>(key => key.Name,
+                StringComparer.OrdinalIgnoreCase);
+            Tech = new DictionaryContainer<string, ProtoAge4XmlRowPageColumn>(key => key.Name,
+                StringComparer.OrdinalIgnoreCase);
+            CarryCapacity =
+                new DictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity>(key => key.ResourceType);
             Cost = new DictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCost>(key => key.ResourceType);
             Command = new DictionaryContainer<UnitCommandEnum, ProtoAge4XmlUnitCommand>(key => key.Name);
             AllowedAge = -1;
             BuildPoints = -1;
             PopulationCapAddition = -1;
-            Event = new DictionaryContainer<EventEnum, ProtoAge4XmlUnitEvent>(key=> key.Name);
+            Event = new DictionaryContainer<EventEnum, ProtoAge4XmlUnitEvent>(key => key.Name);
             Bounty = -1;
             VisualScale = -1;
         }
@@ -1030,19 +1033,18 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
         [JsonConstructor]
         public ProtoAge4Xml([JsonProperty(PropertyName = "version", Required = Required.Always, Order = 1)] int version,
-            [JsonProperty(PropertyName = "Unit", Required = Required.Always)]
-            IEnumerable<ProtoAge4XmlUnit> power) : base(power, key => key.Name, StringComparer.OrdinalIgnoreCase)
+            [JsonProperty(PropertyName = "Unit", Required = Required.Always)] IEnumerable<ProtoAge4XmlUnit> power) :
+            base(power, key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
             Version = version;
         }
-        
 
         [Required]
         [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "version", Required = Required.Always, Order = 1)]
         [XmlAttribute(AttributeName = "version")]
         public int Version { get; set; }
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]

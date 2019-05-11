@@ -5,17 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using ProjectCeleste.GamesFiles.XMLParser.Container.Interface;
+using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
 
 #endregion
 
-namespace ProjectCeleste.GamesFiles.XMLParser.Container
+namespace ProjectCeleste.GameFiles.XMLParser.Container
 {
     public class DictionaryContainer<T1, T2> : IDictionaryContainer<T1, T2>
     {
-        [XmlIgnore]
-        [JsonIgnore]
-        private readonly IDictionary<T1, T2> _valuesDic;
+        [XmlIgnore] [JsonIgnore] private readonly IDictionary<T1, T2> _valuesDic;
 
         private readonly Func<T2, T1> _keySelector;
 
@@ -59,9 +57,9 @@ namespace ProjectCeleste.GamesFiles.XMLParser.Container
         {
             return _valuesDic.ContainsKey(key);
         }
-        
+
         public event EventHandler<T2> OnAdd;
-        
+
         public bool Add(T2 value)
         {
             var key = _keySelector(value);
@@ -80,16 +78,16 @@ namespace ProjectCeleste.GamesFiles.XMLParser.Container
             if (!_valuesDic.TryGetValue(key, out T2 value))
                 return false;
 
-            if(!_valuesDic.Remove(key))
+            if (!_valuesDic.Remove(key))
                 return false;
 
             OnRemoved?.Invoke(this, value);
 
             return true;
         }
-        
+
         public event EventHandler<T2> OnUpdated;
-        
+
         public bool Update(T2 value)
         {
             var keyResult = _keySelector(value);
@@ -100,7 +98,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser.Container
             if (ReferenceEquals(value, item) || Equals(value, item))
                 return false;
 
-            if(string.Equals(JsonConvert.SerializeObject(value, Formatting.None),
+            if (string.Equals(JsonConvert.SerializeObject(value, Formatting.None),
                 JsonConvert.SerializeObject(item, Formatting.None), StringComparison.OrdinalIgnoreCase))
                 return false;
 
@@ -152,6 +150,5 @@ namespace ProjectCeleste.GamesFiles.XMLParser.Container
         {
             _valuesDic.Clear();
         }
-
     }
 }

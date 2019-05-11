@@ -9,15 +9,15 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
 //TODO ORDER
 //TODO JsonConstructor
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "trait", Description = "")]
     [XmlRoot(ElementName = "trait")]
@@ -103,7 +103,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [XmlIgnore]
         public IDictionary<string, AiCharacterXmlTechsTech> Tech { get; } =
             new Dictionary<string, AiCharacterXmlTechsTech>(StringComparer.OrdinalIgnoreCase);
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
@@ -212,7 +212,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "protounits", Required = Required.AllowNull)]
         [XmlElement(ElementName = "protounits")]
-        public AiCharacterXmlProtoUnits ProtoUnits { get; set; } 
+        public AiCharacterXmlProtoUnits ProtoUnits { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "traits", Required = Required.AllowNull)]
@@ -222,7 +222,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "availableadvisors", Required = Required.AllowNull)]
         [XmlElement(ElementName = "availableadvisors")]
-        public AiCharacterXmlAvailableAdvisors AvailableAdvisors { get; set; } 
+        public AiCharacterXmlAvailableAdvisors AvailableAdvisors { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "assignedadvisors", Required = Required.AllowNull)]
@@ -275,8 +275,9 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         public AiCharactersXml() : base(key => key.FileName, StringComparer.OrdinalIgnoreCase)
         {
         }
-        
-        public AiCharactersXml(IDictionary<string, AiCharacterXml> values) : base(values, key => key.FileName, StringComparer.OrdinalIgnoreCase)
+
+        public AiCharactersXml(IDictionary<string, AiCharacterXml> values) : base(values, key => key.FileName,
+            StringComparer.OrdinalIgnoreCase)
         {
         }
 

@@ -8,16 +8,16 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Container.Interface;
-using ProjectCeleste.GamesFiles.XMLParser.Enum.CharacterModifier;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
+using ProjectCeleste.GameFiles.XMLParser.Enum.CharacterModifier;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
 //TODO ORDER
 //TODO JsonConstructor
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "modifiertype", Description = "")]
     [XmlRoot(ElementName = "modifiertype")]
@@ -185,11 +185,12 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [XmlElement(ElementName = "stackingbehavior")]
         public CharacterModifierStackingBehaviorEnum StackingBehavior { get; set; } =
             CharacterModifierStackingBehaviorEnum.None;
-        
+
         [JsonIgnore]
         [XmlIgnore]
         public IDictionaryContainer<string, CharacterModifierXmlModify> Modify { get; } =
-            new DictionaryContainer<string, CharacterModifierXmlModify>(key=> key.UnikId , StringComparer.OrdinalIgnoreCase);
+            new DictionaryContainer<string, CharacterModifierXmlModify>(key => key.UnikId,
+                StringComparer.OrdinalIgnoreCase);
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -276,8 +277,11 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         }
 
         [JsonConstructor]
-        public CharacterModifiersXml([JsonProperty(PropertyName = "modifiertypedata", Required = Required.Always)] CharacterModifierXmlModifierTypeData modifierTypeData,
-            [JsonProperty(PropertyName = "modifiers", Required = Required.Always)] CharacterModifiersModifiersXml modifiers)
+        public CharacterModifiersXml(
+            [JsonProperty(PropertyName = "modifiertypedata", Required = Required.Always)]
+            CharacterModifierXmlModifierTypeData modifierTypeData,
+            [JsonProperty(PropertyName = "modifiers", Required = Required.Always)]
+            CharacterModifiersModifiersXml modifiers)
         {
             ModifierTypeData = modifierTypeData;
             Modifiers = modifiers;

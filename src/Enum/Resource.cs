@@ -7,7 +7,7 @@ using Newtonsoft.Json.Converters;
 
 #endregion
 
-namespace ProjectCeleste.GamesFiles.XMLParser.Enum
+namespace ProjectCeleste.GameFiles.XMLParser.Enum
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ResourceTypeEnum

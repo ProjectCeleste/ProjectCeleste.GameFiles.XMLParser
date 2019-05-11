@@ -8,13 +8,13 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using ProjectCeleste.GamesFiles.XMLParser.Container;
-using ProjectCeleste.GamesFiles.XMLParser.Enum;
-using ProjectCeleste.GamesFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Container;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 #endregion
 
-namespace ProjectCeleste.GamesFiles.XMLParser
+namespace ProjectCeleste.GameFiles.XMLParser
 {
     [JsonObject(Title = "protounit", Description = "")]
     [XmlRoot(ElementName = "protounit")]
@@ -54,7 +54,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [JsonProperty(PropertyName = "ismaininventory", DefaultValueHandling = DefaultValueHandling.Ignore, Order = 2)]
         [XmlElement(ElementName = "ismaininventory")]
         public bool IsMainInventory { get; set; }
-        
+
         [DefaultValue(0)]
         [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "numinventoryslots", DefaultValueHandling = DefaultValueHandling.Ignore,
@@ -87,10 +87,11 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [JsonConstructor]
         public ServerProtoDataXml(
             [JsonProperty(PropertyName = "protounit", Required = Required.Always)]
-            IEnumerable<ServerProtoDataXmlProtoUnit> protounit) : base(protounit, key => key.Name, StringComparer.OrdinalIgnoreCase)
+            IEnumerable<ServerProtoDataXmlProtoUnit> protounit) : base(protounit, key => key.Name,
+            StringComparer.OrdinalIgnoreCase)
         {
         }
-        
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
