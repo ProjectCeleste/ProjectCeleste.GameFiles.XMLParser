@@ -210,8 +210,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
             if (filename == null)
                 return languageXml;
 
-            languageXml.Id = filename.Replace("fr-fr", "")
-                .Replace("de-de", "").Replace("es-es", "").Replace("it-it", "").Replace("zh-cht", "");
+            languageXml.Id = filename.Replace("fr-fr-", "")
+                .Replace("de-de-", "").Replace("es-es-", "").Replace("it-it-", "").Replace("zh-cht-", "");
 
             if (filename.Contains("fr-fr"))
                 languageXml.Language.Values.First().Name = "French";
