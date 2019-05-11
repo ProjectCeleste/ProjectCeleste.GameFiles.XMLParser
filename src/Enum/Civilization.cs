@@ -15,7 +15,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("0")] [EnumMember(Value = "Any")] Any = 0,
         [XmlEnum("1")] [EnumMember(Value = "Greek")] Greek = 1,
         [XmlEnum("3")] [EnumMember(Value = "Egyptian")] Egyptian = 3,
-        [XmlEnum("6")] [EnumMember(Value = "Celt")] Celt = 6,
+        [XmlEnum("6")] [EnumMember(Value = "Celtic")] Celtic = 6,
         [XmlEnum("8")] [EnumMember(Value = "Persian")] Persian = 8,
         [XmlEnum("22")] [EnumMember(Value = "Babylonian")] Babylonian = 22,
         [XmlEnum("24")] [EnumMember(Value = "Norse")] Norse = 24,
@@ -30,7 +30,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
 
         [XmlEnum("eCivMatchingTypeEgyptian")] [EnumMember(Value = "eCivMatchingTypeEgyptian")] Egypt =
             CivilizationEnum.Egyptian,
-        [XmlEnum("eCivMatchingTypeCeltic")] [EnumMember(Value = "eCivMatchingTypeCeltic")] Celt = CivilizationEnum.Celt,
+        [XmlEnum("eCivMatchingTypeCeltic")] [EnumMember(Value = "eCivMatchingTypeCeltic")] Celt = CivilizationEnum.Celtic,
 
         [XmlEnum("eCivMatchingTypePersian")] [EnumMember(Value = "eCivMatchingTypePersian")] Persia =
             CivilizationEnum.Persian,
