@@ -239,14 +239,14 @@ namespace ProjectCeleste.GameFiles.XMLParser
     [XmlRoot(ElementName = "vendors")]
     public class EconVendorsXml : DictionaryContainer<string, EconVendorXml>
     {
-        public EconVendorsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
+        public EconVendorsXml() : base(key => key.Protounit, StringComparer.OrdinalIgnoreCase)
         {
         }
 
         [JsonConstructor]
         public EconVendorsXml(
             [JsonProperty(PropertyName = "vendor", Required = Required.Always)] IEnumerable<EconVendorXml> traits) :
-            base(traits, key => key.Name, StringComparer.OrdinalIgnoreCase)
+            base(traits, key => key.Protounit, StringComparer.OrdinalIgnoreCase)
         {
         }
 
@@ -262,7 +262,7 @@ namespace ProjectCeleste.GameFiles.XMLParser
             {
                 Clear();
                 if (value == null) return;
-                var exs = new List<Exception>();
+                var excs = new List<Exception>();
                 foreach (var item in value)
                     try
                     {
@@ -270,10 +270,10 @@ namespace ProjectCeleste.GameFiles.XMLParser
                     }
                     catch (Exception e)
                     {
-                        exs.Add(e);
+                        excs.Add(new Exception($"Item '{item.Name}'", e));
                     }
-                if (exs.Count > 0)
-                    throw new AggregateException(exs);
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
             }
         }
 
