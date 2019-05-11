@@ -17,7 +17,7 @@ using ProjectCeleste.GamesFiles.XMLParser.Helpers;
 namespace ProjectCeleste.GamesFiles.XMLParser
 {
     [JsonObject(Title = "iteminfo", Description = "")]
-    public class VendorXmlItemInfo
+    public class EconVendorXmlItemInfo
     {
         [Key]
         [Required(AllowEmptyStrings = false)]
@@ -40,62 +40,62 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
     [JsonObject(Title = "purchase", Description = "")]
     [XmlRoot(ElementName = "purchase")]
-    public class VendorXmlPurchase
+    public class EconVendorXmlPurchase
     {
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "trait", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "trait")]
-        public VendorXmlItemInfo Trait { get; set; }
+        public EconVendorXmlItemInfo Trait { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "consumable", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "consumable")]
-        public VendorXmlItemInfo Consumable { get; set; }
+        public EconVendorXmlItemInfo Consumable { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "material", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "material")]
-        public VendorXmlItemInfo Material { get; set; }
+        public EconVendorXmlItemInfo Material { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "blueprint", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "blueprint")]
-        public VendorXmlItemInfo Blueprint { get; set; }
+        public EconVendorXmlItemInfo Blueprint { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "design", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "design")]
-        public VendorXmlItemInfo Design { get; set; }
+        public EconVendorXmlItemInfo Design { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "advisor", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "advisor")]
-        public VendorXmlItemInfo Advisor { get; set; }
+        public EconVendorXmlItemInfo Advisor { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "lootroll", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "lootroll")]
-        public VendorXmlItemInfo Lootroll { get; set; }
+        public EconVendorXmlItemInfo Lootroll { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "quest", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "quest")]
-        public VendorXmlItemInfo Quest { get; set; }
+        public EconVendorXmlItemInfo Quest { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "resource", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "resource")]
-        public VendorXmlItemInfo Resource { get; set; }
+        public EconVendorXmlItemInfo Resource { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "capitalresource", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "capitalresource")]
-        public VendorXmlItemInfo CapitalResource { get; set; }
+        public EconVendorXmlItemInfo CapitalResource { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "gamecurrency", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "gamecurrency")]
-        public VendorXmlItemInfo GameCurrency { get; set; }
+        public EconVendorXmlItemInfo GameCurrency { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -130,12 +130,12 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
     [JsonObject(Title = "item", Description = "")]
     [XmlRoot(ElementName = "item")]
-    public class VendorXmlItem
+    public class EconVendorXmlItem
     {
         [Required]
         [JsonProperty(PropertyName = "purchase", Required = Required.Always)]
         [XmlElement(ElementName = "purchase")]
-        public VendorXmlPurchase Purchase { get; set; }
+        public EconVendorXmlPurchase Purchase { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "cost", Required = Required.Always)]
@@ -145,16 +145,16 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
     [JsonObject(Title = "items", Description = "")]
     [XmlRoot(ElementName = "items")]
-    public class VendorXmlItems : DictionaryContainer<string, VendorXmlItem>
+    public class EconVendorXmlItems : DictionaryContainer<string, EconVendorXmlItem>
     {
-        public VendorXmlItems() : base(key => key.Purchase.GetKey(), StringComparer.OrdinalIgnoreCase)
+        public EconVendorXmlItems() : base(key => key.Purchase.GetKey(), StringComparer.OrdinalIgnoreCase)
         {
         }
 
         [JsonConstructor]
-        public VendorXmlItems(
+        public EconVendorXmlItems(
             [JsonProperty(PropertyName = "item", Required = Required.Always)]
-            IEnumerable<VendorXmlItem> items) : base(items, key => key.Purchase.GetKey(), StringComparer.OrdinalIgnoreCase)
+            IEnumerable<EconVendorXmlItem> items) : base(items, key => key.Purchase.GetKey(), StringComparer.OrdinalIgnoreCase)
         {
         }
         
@@ -163,7 +163,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "item", Required = Required.Always)]
         [XmlElement(ElementName = "item")]
-        public VendorXmlItem[] ItemArray
+        public EconVendorXmlItem[] ItemArray
         {
             get => Gets().ToArray();
             set
@@ -190,12 +190,12 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
     [JsonObject(Title = "itemset", Description = "")]
     [XmlRoot(ElementName = "itemset")]
-    public class VendorXmlItemset
+    public class EconVendorXmlItemset
     {
         [Required]
         [JsonProperty(PropertyName = "items", Required = Required.AllowNull)]
         [XmlElement(ElementName = "items")]
-        public VendorXmlItems Items { get; set; }
+        public EconVendorXmlItems Items { get; set; }
 
         [Required]
         [Range(0, 255)]
@@ -206,17 +206,17 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
     [JsonObject(Title = "itemsets", Description = "")]
     [XmlRoot(ElementName = "itemsets")]
-    public class VendorXmlItemsets
+    public class EconVendorXmlItemsets
     {
         [Required]
         [JsonProperty(PropertyName = "itemset", Required = Required.Always)]
         [XmlElement(ElementName = "itemset")]
-        public VendorXmlItemset Itemset { get; set; }
+        public EconVendorXmlItemset Itemset { get; set; }
     }
 
     [JsonObject(Title = "vendor", Description = "")]
     [XmlRoot(ElementName = "vendor")]
-    public class VendorXml
+    public class EconVendorXml
     {
         [Key]
         [Required(AllowEmptyStrings = false)]
@@ -227,7 +227,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "itemsets", Required = Required.Always)]
         [XmlElement(ElementName = "itemsets")]
-        public VendorXmlItemsets Itemsets { get; set; }
+        public EconVendorXmlItemsets Itemsets { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
@@ -237,16 +237,16 @@ namespace ProjectCeleste.GamesFiles.XMLParser
 
     [JsonObject(Title = "vendors", Description = "")]
     [XmlRoot(ElementName = "vendors")]
-    public class VendorsXml : DictionaryContainer<string, VendorXml>
+    public class EconVendorsXml : DictionaryContainer<string, EconVendorXml>
     {
-        public VendorsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
+        public EconVendorsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
         }
 
         [JsonConstructor]
-        public VendorsXml(
+        public EconVendorsXml(
             [JsonProperty(PropertyName = "vendor", Required = Required.Always)]
-            IEnumerable<VendorXml> traits) : base(traits, key => key.Name, StringComparer.OrdinalIgnoreCase)
+            IEnumerable<EconVendorXml> traits) : base(traits, key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
         }
         
@@ -255,7 +255,7 @@ namespace ProjectCeleste.GamesFiles.XMLParser
         [Required]
         [JsonProperty(PropertyName = "vendor", Required = Required.Always)]
         [XmlElement(ElementName = "vendor")]
-        public VendorXml[] VendorArray
+        public EconVendorXml[] VendorArray
         {
             get => Gets().ToArray();
             set
@@ -277,9 +277,9 @@ namespace ProjectCeleste.GamesFiles.XMLParser
             }
         }
 
-        public static VendorsXml FromXmlFile(string file)
+        public static EconVendorsXml FromXmlFile(string file)
         {
-            return XmlUtils.FromXmlFile<VendorsXml>(file);
+            return XmlUtils.FromXmlFile<EconVendorsXml>(file);
         }
 
         public void SaveToXmlFile(string file)
