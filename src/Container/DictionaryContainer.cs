@@ -26,31 +26,31 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
         public DictionaryContainer(IDictionary<T1, T2> values, Func<T2, T1> keySelector)
         {
             _keySelector = keySelector;
-            _valuesDic = new Dictionary<T1, T2>(new Dictionary<T1, T2>(values));
+            _valuesDic = new Dictionary<T1, T2>(values);
         }
 
         public DictionaryContainer(Func<T2, T1> keySelector, IEqualityComparer<T1> comparer)
         {
             _keySelector = keySelector;
-            _valuesDic = new Dictionary<T1, T2>(new Dictionary<T1, T2>(comparer));
+            _valuesDic = new Dictionary<T1, T2>(comparer);
         }
 
         public DictionaryContainer(IDictionary<T1, T2> values, Func<T2, T1> keySelector, IEqualityComparer<T1> comparer)
         {
             _keySelector = keySelector;
-            _valuesDic = new Dictionary<T1, T2>(new Dictionary<T1, T2>(values, comparer));
+            _valuesDic = new Dictionary<T1, T2>(values, comparer);
         }
 
         public DictionaryContainer(IEnumerable<T2> values, Func<T2, T1> keySelector)
         {
             _keySelector = keySelector;
-            _valuesDic = new Dictionary<T1, T2>(values.ToDictionary(keySelector));
+            _valuesDic = values.ToDictionary(keySelector);
         }
 
         public DictionaryContainer(IEnumerable<T2> values, Func<T2, T1> keySelector, IEqualityComparer<T1> comparer)
         {
             _keySelector = keySelector;
-            _valuesDic = new Dictionary<T1, T2>(values.ToDictionary(keySelector, comparer));
+            _valuesDic = values.ToDictionary(keySelector, comparer);
         }
 
         public bool ContainsKey(T1 key)
