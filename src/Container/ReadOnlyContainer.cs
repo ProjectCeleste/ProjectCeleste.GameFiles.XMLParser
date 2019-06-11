@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Xml;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
@@ -12,33 +14,33 @@ using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Container
 {
-    public class ReadOnlyContainer<T1, T2> : IReadOnlyContainer<T1, T2>
+    public class ReadOnlyContainer<TKey, TValue> : IReadOnlyContainer<TKey, TValue>
     {
-        [XmlIgnore] [JsonIgnore] private readonly IReadOnlyDictionary<T1, T2> _values;
+        [XmlIgnore] [JsonIgnore] private readonly IReadOnlyDictionary<TKey, TValue> _values;
 
-        public ReadOnlyContainer(IDictionary<T1, T2> values)
+        public ReadOnlyContainer(IDictionary<TKey, TValue> values)
         {
-            _values = new ReadOnlyDictionary<T1, T2>(new Dictionary<T1, T2>(values));
+            _values = new ReadOnlyDictionary<TKey, TValue>(new Dictionary<TKey, TValue>(values));
         }
 
-        public ReadOnlyContainer(IDictionary<T1, T2> values, IEqualityComparer<T1> comparer)
+        public ReadOnlyContainer(IDictionary<TKey, TValue> values, IEqualityComparer<TKey> comparer)
         {
-            _values = new ReadOnlyDictionary<T1, T2>(new Dictionary<T1, T2>(values, comparer));
+            _values = new ReadOnlyDictionary<TKey, TValue>(new Dictionary<TKey, TValue>(values, comparer));
         }
 
-        public ReadOnlyContainer(IEnumerable<T2> values, Func<T2, T1> keySelector)
+        public ReadOnlyContainer(IEnumerable<TValue> values, Func<TValue, TKey> keySelector)
         {
-            _values = new ReadOnlyDictionary<T1, T2>(values.ToDictionary(keySelector));
+            _values = new ReadOnlyDictionary<TKey, TValue>(values.ToDictionary(keySelector));
         }
 
-        public ReadOnlyContainer(IEnumerable<T2> values, Func<T2, T1> keySelector, IEqualityComparer<T1> comparer)
+        public ReadOnlyContainer(IEnumerable<TValue> values, Func<TValue, TKey> keySelector, IEqualityComparer<TKey> comparer)
         {
-            _values = new ReadOnlyDictionary<T1, T2>(values.ToDictionary(keySelector, comparer));
+            _values = new ReadOnlyDictionary<TKey, TValue>(values.ToDictionary(keySelector, comparer));
         }
 
         [XmlIgnore]
         [JsonIgnore]
-        public T2 this[T1 key] => _values.TryGetValue(key, out T2 value)
+        public TValue this[TKey key] => _values.TryGetValue(key, out TValue value)
             ? value
             : throw new KeyNotFoundException($"KeyNotFoundException '{key}'");
 
@@ -46,41 +48,42 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
         [JsonIgnore]
         public int Count => _values.Count;
 
-        public bool ContainsKey(T1 key)
+        public bool ContainsKey(TKey key)
         {
             return _values.ContainsKey(key);
         }
 
-        public bool Contains(KeyValuePair<T1, T2> item)
+        public bool Contains(KeyValuePair<TKey, TValue> item)
         {
             return _values.Contains(item);
         }
 
-        public T2 Get(T1 key)
+        public TValue Get(TKey key)
         {
-            return _values.TryGetValue(key, out T2 value)
+            return _values.TryGetValue(key, out TValue value)
                 ? value
-                : default(T2);
+                : default(TValue);
         }
 
-        public T2 Get(Func<T2, bool> critera)
+        public TValue Get(Func<TValue, bool> critera)
         {
             return Gets().FirstOrDefault(critera);
         }
 
-        public bool TryGet(T1 key, out T2 value)
+        public bool TryGet(TKey key, out TValue value)
         {
             return _values.TryGetValue(key, out value);
         }
 
-        public IEnumerable<T2> Gets(Func<T2, bool> critera)
+        public IEnumerable<TValue> Gets(Func<TValue, bool> critera)
         {
             return Gets().Where(critera);
         }
 
-        public IEnumerable<T2> Gets()
+        public IEnumerable<TValue> Gets()
         {
             return _values.ToArray().Select(p => p.Value);
         }
+       
     }
 }
