@@ -182,7 +182,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 foreach (var item in value)
                     try
                     {
-                        Add(item);
+                        if (!Add(item))
+                            throw new Exception("Add fail");
                     }
                     catch (Exception e)
                     {
@@ -201,7 +202,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 try
                 {
                     var newClass = RandomMapSetXml.FromXmlFile(file);
-                    randomMapSets.Add(newClass);
+                    if (!randomMapSets.Add(newClass))
+                        throw new Exception("Add fail");
                 }
                 catch (Exception e)
                 {

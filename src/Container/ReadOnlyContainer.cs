@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Xml;
-using System.Xml.Schema;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
@@ -33,7 +31,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
             _values = new ReadOnlyDictionary<TKey, TValue>(values.ToDictionary(keySelector));
         }
 
-        public ReadOnlyContainer(IEnumerable<TValue> values, Func<TValue, TKey> keySelector, IEqualityComparer<TKey> comparer)
+        public ReadOnlyContainer(IEnumerable<TValue> values, Func<TValue, TKey> keySelector,
+            IEqualityComparer<TKey> comparer)
         {
             _values = new ReadOnlyDictionary<TKey, TValue>(values.ToDictionary(keySelector, comparer));
         }
@@ -51,11 +50,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
         public bool ContainsKey(TKey key)
         {
             return _values.ContainsKey(key);
-        }
-
-        public bool Contains(KeyValuePair<TKey, TValue> item)
-        {
-            return _values.Contains(item);
         }
 
         public TValue Get(TKey key)
@@ -84,6 +78,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
         {
             return _values.ToArray().Select(p => p.Value);
         }
-       
+
+        public bool Contains(KeyValuePair<TKey, TValue> item)
+        {
+            return _values.Contains(item);
+        }
     }
 }

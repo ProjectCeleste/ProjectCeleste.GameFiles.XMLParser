@@ -269,12 +269,6 @@ namespace ProjectCeleste.GameFiles.XMLParser
             Version = version;
         }
 
-        [Required]
-        [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "version", Required = Required.Always)]
-        [XmlAttribute(AttributeName = "version")]
-        public int Version { get; set; }
-
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
@@ -292,7 +286,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 foreach (var item in value)
                     try
                     {
-                        Add(item);
+                        if (!Add(item))
+                            throw new Exception("Add fail");
                     }
                     catch (Exception e)
                     {
@@ -302,6 +297,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
                     throw new AggregateException(excs);
             }
         }
+
+        [Required]
+        [Range(0, int.MaxValue)]
+        [JsonProperty(PropertyName = "version", Required = Required.Always)]
+        [XmlAttribute(AttributeName = "version")]
+        public int Version { get; set; }
 
         public static TechTreeXml FromXmlFile(string file)
         {

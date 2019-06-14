@@ -89,42 +89,13 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
     [JsonObject(Title = "unlockregioneffect", Description = "")]
     [XmlRoot(ElementName = "unlockregioneffect")]
-    public class CharacterLevelXmlUnlockRegionEffect : IEquatable<CharacterLevelXmlUnlockRegionEffect>
+    public class CharacterLevelXmlUnlockRegionEffect
     {
         [Required]
         [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlElement(ElementName = "id")]
         public int Id { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as CharacterLevelXmlUnlockRegionEffect);
-        }
-
-        public bool Equals(CharacterLevelXmlUnlockRegionEffect other)
-        {
-            return other != null &&
-                   Id == other.Id;
-        }
-
-        public override int GetHashCode()
-        {
-            // ReSharper disable once NonReadonlyMemberInGetHashCode
-            return 2108858624 + Id.GetHashCode();
-        }
-
-        public static bool operator ==(CharacterLevelXmlUnlockRegionEffect effect1,
-            CharacterLevelXmlUnlockRegionEffect effect2)
-        {
-            return EqualityComparer<CharacterLevelXmlUnlockRegionEffect>.Default.Equals(effect1, effect2);
-        }
-
-        public static bool operator !=(CharacterLevelXmlUnlockRegionEffect effect1,
-            CharacterLevelXmlUnlockRegionEffect effect2)
-        {
-            return !(effect1 == effect2);
-        }
     }
 
     [JsonObject(Title = "xplevels", Description = "")]
@@ -169,7 +140,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
                     try
                     {
                         item.Level = index;
-                        Add(item);
+                        if (!Add(item))
+                            throw new Exception("Add fail");
                     }
                     catch (Exception e)
                     {

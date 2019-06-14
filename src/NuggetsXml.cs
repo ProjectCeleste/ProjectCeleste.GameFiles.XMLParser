@@ -69,7 +69,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 foreach (var item in value)
                     try
                     {
-                        GuardianUnit.Add(item);
+                        if (!GuardianUnit.Add(item))
+                            throw new Exception("Add fail");
                     }
                     catch (Exception e)
                     {
@@ -111,6 +112,50 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
         [XmlElement(ElementName = "animnugget")]
         public NuggetXmlAnimNugget Animnugget { get; set; }
+    }
+
+    [XmlRoot(ElementName = "nuggets")]
+    public class NuggetsXml : DictionaryContainer<int, NuggetXml>
+    {
+        public NuggetsXml() : base(key => key.Dbid)
+        {
+        }
+
+        [JsonConstructor]
+        public NuggetsXml(
+            [JsonProperty(PropertyName = "nugget", Required = Required.Always)]
+            IEnumerable<NuggetXml> nugget) : base(nugget, key => key.Dbid)
+        {
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Required]
+        [JsonProperty(PropertyName = "nugget", Required = Required.Always)]
+        [XmlElement(ElementName = "nugget")]
+        public NuggetXml[] NuggetArray
+        {
+            get => Gets().ToArray();
+            set
+            {
+                Clear();
+                if (value == null)
+                    return;
+                var excs = new List<Exception>();
+                foreach (var item in value)
+                    try
+                    {
+                        if (!Add(item))
+                            throw new Exception("Add fail");
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(new Exception($"Nugget '{item.Dbid}'", e));
+                    }
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
+            }
+        }
     }
 
     [XmlRoot(ElementName = "questlevel")]
@@ -169,7 +214,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 foreach (var item in value)
                     try
                     {
-                        QuestLevel.Add(item);
+                        if (!QuestLevel.Add(item))
+                            throw new Exception("Add fail");
                     }
                     catch (Exception e)
                     {
@@ -244,54 +290,12 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 foreach (var item in value)
                     try
                     {
-                        NuggetOverride.Add(item);
+                        if (!NuggetOverride.Add(item))
+                            throw new Exception("Add fail");
                     }
                     catch (Exception e)
                     {
                         excs.Add(new Exception($"Questlevel '{item.Id}'", e));
-                    }
-                if (excs.Count > 0)
-                    throw new AggregateException(excs);
-            }
-        }
-    }
-
-    [XmlRoot(ElementName = "nuggets")]
-    public class NuggetsXml : DictionaryContainer<int, NuggetXml>
-    {
-        public NuggetsXml() : base(key => key.Dbid)
-        {
-        }
-
-        [JsonConstructor]
-        public NuggetsXml(
-            [JsonProperty(PropertyName = "nugget", Required = Required.Always)]
-            IEnumerable<NuggetXml> nugget) : base(nugget, key => key.Dbid)
-        {
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
-        [JsonProperty(PropertyName = "nugget", Required = Required.Always)]
-        [XmlElement(ElementName = "nugget")]
-        public NuggetXml[] NuggetArray
-        {
-            get => Gets().ToArray();
-            set
-            {
-                Clear();
-                if (value == null)
-                    return;
-                var excs = new List<Exception>();
-                foreach (var item in value)
-                    try
-                    {
-                        Add(item);
-                    }
-                    catch (Exception e)
-                    {
-                        excs.Add(new Exception($"Nugget '{item.Dbid}'", e));
                     }
                 if (excs.Count > 0)
                     throw new AggregateException(excs);
@@ -322,15 +326,11 @@ namespace ProjectCeleste.GameFiles.XMLParser
             RandomMapRegion =
                 new DictionaryContainer<string, NuggetLogicXmlRandomMapRegion>(list, key => key.Name,
                     StringComparer.OrdinalIgnoreCase);
-            ;
+
             EventNuggetOverride =
                 new DictionaryContainer<string, NuggetLogicXmlEventNuggetOverride>(eventNuggetOverrideList,
                     key => key.Key, StringComparer.OrdinalIgnoreCase);
         }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        public IDictionaryContainer<string, NuggetLogicXmlRandomMapRegion> RandomMapRegion { get; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -349,7 +349,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 foreach (var item in value)
                     try
                     {
-                        RandomMapRegion.Add(item);
+                        if (!RandomMapRegion.Add(item))
+                            throw new Exception("Add fail");
                     }
                     catch (Exception e)
                     {
@@ -359,10 +360,6 @@ namespace ProjectCeleste.GameFiles.XMLParser
                     throw new AggregateException(excs);
             }
         }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        public IDictionaryContainer<string, NuggetLogicXmlEventNuggetOverride> EventNuggetOverride { get; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -381,7 +378,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 foreach (var item in value)
                     try
                     {
-                        EventNuggetOverride.Add(item);
+                        if (!EventNuggetOverride.Add(item))
+                            throw new Exception("Add fail");
                     }
                     catch (Exception e)
                     {
@@ -391,27 +389,53 @@ namespace ProjectCeleste.GameFiles.XMLParser
                     throw new AggregateException(excs);
             }
         }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        public IDictionaryContainer<string, NuggetLogicXmlRandomMapRegion> RandomMapRegion { get; }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        public IDictionaryContainer<string, NuggetLogicXmlEventNuggetOverride> EventNuggetOverride { get; }
     }
 
     [XmlRoot(ElementName = "nuggetdata")]
     public class NuggetDataXml
     {
+        public NuggetDataXml()
+        {
+            Nuggets = new NuggetsXml();
+            NuggetLogic = new NuggetLogicXml();
+        }
+
+        [JsonConstructor]
+        public NuggetDataXml(
+            [JsonProperty(PropertyName = "nuggets", Required = Required.Always, Order = 1)] NuggetsXml nuggets,
+            [JsonProperty(PropertyName = "nuggetlogic", Required = Required.Always, Order = 2)]
+            NuggetLogicXml nuggetLogic)
+        {
+            Nuggets = nuggets ?? throw new ArgumentNullException(nameof(nuggets));
+            NuggetLogic = nuggetLogic ?? throw new ArgumentNullException(nameof(nuggetLogic));
+        }
+
         [Required]
+        [JsonProperty(PropertyName = "nuggets", Required = Required.Always, Order = 1)]
         [XmlElement(ElementName = "nuggets")]
         public NuggetsXml Nuggets { get; set; }
 
         [Required]
+        [JsonProperty(PropertyName = "nuggetlogic", Required = Required.Always, Order = 2)]
         [XmlElement(ElementName = "nuggetlogic")]
-        public NuggetLogicXml Nuggetlogic { get; set; }
-
-        public static NuggetDataXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<NuggetDataXml>(file);
-        }
+        public NuggetLogicXml NuggetLogic { get; set; }
 
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static NuggetDataXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<NuggetDataXml>(file);
         }
     }
 }

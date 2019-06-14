@@ -13,9 +13,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
 {
     public class DictionaryContainer<TKey, TValue> : IDictionaryContainer<TKey, TValue>
     {
+        [XmlIgnore] [JsonIgnore] private readonly Func<TValue, TKey> _keySelector;
         [XmlIgnore] [JsonIgnore] private readonly IDictionary<TKey, TValue> _valuesDic;
-
-        private readonly Func<TValue, TKey> _keySelector;
 
         public DictionaryContainer(Func<TValue, TKey> keySelector)
         {
@@ -35,7 +34,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
             _valuesDic = new Dictionary<TKey, TValue>(comparer);
         }
 
-        public DictionaryContainer(IDictionary<TKey, TValue> values, Func<TValue, TKey> keySelector, IEqualityComparer<TKey> comparer)
+        public DictionaryContainer(IDictionary<TKey, TValue> values, Func<TValue, TKey> keySelector,
+            IEqualityComparer<TKey> comparer)
         {
             _keySelector = keySelector;
             _valuesDic = new Dictionary<TKey, TValue>(values, comparer);
@@ -47,7 +47,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
             _valuesDic = values.ToDictionary(keySelector);
         }
 
-        public DictionaryContainer(IEnumerable<TValue> values, Func<TValue, TKey> keySelector, IEqualityComparer<TKey> comparer)
+        public DictionaryContainer(IEnumerable<TValue> values, Func<TValue, TKey> keySelector,
+            IEqualityComparer<TKey> comparer)
         {
             _keySelector = keySelector;
             _valuesDic = values.ToDictionary(keySelector, comparer);

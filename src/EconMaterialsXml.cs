@@ -148,7 +148,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 foreach (var item in value)
                     try
                     {
-                        Add(item);
+                        if (!Add(item))
+                            throw new Exception("Add fail");
                     }
                     catch (Exception e)
                     {

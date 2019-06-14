@@ -402,7 +402,8 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 foreach (var item in value)
                     try
                     {
-                        Add(item);
+                        if (!Add(item))
+                            throw new Exception("Add fail");
                     }
                     catch (Exception e)
                     {
@@ -416,14 +417,14 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
     [JsonObject(Title = "questgivermanager", Description = "")]
     [XmlRoot(ElementName = "questgivermanager")]
-    public class QuestGiverXmlManager
+    public class QuestGiverManagerXml
     {
-        public QuestGiverXmlManager()
+        public QuestGiverManagerXml()
         {
         }
 
         [JsonConstructor]
-        public QuestGiverXmlManager(
+        public QuestGiverManagerXml(
             [JsonProperty(PropertyName = "questgivers", Required = Required.Always, Order = 1)]
             QuestGiversXml questgivers)
         {
@@ -440,9 +441,9 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlElement(ElementName = "questgivers")]
         public QuestGiversXml QuestGivers { get; set; }
 
-        public static QuestGiverXmlManager FromXmlFile(string file)
+        public static QuestGiverManagerXml FromXmlFile(string file)
         {
-            return XmlUtils.FromXmlFile<QuestGiverXmlManager>(file);
+            return XmlUtils.FromXmlFile<QuestGiverManagerXml>(file);
         }
 
         public void SaveToXmlFile(string file)

@@ -30,7 +30,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
 
         [XmlEnum("eCivMatchingTypeEgyptian")] [EnumMember(Value = "eCivMatchingTypeEgyptian")] Egypt =
             CivilizationEnum.Egyptian,
-        [XmlEnum("eCivMatchingTypeCeltic")] [EnumMember(Value = "eCivMatchingTypeCeltic")] Celt = CivilizationEnum.Celtic,
+
+        [XmlEnum("eCivMatchingTypeCeltic")] [EnumMember(Value = "eCivMatchingTypeCeltic")] Celt =
+            CivilizationEnum.Celtic,
 
         [XmlEnum("eCivMatchingTypePersian")] [EnumMember(Value = "eCivMatchingTypePersian")] Persia =
             CivilizationEnum.Persian,
