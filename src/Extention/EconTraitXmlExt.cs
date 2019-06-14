@@ -15,15 +15,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
         public static string GetDisplayNameLocalized(this EconTraitXml item, LanguagesXml languages,
             string language = "English")
         {
-            return languages["stringtablex"].Language[language]
-                .LanguageString[item.DisplayNameId].Text;
+            return languages["stringtablex"][language][item.DisplayNameId].Text;
         }
 
         public static string GetRollOverTextLocalized(this EconTraitXml item, LanguagesXml languages,
             string language = "English")
         {
-            return languages["stringtablex"].Language[language]
-                .LanguageString[item.RollOverTextId].Text;
+            return languages["stringtablex"][language][item.RollOverTextId].Text;
         }
 
         public static string GetDisplayNameLocalized(this EconTraitXmlEffect effect, LanguagesXml languages,
@@ -33,30 +31,26 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             {
                 case EffectSubTypeEnum.ActionEnable:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[42080].Text.Replace("%2s",
-                            effect.Action.GetDisplayNameLocalized(languages, language));
+                    return languages["stringtablex"][language][42080].Text.Replace("%2s",
+                        effect.Action.GetDisplayNameLocalized(languages, language));
                 }
                 case EffectSubTypeEnum.AreaDamageReduction:
                 {
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[58257].Text}:";
+                        $"{languages["stringtablex"][language][58257].Text}:";
                 }
                 case EffectSubTypeEnum.Armor:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[49361].Text.Replace(" %s%2.1f", string.Empty)
+                    return languages["stringtablex"][language][49361].Text.Replace(" %s%2.1f", string.Empty)
                         .Replace("%s", effect.DamageType.GetDisplayNameLocalized(languages, language));
                 }
                 case EffectSubTypeEnum.BuildingWorkRate:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[55094].Text.Replace(" +%1.1f", string.Empty);
+                    return languages["stringtablex"][language][55094].Text.Replace(" +%1.1f", string.Empty);
                 }
                 case EffectSubTypeEnum.BuildPoints:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[58300].Text;
+                    return languages["stringtablex"][language][58300].Text;
                 }
                 case EffectSubTypeEnum.CarryCapacity:
                 {
@@ -65,31 +59,31 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
                     {
                         case EffectUnitTypeEnum.AbstractFarm:
                             return
-                                $"{languages["stringtablex"].Language[language].LanguageString[65869].Text}:";
+                                $"{languages["stringtablex"][language][65869].Text}:";
                         case EffectUnitTypeEnum.AbstractFish:
                             return
-                                $"{languages["stringtablex"].Language[language].LanguageString[65870].Text}:";
+                                $"{languages["stringtablex"][language][65870].Text}:";
                         case EffectUnitTypeEnum.AbstractFruit:
                             return
-                                $"{languages["stringtablex"].Language[language].LanguageString[65866].Text}:";
+                                $"{languages["stringtablex"][language][65866].Text}:";
                         case EffectUnitTypeEnum.Fish:
                             return
-                                $"{languages["stringtablex"].Language[language].LanguageString[65870].Text}:";
+                                $"{languages["stringtablex"][language][65870].Text}:";
                         case EffectUnitTypeEnum.Gold:
                             return
-                                $"{languages["stringtablex"].Language[language].LanguageString[65872].Text}:";
+                                $"{languages["stringtablex"][language][65872].Text}:";
                         case EffectUnitTypeEnum.Herdable:
                             return
-                                $"{languages["stringtablex"].Language[language].LanguageString[65867].Text}:";
+                                $"{languages["stringtablex"][language][65867].Text}:";
                         case EffectUnitTypeEnum.Huntable:
                             return
-                                $"{languages["stringtablex"].Language[language].LanguageString[65868].Text}:";
+                                $"{languages["stringtablex"][language][65868].Text}:";
                         case EffectUnitTypeEnum.Stone:
                             return
-                                $"{languages["stringtablex"].Language[language].LanguageString[65873].Text}:";
+                                $"{languages["stringtablex"][language][65873].Text}:";
                         case EffectUnitTypeEnum.Tree:
                             return
-                                $"{languages["stringtablex"].Language[language].LanguageString[65871].Text}:";
+                                $"{languages["stringtablex"][language][65871].Text}:";
                         default:
                             throw new ArgumentOutOfRangeException(nameof(effect.UnitType), effect.UnitType, null);
                     }
@@ -97,80 +91,65 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
                 case EffectSubTypeEnum.ConvertResist:
                 {
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[58299].Text}:";
+                        $"{languages["stringtablex"][language][58299].Text}:";
                 }
                 case EffectSubTypeEnum.CostAll:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[34447].Text;
+                    return languages["stringtablex"][language][34447].Text;
                 }
                 case EffectSubTypeEnum.Damage:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[58207].Text.Replace(" %s%.1f", string.Empty);
+                    return languages["stringtablex"][language][58207].Text.Replace(" %s%.1f", string.Empty);
                 }
                 case EffectSubTypeEnum.DamageBonus:
                 {
                     return effect.UnitType != EffectUnitTypeEnum.Invalid
                         ? effect.UnitType.GetDisplayNameLocalized(languages, language) + " " + languages
-                              ["stringtablex"].Language[language]
-                              .LanguageString[57581].Text
-                        : languages["stringtablex"].Language[language]
-                            .LanguageString[57581].Text;
+                              ["stringtablex"][language][57581].Text
+                        : languages["stringtablex"][language][57581].Text;
                 }
                 case EffectSubTypeEnum.DamageBonusReduction:
                 {
                     return effect.UnitType != EffectUnitTypeEnum.Invalid
                         ? effect.UnitType.GetDisplayNameLocalized(languages, language) + " " + languages
-                              ["stringtablex"].Language[language]
-                              .LanguageString[57582].Text
-                        : languages["stringtablex"].Language[language]
-                            .LanguageString[57582].Text;
+                              ["stringtablex"][language][57582].Text
+                        : languages["stringtablex"][language][57582].Text;
                 }
                 case EffectSubTypeEnum.HitPercent:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[55093].Text.Replace(" +%1.0f", ":");
+                    return languages["stringtablex"][language][55093].Text.Replace(" +%1.0f", ":");
                 }
                 case EffectSubTypeEnum.Hitpoints:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[57580].Text;
+                    return languages["stringtablex"][language][57580].Text;
                 }
                 case EffectSubTypeEnum.Los:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[58204].Text;
+                    return languages["stringtablex"][language][58204].Text;
                 }
                 case EffectSubTypeEnum.MaximumRange:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[58203].Text;
+                    return languages["stringtablex"][language][58203].Text;
                 }
                 case EffectSubTypeEnum.MaximumVelocity:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[58206].Text;
+                    return languages["stringtablex"][language][58206].Text;
                 }
                 case EffectSubTypeEnum.TargetSpeedBoost:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[57584].Text;
+                    return languages["stringtablex"][language][57584].Text;
                 }
                 case EffectSubTypeEnum.TargetSpeedBoostResist:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[57585].Text;
+                    return languages["stringtablex"][language][57585].Text;
                 }
                 case EffectSubTypeEnum.TrainPoints:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[57583].Text;
+                    return languages["stringtablex"][language][57583].Text;
                 }
                 case EffectSubTypeEnum.WorkRate:
                 {
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[55094].Text.Replace(" +%1.1f", string.Empty);
+                    return languages["stringtablex"][language][55094].Text.Replace(" +%1.1f", string.Empty);
                 }
                 default:
                 {
@@ -187,35 +166,26 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
                 case EffectActionTypeEnum.Invalid:
                     throw new InvalidDataException($"Invalid type '{type}'");
                 case EffectActionTypeEnum.Build:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[55353].Text;
+                    return languages["stringtablex"][language][55353].Text;
                 case EffectActionTypeEnum.Convert:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[57342].Text;
+                    return languages["stringtablex"][language][57342].Text;
                 case EffectActionTypeEnum.Empower:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[56285].Text;
+                    return languages["stringtablex"][language][56285].Text;
                 case EffectActionTypeEnum.FishGather:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[55352].Text} {languages["stringtablex"].Language[language].LanguageString[22207].Text}";
+                        $"{languages["stringtablex"][language][55352].Text} {languages["stringtablex"][language][22207].Text}";
                 case EffectActionTypeEnum.Gather:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[55352].Text;
+                    return languages["stringtablex"][language][55352].Text;
                 case EffectActionTypeEnum.Heal:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[55354].Text;
+                    return languages["stringtablex"][language][55354].Text;
                 case EffectActionTypeEnum.MeleeAttack:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[58251].Text;
+                    return languages["stringtablex"][language][58251].Text;
                 case EffectActionTypeEnum.RangedAttack:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[58250].Text;
+                    return languages["stringtablex"][language][58250].Text;
                 case EffectActionTypeEnum.SelfHeal:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[57824].Text;
+                    return languages["stringtablex"][language][57824].Text;
                 case EffectActionTypeEnum.Trade:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[55355].Text;
+                    return languages["stringtablex"][language][55355].Text;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -229,77 +199,53 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
                 case EffectUnitTypeEnum.Invalid:
                     throw new InvalidDataException($"Invalid type '{type}'");
                 case EffectUnitTypeEnum.AbstractArcher:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[43016].Text;
+                    return languages["stringtablex"][language][43016].Text;
                 case EffectUnitTypeEnum.AbstractCavalry:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[38214].Text;
+                    return languages["stringtablex"][language][38214].Text;
                 case EffectUnitTypeEnum.AbstractDock:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[49725].Text;
+                    return languages["stringtablex"][language][49725].Text;
                 case EffectUnitTypeEnum.AbstractFarm:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[42006].Text;
+                    return languages["stringtablex"][language][42006].Text;
                 case EffectUnitTypeEnum.AbstractFish:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[22207].Text;
+                    return languages["stringtablex"][language][22207].Text;
                 case EffectUnitTypeEnum.AbstractFruit:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[57826].Text;
+                    return languages["stringtablex"][language][57826].Text;
                 case EffectUnitTypeEnum.AbstractInfantry:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[42167].Text;
+                    return languages["stringtablex"][language][42167].Text;
                 case EffectUnitTypeEnum.AbstractTownCenter:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[42029].Text;
+                    return languages["stringtablex"][language][42029].Text;
                 case EffectUnitTypeEnum.ActionBuild:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[56287].Text;
+                    return languages["stringtablex"][language][56287].Text;
                 case EffectUnitTypeEnum.ActionTrain:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[56288].Text;
+                    return languages["stringtablex"][language][56288].Text;
                 case EffectUnitTypeEnum.Building:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[57348].Text;
+                    return languages["stringtablex"][language][57348].Text;
                 case EffectUnitTypeEnum.ConvertableCavalry:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[38214].Text;
+                    return languages["stringtablex"][language][38214].Text;
                 case EffectUnitTypeEnum.ConvertableInfantry:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[42167].Text;
+                    return languages["stringtablex"][language][42167].Text;
                 case EffectUnitTypeEnum.ConvertableSiege:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[42026].Text;
+                    return languages["stringtablex"][language][42026].Text;
                 case EffectUnitTypeEnum.Dropsite:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[56286].Text;
+                    return languages["stringtablex"][language][56286].Text;
                 case EffectUnitTypeEnum.Fish:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[22207].Text;
+                    return languages["stringtablex"][language][22207].Text;
                 case EffectUnitTypeEnum.Gold:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[20193].Text;
+                    return languages["stringtablex"][language][20193].Text;
                 case EffectUnitTypeEnum.Herdable:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[22205].Text;
+                    return languages["stringtablex"][language][22205].Text;
                 case EffectUnitTypeEnum.Huntable:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[22206].Text;
+                    return languages["stringtablex"][language][22206].Text;
                 case EffectUnitTypeEnum.LogicalTypeHealed:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[22208].Text;
+                    return languages["stringtablex"][language][22208].Text;
                 case EffectUnitTypeEnum.Ship:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[42169].Text;
+                    return languages["stringtablex"][language][42169].Text;
                 case EffectUnitTypeEnum.Stone:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[55126].Text;
+                    return languages["stringtablex"][language][55126].Text;
                 case EffectUnitTypeEnum.Tree:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[22203].Text;
+                    return languages["stringtablex"][language][22203].Text;
                 case EffectUnitTypeEnum.UnitTypeBldgWatchPost:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[55099].Text;
+                    return languages["stringtablex"][language][55099].Text;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -313,17 +259,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
                 case DamageTypeEnum.None:
                     throw new InvalidDataException($"Invalid type '{type}'");
                 case DamageTypeEnum.Hand:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[54789].Text;
+                    return languages["stringtablex"][language][54789].Text;
                 case DamageTypeEnum.Ranged:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[54790].Text;
+                    return languages["stringtablex"][language][54790].Text;
                 case DamageTypeEnum.Cavalry:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[54792].Text;
+                    return languages["stringtablex"][language][54792].Text;
                 case DamageTypeEnum.Siege:
-                    return languages["stringtablex"].Language[language]
-                        .LanguageString[54791].Text;
+                    return languages["stringtablex"][language][54791].Text;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }

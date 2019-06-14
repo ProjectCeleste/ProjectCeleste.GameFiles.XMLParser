@@ -60,20 +60,18 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
     [JsonObject(Title = "language", Description = "")]
     [XmlRoot(ElementName = "language")]
-    public class LanguageXml
+    public class LanguageXml : DictionaryContainer<int, LanguageStringXml>
     {
-        public LanguageXml()
+        public LanguageXml() : base(key => key.LocId)
         {
-            LanguageString = new Dictionary<int, LanguageStringXml>();
         }
 
         [JsonConstructor]
         public LanguageXml([JsonProperty(PropertyName = "name", Required = Required.Always)] string name,
             [JsonProperty(PropertyName = "string", Required = Required.Always)]
-            IDictionary<int, LanguageStringXml> languageString)
+            IEnumerable<LanguageStringXml> languageString) : base(languageString, key => key.LocId)
         {
             Name = name;
-            LanguageString = new Dictionary<int, LanguageStringXml>(languageString);
         }
 
         [Key]
@@ -82,27 +80,24 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
 
-        [XmlIgnore]
-        [JsonProperty(PropertyName = "string", Required = Required.Always)]
-        public IDictionary<int, LanguageStringXml> LanguageString { get; }
-
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "string", Required = Required.Always)]
         [XmlElement(ElementName = "string")]
         public LanguageStringXml[] LanguageStringArrayDoNotUse
         {
-            get => LanguageString.Values.ToArray();
+            get => Gets().ToArray();
             set
             {
-                LanguageString.Clear();
+                Clear();
                 if (value == null) return;
                 var excs = new List<Exception>();
                 foreach (var item in value)
                     try
                     {
-                        LanguageString.Add(item.LocId, item);
+                        if (!Add(item))
+                            throw new Exception("Add fail");
                     }
                     catch (Exception e)
                     {
@@ -116,11 +111,10 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
     [JsonObject(Title = "stringtable", Description = "")]
     [XmlRoot(ElementName = "stringtable")]
-    public class StringTableXml
+    public class StringTableXml : DictionaryContainer<string, LanguageXml>
     {
-        public StringTableXml()
+        public StringTableXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
-            Language = new Dictionary<string, LanguageXml>(StringComparer.OrdinalIgnoreCase);
         }
 
         [JsonConstructor]
@@ -130,14 +124,14 @@ namespace ProjectCeleste.GameFiles.XMLParser
             , [JsonProperty(PropertyName = "locend", DefaultValueHandling = DefaultValueHandling.Ignore)] int locend
             , [JsonProperty(PropertyName = "loccurrent", DefaultValueHandling = DefaultValueHandling.Ignore)]
             int loccurrent
-            , [JsonProperty(PropertyName = "language", Required = Required.Always)] IDictionary<string, LanguageXml> language)
+            , [JsonProperty(PropertyName = "language", Required = Required.Always)] IEnumerable<LanguageXml> language) :
+            base(language, key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
             Version = version;
             Id = id;
             Locstart = locstart;
             Locend = locend;
             Loccurrent = loccurrent;
-            Language = new Dictionary<string, LanguageXml>(language, StringComparer.OrdinalIgnoreCase);
         }
 
         [Key]
@@ -170,27 +164,24 @@ namespace ProjectCeleste.GameFiles.XMLParser
         [XmlAttribute(AttributeName = "loccurrent")]
         public int Loccurrent { get; set; }
 
-        [JsonProperty(PropertyName = "language", Required = Required.Always)]
-        [XmlIgnore]
-        public IDictionary<string, LanguageXml> Language { get; }
-
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "language", Required = Required.Always)]
         [XmlElement(ElementName = "language")]
         public LanguageXml[] LanguageArrayDoNotUse
         {
-            get => Language.Values.ToArray();
+            get => Gets().ToArray();
             set
             {
-                Language.Clear();
+                Clear();
                 if (value == null) return;
                 var excs = new List<Exception>();
                 foreach (var item in value)
                     try
                     {
-                        Language.Add(item.Name, item);
+                        if (!Add(item))
+                            throw new Exception("Add fail");
                     }
                     catch (Exception e)
                     {
@@ -214,21 +205,17 @@ namespace ProjectCeleste.GameFiles.XMLParser
                 .Replace("de-de-", "").Replace("es-es-", "").Replace("it-it-", "").Replace("zh-cht-", "");
 
             if (filename.Contains("fr-fr"))
-                languageXml.Language.Values.First().Name = "French";
+                languageXml.Gets().First().Name = "French";
             else if (filename.Contains("de-de"))
-                languageXml.Language.Values.First().Name = "German";
+                languageXml.Gets().First().Name = "German";
             else if (filename.Contains("es-es"))
-                languageXml.Language.Values.First().Name = "Spanish";
+                languageXml.Gets().First().Name = "Spanish";
             else if (filename.Contains("it-it"))
-                languageXml.Language.Values.First().Name = "Italian";
+                languageXml.Gets().First().Name = "Italian";
             else if (filename.Contains("zh-cht"))
-                languageXml.Language.Values.First().Name = "Chinese";
+                languageXml.Gets().First().Name = "Chinese";
             else
-                languageXml.Language.Values.First().Name = "English";
-
-            languageXml.LanguageArrayDoNotUse =
-                JsonConvert.DeserializeObject<LanguageXml[]>(
-                    JsonConvert.SerializeObject(languageXml.Language.Values.ToArray()));
+                languageXml.Gets().First().Name = "English";
 
             return languageXml;
         }
@@ -279,45 +266,51 @@ namespace ProjectCeleste.GameFiles.XMLParser
 
         public static LanguagesXml LanguagesFromXmlFiles(string languagesFolder)
         {
-            var listFile = new List<string>
+            var prefixLang = new[] {"", "de-DE", "fr-FR", "es-ES", "it-IT", "zh-CHT"};
+
+            var listFile = new[]
             {
-                "econstrings.xml",
-                "equipmentstrings.xml",
-                "queststringtable.xml",
-                "stringtablex.xml"
+                "econstrings",
+                "equipmentstrings",
+                "queststringtable",
+                "stringtablex"
             };
 
-            var prefixLang = new List<string> {"de-DE", "fr-FR", "es-es", "it-it", "zh-cht"};
             var languages = new LanguagesXml();
-            foreach (var langFile in listFile)
-            {
-                var fileName = Path.Combine(languagesFolder, langFile);
-                var newClass = StringTableXml.FromXmlFile(fileName);
-                foreach (var newLang in newClass.Language.Values)
-                    if (!languages.ContainsKey(newClass.Id))
-                        languages.Add(newClass);
-                    else
-                        foreach (var languageString in newLang.LanguageString.Values.ToArray())
-                            languages[newClass.Id].Language[newLang.Name]
-                                .LanguageString
-                                .Add(languageString.LocId, languageString);
-            }
-
             foreach (var prefix in prefixLang)
             foreach (var langFile in listFile)
             {
-                var fileName = Path.Combine(languagesFolder, $"{prefix}-{langFile}");
+                var fileName = Path.Combine(languagesFolder,
+                    $"{(string.IsNullOrWhiteSpace(prefix) ? string.Empty : $"{prefix}-")}{langFile}.xml");
                 var newClass = StringTableXml.FromXmlFile(fileName);
-                var languageXml = new LanguageXml();
-                var lng = languages[newClass.Id].Language["English"];
-                languageXml.Name = newClass.Language.Values.First().Name;
-                foreach (var newLang in lng.LanguageString.Values.ToArray())
-                    languageXml.LanguageString.Add(newLang.LocId,
-                        newClass.Language[languageXml.Name].LanguageString.ContainsKey(newLang.LocId)
-                            ? newClass.Language[languageXml.Name].LanguageString[newLang.LocId]
-                            : throw new KeyNotFoundException(newLang.LocId.ToString()));
-                languages[newClass.Id].Language.Add(languageXml.Name, languageXml);
+                if (!languages.ContainsKey(newClass.Id))
+                    languages.Add(newClass);
+                else
+                    foreach (var newLang in newClass.Gets())
+                        languages[newClass.Id].Add(newLang);
             }
+
+            //TODO MOVE TO EXT VERIFY
+            var excs = new List<Exception>();
+            foreach (var stringTable in languages.Gets())
+            {
+                var defLang = stringTable["English"];
+                foreach (var language in stringTable.Gets(key => !string.Equals(key.Name, defLang.Name,
+                    StringComparison.OrdinalIgnoreCase)))
+                foreach (var str in defLang.Gets())
+                    try
+                    {
+                        if (!language.ContainsKey(str.LocId))
+                            throw new KeyNotFoundException(
+                                $"Missing string [Language = {language}; LocId = {str.LocId};]");
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(e);
+                    }
+            }
+            if (excs.Count > 1)
+                throw new AggregateException(excs);
 
             return languages;
         }

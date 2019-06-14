@@ -5,15 +5,13 @@
         public static string GetDisplayNameLocalized(this ProtoAge4XmlUnit item, LanguagesXml languages,
             string language = "English")
         {
-            return languages["stringtablex"].Language["English"]
-                .LanguageString[item.DisplayNameId].Text;
+            return languages["stringtablex"]["English"][item.DisplayNameId].Text;
         }
 
         public static string GetRolloverTextLocalized(this ProtoAge4XmlUnit item, LanguagesXml languages,
             string language = "English")
         {
-            return languages["stringtablex"].Language["English"]
-                .LanguageString[item.RolloverTextId].Text;
+            return languages["stringtablex"]["English"][item.RolloverTextId].Text;
         }
     }
 }

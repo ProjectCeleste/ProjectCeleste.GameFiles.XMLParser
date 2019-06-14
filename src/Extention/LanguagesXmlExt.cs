@@ -17,16 +17,16 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             {
                 case 0:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[63902].Text}";
+                        $"{languages["stringtablex"][language][63902].Text}";
                 case 1:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[63903].Text}";
+                        $"{languages["stringtablex"][language][63903].Text}";
                 case 2:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[63904].Text}";
+                        $"{languages["stringtablex"][language][63904].Text}";
                 case 3:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[63905].Text}";
+                        $"{languages["stringtablex"][language][63905].Text}";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(age), age, null);
             }
@@ -39,25 +39,25 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             {
                 case ResourceTypeEnum.Wood:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[18899].Text}";
+                        $"{languages["stringtablex"][language][18899].Text}";
                 case ResourceTypeEnum.Food:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[18900].Text}";
+                        $"{languages["stringtablex"][language][18900].Text}";
                 case ResourceTypeEnum.Stone:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[28529].Text}";
+                        $"{languages["stringtablex"][language][28529].Text}";
                 case ResourceTypeEnum.Gold:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[18129].Text}";
+                        $"{languages["stringtablex"][language][18129].Text}";
                 case ResourceTypeEnum.SkillPoints:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[28530].Text}";
+                        $"{languages["stringtablex"][language][28530].Text}";
                 case ResourceTypeEnum.Xp:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[31117].Text}";
+                        $"{languages["stringtablex"][language][31117].Text}";
                 case ResourceTypeEnum.Ships:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[31818].Text}";
+                        $"{languages["stringtablex"][language][31818].Text}";
                 case ResourceTypeEnum.Invalid:
                     return "Invalid!";
                 default:
@@ -72,31 +72,31 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             {
                 case InventoryItemTypeEnum.Material:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[52890].Text}";
+                        $"{languages["stringtablex"][language][52890].Text}";
                 case InventoryItemTypeEnum.Blueprint:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[52887].Text}";
+                        $"{languages["stringtablex"][language][52887].Text}";
                 case InventoryItemTypeEnum.Trait:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[63898].Text}";
+                        $"{languages["stringtablex"][language][63898].Text}";
                 case InventoryItemTypeEnum.Design:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[52888].Text}";
+                        $"{languages["stringtablex"][language][52888].Text}";
                 case InventoryItemTypeEnum.Resource:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[36059].Text}";
+                        $"{languages["stringtablex"][language][36059].Text}";
                 case InventoryItemTypeEnum.Advisor:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[63901].Text}";
+                        $"{languages["stringtablex"][language][63901].Text}";
                 case InventoryItemTypeEnum.Consumable:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[52891].Text}";
+                        $"{languages["stringtablex"][language][52891].Text}";
                 case InventoryItemTypeEnum.LootRoll:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[57460].Text}";
+                        $"{languages["stringtablex"][language][57460].Text}";
                 case InventoryItemTypeEnum.Quest:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[53219].Text}";
+                        $"{languages["stringtablex"][language][53219].Text}";
                 case InventoryItemTypeEnum.CapitalResource:
                     return
                         "Capital Resource";
@@ -124,22 +124,22 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             {
                 case CRarityEnum.Junk:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[52993].Text}";
+                        $"{languages["stringtablex"][language][52993].Text}";
                 case CRarityEnum.Common:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[52994].Text}";
+                        $"{languages["stringtablex"][language][52994].Text}";
                 case CRarityEnum.Uncommon:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[52995].Text}";
+                        $"{languages["stringtablex"][language][52995].Text}";
                 case CRarityEnum.Rare:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[52996].Text}";
+                        $"{languages["stringtablex"][language][52996].Text}";
                 case CRarityEnum.Epic:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[52997].Text}";
+                        $"{languages["stringtablex"][language][52997].Text}";
                 case CRarityEnum.Legendary:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[53075].Text}";
+                        $"{languages["stringtablex"][language][53075].Text}";
                 case CRarityEnum.All:
                     return "All";
                 default:
@@ -154,7 +154,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             {
                 case GameCurrencyTypeEnum.EmpirePoints:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[55403].Text}";
+                        $"{languages["stringtablex"][language][55403].Text}";
                 case GameCurrencyTypeEnum.None:
                     throw new InvalidOperationException("Invalid GameCurrency");
                 default:
@@ -169,28 +169,28 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             {
                 case CapitalResourceTypeEnum.cCapResCoin:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[55395].Text}";
+                        $"{languages["stringtablex"][language][55395].Text}";
                 case CapitalResourceTypeEnum.cCapResWorkers:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[55396].Text}";
+                        $"{languages["stringtablex"][language][55396].Text}";
                 case CapitalResourceTypeEnum.cCapResFactionPoints1:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[55397].Text}";
+                        $"{languages["stringtablex"][language][55397].Text}";
                 case CapitalResourceTypeEnum.cCapResFactionPoints2:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[55398].Text}";
+                        $"{languages["stringtablex"][language][55398].Text}";
                 case CapitalResourceTypeEnum.cCapResFactionPoints3:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[55399].Text}";
+                        $"{languages["stringtablex"][language][55399].Text}";
                 case CapitalResourceTypeEnum.cCapResFactionPoints4:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[55400].Text}";
+                        $"{languages["stringtablex"][language][55400].Text}";
                 case CapitalResourceTypeEnum.cCapResFactionPoints5:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[55401].Text}";
+                        $"{languages["stringtablex"][language][55401].Text}";
                 case CapitalResourceTypeEnum.cCapResFactionPoints6:
                     return
-                        $"{languages["stringtablex"].Language[language].LanguageString[55402].Text}";
+                        $"{languages["stringtablex"][language][55402].Text}";
                 case CapitalResourceTypeEnum.None:
                     throw new InvalidOperationException("Invalid CapitalResource");
                 default:
