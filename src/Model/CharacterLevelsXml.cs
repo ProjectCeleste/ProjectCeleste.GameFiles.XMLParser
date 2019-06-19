@@ -375,7 +375,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             this.ToXmlFile(file);
         }
 
-        public static ICharacterLevelsXml FromXmlFile(string file)
+        public static CharacterLevelsXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<CharacterLevelsXml>(file);
         }
