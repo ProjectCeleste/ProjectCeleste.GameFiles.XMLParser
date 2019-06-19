@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using ProjectCeleste.GameFiles.XMLParser.Container;
@@ -167,13 +166,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             AgeUpEffect = ageUpEffect;
             _unlockRegionEffect = unlockRegionEffect;
         }
-        
-        [Key]
-        [Required]
-        [Range(0, 99)]
-        [JsonProperty(PropertyName = "level", Required = Required.Always)]
-        [XmlIgnore]
-        public int Level { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]
@@ -212,6 +204,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             get => _unlockRegionEffect?.Count > 0 ? _unlockRegionEffect : null;
             set => _unlockRegionEffect = value;
         }
+
+        [Key]
+        [Required]
+        [Range(0, 99)]
+        [JsonProperty(PropertyName = "level", Required = Required.Always)]
+        [XmlIgnore]
+        public int Level { get; set; }
 
         [XmlIgnore]
         [JsonIgnore]
@@ -253,7 +252,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void SetXp(int xp)
         {
-            Xp = xp < 0 || xp > 99 ? throw new ArgumentOutOfRangeException(nameof(xp), xp, null) : xp;
+            Xp = xp < 0 ? throw new ArgumentOutOfRangeException(nameof(xp), xp, null) : xp;
         }
 
         public void SetGameCurrencyEffect(int empirePoints)
@@ -307,8 +306,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [JsonObject(Title = "xplevels", Description = "")]
     [XmlRoot(ElementName = "xplevels")]
     public class CharacterLevelsXml :
-        DictionaryContainer<int, CharacterLevelXml, ICharacterLevel, ICharacterLevelReadOnly>, ICharacterLevelsXml,
-        ICharacterLevels, ICharacterLevelsReadOnly
+        DictionaryContainer<int, CharacterLevelXml, ICharacterLevel, ICharacterLevelReadOnly>, ICharacterLevelsXml
     {
         public CharacterLevelsXml() : base(key => key.Level)
         {
@@ -363,6 +361,35 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
+        [JsonIgnore]
+        [XmlIgnore]
+        ICharacterLevel ICharacterLevels.this[int key] => this[key];
+
+        ICharacterLevel ICharacterLevels.Get(Func<ICharacterLevel, bool> critera)
+        {
+            return Get(critera);
+        }
+
+        ICharacterLevel ICharacterLevels.Get(int key)
+        {
+            return Get(key);
+        }
+
+        IEnumerable<ICharacterLevel> ICharacterLevels.Gets()
+        {
+            return Gets();
+        }
+
+        IEnumerable<ICharacterLevel> ICharacterLevels.Gets(Func<ICharacterLevel, bool> critera)
+        {
+            return Gets(critera);
+        }
+
+        bool ICharacterLevels.TryGet(int key, out ICharacterLevel value)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetMaxLevel(int maxLevel)
         {
             MaxLevel = maxLevel < 0 || maxLevel > 99
@@ -375,7 +402,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             this.ToXmlFile(file);
         }
 
-        public static CharacterLevelsXml FromXmlFile(string file)
+        public static ICharacterLevelsXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<CharacterLevelsXml>(file);
         }

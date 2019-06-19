@@ -132,11 +132,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
             return true;
         }
 
-        bool IDictionaryContainer<TKey, TInterface>.ContainsKey(TKey key)
-        {
-            throw new NotImplementedException();
-        }
-
         TInterface IDictionaryContainer<TKey, TInterface>.Get(Func<TInterface, bool> critera)
         {
             throw new NotImplementedException();

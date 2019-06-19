@@ -1,5 +1,6 @@
 ﻿#region Using directives
 
+using System;
 using System.Collections.Generic;
 using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
 
@@ -52,9 +53,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
         new ICharacterLevelGameCurrencyEffect GameCurrencyEffect { get; }
         new ICharacterLevelSkillPointsEffect SkillPointsEffect { get; }
         new ICharacterLevelAgeUpEffect AgeUpEffect { get; }
+
         new IEnumerable<ICharacterLevelUnlockRegionEffect> UnlockRegionEffect { get; }
+
         //void SetLevel(int level);
         void SetXp(int xp);
+
         void SetGameCurrencyEffect(int empirePoints);
         void RemoveGameCurrencyEffect();
         void SetSkillPointsEffect(int skillPoints);
@@ -75,9 +79,17 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
         ICharacterLevelAgeUpEffectReadOnly AgeUpEffect { get; }
         IEnumerable<ICharacterLevelUnlockRegionEffectReadOnly> UnlockRegionEffect { get; }
     }
-    public interface ICharacterLevels :  IDictionaryContainer<int, ICharacterLevel>
+
+    public interface ICharacterLevels : IDictionaryContainer<int, ICharacterLevel>, ICharacterLevelsReadOnly
     {
-        int MaxLevel { get; }
+        new ICharacterLevel this[int key] { get; }
+        new int Count { get; }
+        new bool ContainsKey(int key);
+        new ICharacterLevel Get(Func<ICharacterLevel, bool> critera);
+        new ICharacterLevel Get(int key);
+        new IEnumerable<ICharacterLevel> Gets();
+        new IEnumerable<ICharacterLevel> Gets(Func<ICharacterLevel, bool> critera);
+        new bool TryGet(int key, out ICharacterLevel value);
         void SetMaxLevel(int maxLevel);
     }
 

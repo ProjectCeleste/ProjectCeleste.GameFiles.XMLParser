@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using ProjectCeleste.GameFiles.XMLParser.Interface;
 using ProjectCeleste.GameFiles.XMLParser.Model;
 
 #endregion
@@ -10,13 +11,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
 {
     public static class EconBlueprintXmlExt
     {
-        public static string GetDisplayNameLocalized(this EconBlueprintXml item, LanguagesXml languages,
+        public static string GetDisplayNameLocalized(this EconBlueprintXml item, ILanguagesReadOnly languages,
             string language = "English")
         {
             return languages["econstrings"][language][item.DisplayNameId].Text;
         }
 
-        public static string GetRollOverTextLocalized(this EconBlueprintXml item, LanguagesXml languages,
+        public static string GetRollOverTextLocalized(this EconBlueprintXml item, ILanguagesReadOnly languages,
             string language = "English")
         {
             return languages["econstrings"][language][item.RollOverTextId].Text;

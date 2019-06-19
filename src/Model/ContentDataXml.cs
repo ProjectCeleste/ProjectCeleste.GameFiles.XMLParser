@@ -185,20 +185,20 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonIgnore]
         [XmlIgnore]
-        IReadOnlyContainer<string, ContentDataXmlContent> IContentDataReadOnly.Content => Content;
+        IDictionaryContainer<string, ContentDataXmlContent> IContentData.Content => Content;
 
         [JsonIgnore]
         [XmlIgnore]
-        IDictionaryContainer<string, ContentDataXmlContent> IContentData.Content => Content;
+        IDictionaryContainer<string, ContentDataXmlCurrencycontent> IContentData.CurrencyContent => CurrencyContent;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IReadOnlyContainer<string, ContentDataXmlContent> IContentDataReadOnly.Content => Content;
 
         [JsonIgnore]
         [XmlIgnore]
         IReadOnlyContainer<string, ContentDataXmlCurrencycontent> IContentDataReadOnly.CurrencyContent =>
             CurrencyContent;
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IDictionaryContainer<string, ContentDataXmlCurrencycontent> IContentData.CurrencyContent => CurrencyContent;
 
         public static ContentDataXml FromXmlFile(string file)
         {

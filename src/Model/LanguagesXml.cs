@@ -19,7 +19,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
     [JsonObject(Title = "string", Description = "")]
     [XmlRoot(ElementName = "string")]
-    public class LanguageStringXml
+    public class LanguageStringXml : ILanguageString
     {
         public LanguageStringXml()
         {
@@ -27,11 +27,15 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonConstructor]
         public LanguageStringXml([JsonProperty(PropertyName = "_locid", Required = Required.Always)] int locId,
-            [JsonProperty(PropertyName = "symbol", DefaultValueHandling = DefaultValueHandling.Ignore)] string symbol,
-            [JsonProperty(PropertyName = "comment", DefaultValueHandling = DefaultValueHandling.Ignore)] string comment,
-            [JsonProperty(PropertyName = "text", Required = Required.AllowNull)] string text)
+            [JsonProperty(PropertyName = "symbol", DefaultValueHandling = DefaultValueHandling.Ignore)] string symbol =
+                null,
+            [JsonProperty(PropertyName = "comment", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            string comment = null,
+            [JsonProperty(PropertyName = "text", Required = Required.AllowNull)] string text = null)
         {
-            LocId = locId;
+            LocId = locId < 0
+                ? throw new ArgumentOutOfRangeException(nameof(locId), locId, null)
+                : locId;
             Symbol = symbol;
             Comment = comment;
             Text = text;
@@ -57,14 +61,42 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "text", Required = Required.AllowNull)]
         [XmlText]
         public string Text { get; set; }
+
+        public void SetLocId(int locId)
+        {
+            LocId = locId < 0
+                ? throw new ArgumentOutOfRangeException(nameof(locId), locId, null)
+                : locId;
+        }
+
+        public void SetComment(string comment = null)
+        {
+            Comment = comment;
+        }
+
+        public void SetSymbol(string symbol = null)
+        {
+            Symbol = symbol;
+        }
+
+        public void SetText(string text = null)
+        {
+            Text = text;
+        }
     }
 
     [JsonObject(Title = "language", Description = "")]
     [XmlRoot(ElementName = "language")]
-    public class LanguageXml : DictionaryContainer<int, LanguageStringXml>
+    public class LanguageXml : DictionaryContainer<int, LanguageStringXml, ILanguageString, ILanguageStringReadOnly>,
+        ILanguage
     {
         public LanguageXml() : base(key => key.LocId)
         {
+        }
+
+        public LanguageXml(string name) : base(key => key.LocId)
+        {
+            Name = !string.IsNullOrWhiteSpace(name) ? name : throw new ArgumentNullException(nameof(name));
         }
 
         [JsonConstructor]
@@ -72,14 +104,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             [JsonProperty(PropertyName = "string", Required = Required.Always)]
             IEnumerable<LanguageStringXml> languageString) : base(languageString, key => key.LocId)
         {
-            Name = name;
+            Name = !string.IsNullOrWhiteSpace(name) ? name : throw new ArgumentNullException(nameof(name));
         }
-
-        [Key]
-        [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "name", Required = Required.Always)]
-        [XmlAttribute(AttributeName = "name")]
-        public string Name { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -108,11 +134,51 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                     throw new AggregateException(excs);
             }
         }
+
+        [Key]
+        [Required(AllowEmptyStrings = false)]
+        [JsonProperty(PropertyName = "name", Required = Required.Always)]
+        [XmlAttribute(AttributeName = "name")]
+        public string Name { get; set; }
+
+        public void SetName(string name)
+        {
+            Name = !string.IsNullOrWhiteSpace(name) ? name : throw new ArgumentNullException(nameof(name));
+        }
+
+        ILanguageString ILanguage.Get(Func<ILanguageString, bool> critera)
+        {
+            return Get(critera);
+        }
+
+        ILanguageString ILanguage.Get(int key)
+        {
+            return Get(key);
+        }
+
+        IEnumerable<ILanguageString> ILanguage.Gets()
+        {
+            return Gets();
+        }
+
+        IEnumerable<ILanguageString> ILanguage.Gets(Func<ILanguageString, bool> critera)
+        {
+            return Gets(critera);
+        }
+
+        bool ILanguage.TryGet(int key, out ILanguageString value)
+        {
+            throw new NotImplementedException();
+        }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        ILanguageString ILanguage.this[int key] => this[key];
     }
 
     [JsonObject(Title = "stringtable", Description = "")]
     [XmlRoot(ElementName = "stringtable")]
-    public class StringTableXml : DictionaryContainer<string, LanguageXml>
+    public class StringTableXml : DictionaryContainer<string, LanguageXml, ILanguage, ILanguageReadOnly>, IStringTable
     {
         public StringTableXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -130,40 +196,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         {
             Version = version;
             Id = id;
-            Locstart = locstart;
-            Locend = locend;
-            Loccurrent = loccurrent;
+            LocStart = locstart;
+            LocEnd = locend;
+            LocCurrent = loccurrent;
         }
-
-        [Key]
-        [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "id", Required = Required.Always)]
-        [XmlIgnore]
-        public string Id { get; set; }
-
-        [Required]
-        [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "version", Required = Required.Always)]
-        [XmlAttribute(AttributeName = "version")]
-        public int Version { get; set; }
-
-        [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "locstart", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlAttribute(AttributeName = "locstart")]
-        public int Locstart { get; set; }
-
-        [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "locend", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlAttribute(AttributeName = "locend")]
-        public int Locend { get; set; }
-
-        [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "loccurrent", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlAttribute(AttributeName = "loccurrent")]
-        public int Loccurrent { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -191,6 +227,90 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                 if (excs.Count > 0)
                     throw new AggregateException(excs);
             }
+        }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        ILanguage IStringTable.this[string key] => this[key];
+
+        [Key]
+        [Required(AllowEmptyStrings = false)]
+        [JsonProperty(PropertyName = "id", Required = Required.Always)]
+        [XmlIgnore]
+        public string Id { get; set; }
+
+        [Required]
+        [Range(0, int.MaxValue)]
+        [JsonProperty(PropertyName = "version", Required = Required.Always)]
+        [XmlAttribute(AttributeName = "version")]
+        public int Version { get; set; }
+
+        [DefaultValue(0)]
+        [Range(0, int.MaxValue)]
+        [JsonProperty(PropertyName = "locstart", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlAttribute(AttributeName = "locstart")]
+        public int LocStart { get; set; }
+
+        [DefaultValue(0)]
+        [Range(0, int.MaxValue)]
+        [JsonProperty(PropertyName = "locend", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlAttribute(AttributeName = "locend")]
+        public int LocEnd { get; set; }
+
+        [DefaultValue(0)]
+        [Range(0, int.MaxValue)]
+        [JsonProperty(PropertyName = "loccurrent", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlAttribute(AttributeName = "loccurrent")]
+        public int LocCurrent { get; set; }
+
+        public void SetId(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetLocCurrent(int locCurrent)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetLocEnd(int locEnd)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetLocStart(int locStart)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetVersion(int version)
+        {
+            throw new NotImplementedException();
+        }
+
+        ILanguage IStringTable.Get(Func<ILanguage, bool> critera)
+        {
+            return Get(critera);
+        }
+
+        ILanguage IStringTable.Get(string key)
+        {
+            return Get(key);
+        }
+
+        IEnumerable<ILanguage> IStringTable.Gets()
+        {
+            return Gets();
+        }
+
+        IEnumerable<ILanguage> IStringTable.Gets(Func<ILanguage, bool> critera)
+        {
+            return Gets(critera);
+        }
+
+        bool IStringTable.TryGet(string key, out ILanguage value)
+        {
+            throw new NotImplementedException();
         }
 
         public static StringTableXml FromXmlFile(string file)
@@ -224,7 +344,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "languages", Description = "")]
     [XmlRoot(ElementName = "languages")]
-    public class LanguagesXml : DictionaryContainer<string, StringTableXml>, ILanguages, ILanguagesReadOnly
+    public class LanguagesXml : DictionaryContainer<string, StringTableXml, IStringTable, IStringTableReadOnly>,
+        ILanguagesXml
     {
         public LanguagesXml() : base(key => key.Id, StringComparer.OrdinalIgnoreCase)
         {
@@ -265,7 +386,36 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static LanguagesXml LanguagesFromXmlFiles(string languagesFolder)
+        [JsonIgnore]
+        [XmlIgnore]
+        IStringTable ILanguages.this[string key] => this[key];
+
+        IStringTable ILanguages.Get(Func<IStringTable, bool> critera)
+        {
+            return Get(critera);
+        }
+
+        IStringTable ILanguages.Get(string key)
+        {
+            return Get(key);
+        }
+
+        IEnumerable<IStringTable> ILanguages.Gets()
+        {
+            return Gets();
+        }
+
+        IEnumerable<IStringTable> ILanguages.Gets(Func<IStringTable, bool> critera)
+        {
+            return Gets(critera);
+        }
+
+        bool ILanguages.TryGet(string key, out IStringTable value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static ILanguagesXml LanguagesFromXmlFiles(string languagesFolder)
         {
             var prefixLang = new[] {"", "de-DE", "fr-FR", "es-ES", "it-IT", "zh-CHT"};
 

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Container.Interface
 {
-    public interface IReadOnlyContainer<T1, T2>
+    public interface IReadOnlyContainer<in T1, T2>
     {
         T2 this[T1 key] { get; }
         int Count { get; }
