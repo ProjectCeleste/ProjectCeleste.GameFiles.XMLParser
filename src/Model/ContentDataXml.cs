@@ -174,12 +174,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonIgnore]
         [XmlIgnore]
-        public IDictionaryContainer<string, ContentDataXmlContent> Content { get; } =
+        public DictionaryContainer<string, ContentDataXmlContent> Content { get; } =
             new DictionaryContainer<string, ContentDataXmlContent>(key => key.Name, StringComparer.OrdinalIgnoreCase);
 
         [JsonIgnore]
         [XmlIgnore]
-        public IDictionaryContainer<string, ContentDataXmlCurrencycontent> CurrencyContent { get; } =
+        public DictionaryContainer<string, ContentDataXmlCurrencycontent> CurrencyContent { get; } =
             new DictionaryContainer<string, ContentDataXmlCurrencycontent>(key => key.Name,
                 StringComparer.OrdinalIgnoreCase);
 
@@ -189,8 +189,16 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonIgnore]
         [XmlIgnore]
+        IDictionaryContainer<string, ContentDataXmlContent> IContentData.Content => Content;
+
+        [JsonIgnore]
+        [XmlIgnore]
         IReadOnlyContainer<string, ContentDataXmlCurrencycontent> IContentDataReadOnly.CurrencyContent =>
             CurrencyContent;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IDictionaryContainer<string, ContentDataXmlCurrencycontent> IContentData.CurrencyContent => CurrencyContent;
 
         public static ContentDataXml FromXmlFile(string file)
         {
