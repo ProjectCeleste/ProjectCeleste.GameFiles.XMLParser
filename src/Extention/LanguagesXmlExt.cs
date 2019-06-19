@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Model;
 
 #endregion
 

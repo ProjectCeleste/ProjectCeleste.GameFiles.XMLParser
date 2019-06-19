@@ -1,4 +1,10 @@
-﻿namespace ProjectCeleste.GameFiles.XMLParser.Extention
+﻿#region Using directives
+
+using ProjectCeleste.GameFiles.XMLParser.Model;
+
+#endregion
+
+namespace ProjectCeleste.GameFiles.XMLParser.Extention
 {
     public static class ProtoAge4XmlExt
     {

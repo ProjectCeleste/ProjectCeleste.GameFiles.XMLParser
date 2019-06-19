@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Model;
 
 #endregion
 
