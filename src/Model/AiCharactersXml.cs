@@ -26,19 +26,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     {
         [Required]
         [JsonProperty(PropertyName = "used", Required = Required.Always)]
-        [XmlIgnore]
-        public bool IsUsed { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required(AllowEmptyStrings = false)]
-        [JsonIgnore]
         [XmlAttribute(AttributeName = "used")]
-        public string UsedStrDoNotUse
-        {
-            get => IsUsed ? "true" : "false";
-            set => IsUsed = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-        }
+        public bool Used { get; set; }
 
         [Required]
         [Range(0, 99)]
@@ -98,12 +87,19 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "activetechs", Description = "")]
     [XmlRoot(ElementName = "activetechs")]
-    public class AiCharacterXmlTechs
+    public class AiCharacterXmlTechs : DictionaryContainer<string, AiCharacterXmlTechsTech>
     {
-        [JsonIgnore]
-        [XmlIgnore]
-        public IDictionary<string, AiCharacterXmlTechsTech> Tech { get; } =
-            new Dictionary<string, AiCharacterXmlTechsTech>(StringComparer.OrdinalIgnoreCase);
+        public AiCharacterXmlTechs() : base(key => key.TechId, StringComparer.OrdinalIgnoreCase)
+        {
+        }
+
+        [JsonConstructor]
+        public AiCharacterXmlTechs(
+            [JsonProperty(PropertyName = "tech", Required = Required.Always)]
+            IEnumerable<AiCharacterXmlTechsTech> values) : base(values, key => key.TechId,
+            StringComparer.OrdinalIgnoreCase)
+        {
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -112,15 +108,26 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "tech")]
         public AiCharacterXmlTechsTech[] TechArrayDoNotUse
         {
-            get => Tech.Values.ToArray();
+            get => Gets().ToArray();
             set
             {
-                Tech.Clear();
+                Clear();
                 if (value == null)
                     return;
 
+                var excs = new List<Exception>();
                 foreach (var item in value)
-                    Tech.Add(item.TechId, item);
+                    try
+                    {
+                        if (!Add(item))
+                            throw new Exception("Add fail");
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(new Exception($"Item '{item.TechId}'", e));
+                    }
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
             }
         }
     }
@@ -129,31 +136,73 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "assignedadvisors")]
     public class AiCharacterXmlAssignedAdvisors
     {
+        public AiCharacterXmlAssignedAdvisors()
+        {
+            AssignedAdvisor = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        }
+
+        [JsonConstructor]
+        public AiCharacterXmlAssignedAdvisors(
+            [JsonProperty(PropertyName = "assignedadvisor", Required = Required.Always)]
+            HashSet<string> assignedAdvisor)
+        {
+            AssignedAdvisor = assignedAdvisor != null
+                ? new HashSet<string>(assignedAdvisor, StringComparer.OrdinalIgnoreCase)
+                : null;
+        }
+
         [Required]
         [MaxLength(4)]
         [JsonProperty(PropertyName = "assignedadvisor", Required = Required.Always)]
         [XmlElement(ElementName = "assignedadvisor")]
-        public HashSet<string> AssignedAdvisor { get; set; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        public HashSet<string> AssignedAdvisor { get; set; }
     }
 
     [JsonObject(Title = "availableadvisors", Description = "")]
     [XmlRoot(ElementName = "availableadvisors")]
     public class AiCharacterXmlAvailableAdvisors
     {
+        public AiCharacterXmlAvailableAdvisors()
+        {
+            AvailableAdvisor = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        }
+
+        [JsonConstructor]
+        public AiCharacterXmlAvailableAdvisors(
+            [JsonProperty(PropertyName = "availableadvisor", Required = Required.Always)]
+            HashSet<string> availableAdvisor)
+        {
+            AvailableAdvisor = availableAdvisor != null
+                ? new HashSet<string>(availableAdvisor, StringComparer.OrdinalIgnoreCase)
+                : null;
+        }
+
         [Required]
         [JsonProperty(PropertyName = "availableadvisor", Required = Required.Always)]
         [XmlElement(ElementName = "availableadvisor")]
-        public HashSet<string> AvailableAdvisor { get; set; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        public HashSet<string> AvailableAdvisor { get; set; }
     }
 
     [JsonObject(Title = "protounits", Description = "")]
     [XmlRoot(ElementName = "protounits")]
     public class AiCharacterXmlProtoUnits
     {
+        public AiCharacterXmlProtoUnits()
+        {
+            ProtoUnit = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        }
+
+        [JsonConstructor]
+        public AiCharacterXmlProtoUnits(
+            [JsonProperty(PropertyName = "protounit", Required = Required.AllowNull)] HashSet<string> protoUnit)
+        {
+            ProtoUnit = protoUnit != null ? new HashSet<string>(protoUnit, StringComparer.OrdinalIgnoreCase) : null;
+        }
+
         [Required]
-        [JsonProperty(PropertyName = "protounit", Required = Required.Always)]
+        [JsonProperty(PropertyName = "protounit", Required = Required.AllowNull)]
         [XmlElement(ElementName = "protounit")]
-        public HashSet<string> ProtoUnit { get; set; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        public HashSet<string> ProtoUnit { get; set; }
     }
 
     [JsonObject(Title = "character", Description = "")]
@@ -278,6 +327,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         }
 
         public AiCharactersXml(IDictionary<string, AiCharacterXml> values) : base(values, key => key.FileName,
+            StringComparer.OrdinalIgnoreCase)
+        {
+        }
+
+        [JsonConstructor]
+        public AiCharactersXml(
+            [JsonProperty(PropertyName = "characters", Required = Required.Always)]
+            IEnumerable<AiCharacterXml> values) : base(values, key => key.FileName,
             StringComparer.OrdinalIgnoreCase)
         {
         }
