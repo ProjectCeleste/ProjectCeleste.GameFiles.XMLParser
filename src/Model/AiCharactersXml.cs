@@ -376,6 +376,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             foreach (var file in Directory.GetFiles(folder, "*.character", SearchOption.AllDirectories))
                 try
                 {
+                    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+                    if( !string.IsNullOrWhiteSpace(fileNameWithoutExtension) && string.Equals(fileNameWithoutExtension,
+                            "defaultai", StringComparison.OrdinalIgnoreCase))
+                        continue;
                     var newClass = AiCharacterXml.FromXmlFile(file, folder);
                     aiCharacters.Add(newClass.FileName, newClass);
                 }
