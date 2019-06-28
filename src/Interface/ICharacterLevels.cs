@@ -53,12 +53,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
         new ICharacterLevelGameCurrencyEffect GameCurrencyEffect { get; }
         new ICharacterLevelSkillPointsEffect SkillPointsEffect { get; }
         new ICharacterLevelAgeUpEffect AgeUpEffect { get; }
-
         new IEnumerable<ICharacterLevelUnlockRegionEffect> UnlockRegionEffect { get; }
 
         //void SetLevel(int level);
         void SetXp(int xp);
-
         void SetGameCurrencyEffect(int empirePoints);
         void RemoveGameCurrencyEffect();
         void SetSkillPointsEffect(int skillPoints);
