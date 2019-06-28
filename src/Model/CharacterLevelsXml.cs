@@ -387,7 +387,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         bool ICharacterLevels.TryGet(int key, out ICharacterLevel value)
         {
-            throw new NotImplementedException();
+            if (!TryGet(key, out CharacterLevelXml item))
+            {
+                value = null;
+                return false;
+            }
+            value = item;
+            return true;
         }
 
         public void SetMaxLevel(int maxLevel)
