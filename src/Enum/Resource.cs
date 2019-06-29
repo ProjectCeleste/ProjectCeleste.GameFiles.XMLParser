@@ -16,6 +16,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("Wood")] [EnumMember(Value = "Wood")] Wood = 1,
         [XmlEnum("Food")] [EnumMember(Value = "Food")] Food = 2,
         [XmlEnum("Stone")] [EnumMember(Value = "Stone")] Stone = 3,
+        [XmlEnum("stone")] [EnumMember(Value = "stone")] stone = Stone, //TEMP
         [XmlEnum("Gold")] [EnumMember(Value = "Gold")] Gold = 4,
         [XmlEnum("SkillPoints")] [EnumMember(Value = "SkillPoints")] SkillPoints = 5,
         [XmlEnum("XP")] [EnumMember(Value = "XP")] Xp = 6,
