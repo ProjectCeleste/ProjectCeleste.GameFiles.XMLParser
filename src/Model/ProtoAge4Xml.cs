@@ -223,9 +223,24 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     }
 
     [XmlRoot(ElementName = "Armor")]
-    public class Armor
+    public class ProtoAge4XmlUnitArmor
     {
-        [Key]
+        public ProtoAge4XmlUnitArmor()
+        {
+        }
+
+        [JsonConstructor]
+        public ProtoAge4XmlUnitArmor(
+            [JsonConverter(typeof(StringEnumConverter))]
+            [JsonProperty(PropertyName = "type", Required = Required.Always)] DamageTypeEnum type,
+            [JsonProperty(PropertyName = "value", Required = Required.Always)] double value)
+        {
+            Type = type != DamageTypeEnum.None
+                ? type
+                : throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            Value = value;
+        }
+
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "type", Required = Required.Always)]
@@ -233,7 +248,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public DamageTypeEnum Type { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue)]
+        [Range(double.MinValue, double.MaxValue)]
         [JsonProperty(PropertyName = "value", Required = Required.Always)]
         [XmlAttribute(AttributeName = "value")]
         public double Value { get; set; }
@@ -392,7 +407,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     }
 
     [XmlRoot(ElementName = "Unit")]
-    public class ProtoAge4XmlUnit
+    public class ProtoAge4XmlUnit : IProtoAge4Unit
     {
         public ProtoAge4XmlUnit()
         {
@@ -415,21 +430,446 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             VisualScale = -1;
         }
 
+        public ProtoAge4XmlUnit(string name,
+            int id,
+            int dbid,
+            int displayNameId,
+            int editorNameId,
+            int rolloverTextId,
+            int shortRolloverTextId,
+            double obstructionRadiusX,
+            double obstructionRadiusZ,
+            double maxVelocity,
+            double maxRunVelocity,
+            string movementType,
+            double lifespan,
+            double los,
+            string soundFile,
+            ProtoAge4XmlUnitDecay decay,
+            HashSet<UnitFlagEnum> flag,
+            string animFile,
+            double visualScale,
+            HashSet<UnitTypeEnum> unitType,
+            ImpactTypeEnum impactType,
+            string icon,
+            string portraitIcon,
+            double initialHitpoints,
+            double maxHitpoints,
+            double bounty,
+            ProtoAge4XmlUnitInitialResource initialResource,
+            ResourceSubTypeEnum resourceSubType,
+            ProtoAge4XmlUnitMinimapColor minimapColor,
+            int gathererLimit,
+            double turnRate,
+            int wanderDistance,
+            string unitAiType,
+            DictionaryContainer<EventEnum, ProtoAge4XmlUnitEvent> @event,
+            ProtoAge4XmlUnitEvent[] eventArray,
+            string formationCategory,
+            PhysicsInfoEnum physicsInfo,
+            int selectionPriority,
+            string initialUnitAiStance,
+            string tactics,
+            List<ProtoAge4XmlUnitProtoAction> protoAction,
+            int populationCapAddition,
+            string placementFile,
+            double buildPoints,
+            double buildingWorkRate,
+            int allowedAge,
+            int builderLimit,
+            List<ProtoAge4XmlUnitArmor> armor,
+            HashSet<UnitTypeEnum> contain,
+            DictionaryContainer<UnitCommandEnum, ProtoAge4XmlUnitCommand> command,
+            ProtoAge4XmlUnitCommand[] commandArray,
+            int unitLevel,
+            string trait1,
+            string trait2,
+            string trait3,
+            string trait4,
+            string trait5,
+            string vanTrait1,
+            string vanTrait2,
+            string vanTrait3,
+            DictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCost> cost,
+            ProtoAge4XmlUnitCost[] costArray,
+            DictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity> carryCapacity,
+            ProtoAge4XmlUnitCarryCapacity[] carryCapacityArray,
+            double repairPoints,
+            DictionaryContainer<string, ProtoAge4XmlRowPageColumn> tech,
+            ProtoAge4XmlRowPageColumn[] techArray,
+            double idleTimeout,
+            string socketUnitType,
+            double allowedHeightVariance,
+            string minimapIcon,
+            string projectileProtoUnit,
+            int buildLimit,
+            int maxContained,
+            string inputContext,
+            DictionaryContainer<string, ProtoAge4XmlRowPageColumn> train,
+            ProtoAge4XmlRowPageColumn[] trainArray,
+            int populationCount,
+            double corpseDecalTime,
+            double trainPoints,
+            double autoAttackRange,
+            double turnRadius,
+            ProtoAge4XmlUnitHeightBob heightBob,
+            string designTag,
+            string deathMessage)
+        {
+            Name = name;
+            Id = id;
+            Dbid = dbid;
+            DisplayNameId = displayNameId;
+            EditorNameId = editorNameId;
+            RolloverTextId = rolloverTextId;
+            ShortRolloverTextId = shortRolloverTextId;
+            ObstructionRadiusX = obstructionRadiusX;
+            ObstructionRadiusZ = obstructionRadiusZ;
+            MaxVelocity = maxVelocity;
+            MaxRunVelocity = maxRunVelocity;
+            MovementType = movementType;
+            Lifespan = lifespan;
+            Los = los;
+            SoundFile = soundFile;
+            Decay = decay;
+            Flag = flag;
+            AnimFile = animFile;
+            VisualScale = visualScale;
+            UnitType = unitType;
+            ImpactType = impactType;
+            Icon = icon;
+            PortraitIcon = portraitIcon;
+            InitialHitpoints = initialHitpoints;
+            MaxHitpoints = maxHitpoints;
+            Bounty = bounty;
+            InitialResource = initialResource;
+            ResourceSubType = resourceSubType;
+            MinimapColor = minimapColor;
+            GathererLimit = gathererLimit;
+            TurnRate = turnRate;
+            WanderDistance = wanderDistance;
+            UnitAiType = unitAiType;
+            Event = @event;
+            EventArray = eventArray;
+            FormationCategory = formationCategory;
+            PhysicsInfo = physicsInfo;
+            SelectionPriority = selectionPriority;
+            InitialUnitAiStance = initialUnitAiStance;
+            Tactics = tactics;
+            ProtoAction = protoAction;
+            PopulationCapAddition = populationCapAddition;
+            PlacementFile = placementFile;
+            BuildPoints = buildPoints;
+            BuildingWorkRate = buildingWorkRate;
+            AllowedAge = allowedAge;
+            BuilderLimit = builderLimit;
+            Armor = armor;
+            Contain = contain;
+            Command = command;
+            CommandArray = commandArray;
+            UnitLevel = unitLevel;
+            Trait1 = trait1;
+            Trait2 = trait2;
+            Trait3 = trait3;
+            Trait4 = trait4;
+            Trait5 = trait5;
+            VanTrait1 = vanTrait1;
+            VanTrait2 = vanTrait2;
+            VanTrait3 = vanTrait3;
+            Cost = cost;
+            CostArray = costArray;
+            CarryCapacity = carryCapacity;
+            CarryCapacityArray = carryCapacityArray;
+            RepairPoints = repairPoints;
+            Tech = tech;
+            TechArray = techArray;
+            IdleTimeout = idleTimeout;
+            SocketUnitType = socketUnitType;
+            AllowedHeightVariance = allowedHeightVariance;
+            MinimapIcon = minimapIcon;
+            ProjectileProtoUnit = projectileProtoUnit;
+            BuildLimit = buildLimit;
+            MaxContained = maxContained;
+            InputContext = inputContext;
+            Train = train;
+            TrainArray = trainArray;
+            PopulationCount = populationCount;
+            CorpseDecalTime = corpseDecalTime;
+            TrainPoints = trainPoints;
+            AutoAttackRange = autoAttackRange;
+            TurnRadius = turnRadius;
+            HeightBob = heightBob;
+            DesignTag = designTag;
+            DeathMessage = deathMessage;
+        }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        public DictionaryContainer<EventEnum, ProtoAge4XmlUnitEvent> Event { get; }
+
+        [DefaultValue(0)]
+        [Range(0, int.MaxValue)]
+        [JsonProperty(PropertyName = "WanderDistance", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "WanderDistance")]
+        public int WanderDistance { get; set; }
+
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "UnitAIType", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "UnitAIType")]
+        public string UnitAiType { get; set; }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "Event", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "Event")]
+        public ProtoAge4XmlUnitEvent[] EventArray
+        {
+            get => Event.Count > 0 ? Event.Gets().ToArray() : null;
+            set
+            {
+                Event.Clear();
+
+                if (value == null)
+                    return;
+
+                var excs = new List<Exception>();
+                foreach (var item in value)
+                    try
+                    {
+                        Event.Add(item);
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(new Exception($"Item '{item.Name}'", e));
+                    }
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
+            }
+        }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        public DictionaryContainer<UnitCommandEnum, ProtoAge4XmlUnitCommand> Command { get; }
+
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "Armor", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "Armor")]
+        public List<ProtoAge4XmlUnitArmor> Armor { get; set; }
+
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "Contain", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "Contain")]
+        public HashSet<UnitTypeEnum> Contain { get; set; }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "Command", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "Command")]
+        public ProtoAge4XmlUnitCommand[] CommandArray
+        {
+            get => Command.Count > 0 ? Command.Gets().ToArray() : null;
+            set
+            {
+                Command.Clear();
+
+                if (value == null)
+                    return;
+
+                var excs = new List<Exception>();
+                foreach (var item in value)
+                    try
+                    {
+                        Command.Add(item);
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(new Exception($"Item '{item.Name}'", e));
+                    }
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
+            }
+        }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        public DictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCost> Cost { get; }
+
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "VanTrait2", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "VanTrait2")]
+        public string VanTrait2 { get; set; }
+
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "VanTrait3", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "VanTrait3")]
+        public string VanTrait3 { get; set; }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "Cost", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "Cost")]
+        public ProtoAge4XmlUnitCost[] CostArray
+        {
+            get => Cost.Count > 0 ? Cost.Gets().ToArray() : null;
+            set
+            {
+                Cost.Clear();
+
+                if (value == null)
+                    return;
+
+                var excs = new List<Exception>();
+                foreach (var item in value)
+                    try
+                    {
+                        Cost.Add(item);
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(new Exception($"Item '{item.ResourceType}'", e));
+                    }
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
+            }
+        }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        public DictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity> CarryCapacity { get; }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "CarryCapacity", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "CarryCapacity")]
+        public ProtoAge4XmlUnitCarryCapacity[] CarryCapacityArray
+        {
+            get => CarryCapacity.Count > 0 ? CarryCapacity.Gets().ToArray() : null;
+            set
+            {
+                CarryCapacity.Clear();
+
+                if (value == null)
+                    return;
+
+                var excs = new List<Exception>();
+                foreach (var item in value)
+                    try
+                    {
+                        CarryCapacity.Add(item);
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(new Exception($"Item '{item.ResourceType}'", e));
+                    }
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
+            }
+        }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        public DictionaryContainer<string, ProtoAge4XmlRowPageColumn> Tech { get; }
+
+        [DefaultValue(0)]
+        [Range(0, int.MaxValue)]
+        [JsonProperty(PropertyName = "RepairPoints", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "RepairPoints")]
+        public double RepairPoints { get; set; }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "Tech", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "Tech")]
+        public ProtoAge4XmlRowPageColumn[] TechArray
+        {
+            get => Tech.Count > 0 ? Tech.Gets().ToArray() : null;
+            set
+            {
+                Tech.Clear();
+
+                if (value == null)
+                    return;
+
+                var excs = new List<Exception>();
+                foreach (var item in value)
+                    try
+                    {
+                        Tech.Add(item);
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(new Exception($"Item '{item.Name}'", e));
+                    }
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
+            }
+        }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        public DictionaryContainer<string, ProtoAge4XmlRowPageColumn> Train { get; }
+
+        [DefaultValue(0)]
+        [Range(0, int.MaxValue)]
+        [JsonProperty(PropertyName = "MaxContained", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "MaxContained")]
+        public int MaxContained { get; set; }
+
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "InputContext", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "InputContext")]
+        public string InputContext { get; set; }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DefaultValue(null)]
+        [JsonProperty(PropertyName = "Train", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "Train")]
+        public ProtoAge4XmlRowPageColumn[] TrainArray
+        {
+            get => Train.Count > 0 ? Train.Gets().ToArray() : null;
+            set
+            {
+                Train.Clear();
+
+                if (value == null)
+                    return;
+
+                var excs = new List<Exception>();
+                foreach (var item in value)
+                    try
+                    {
+                        Train.Add(item);
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(new Exception($"Item '{item.Name}'", e));
+                    }
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
+            }
+        }
+
         [Key]
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
 
-        [Required]
+        [DefaultValue(0)]
         [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "id", Required = Required.Always)]
+        [JsonProperty(PropertyName = "id", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "id")]
         public int Id { get; set; }
 
-        [Required]
+        [DefaultValue(0)]
         [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "DBID", Required = Required.Always)]
+        [JsonProperty(PropertyName = "DBID", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "DBID")]
         public int Dbid { get; set; }
 
@@ -591,51 +1031,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "TurnRate")]
         public double TurnRate { get; set; }
 
-        [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "WanderDistance", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "WanderDistance")]
-        public int WanderDistance { get; set; }
-
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "UnitAIType", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "UnitAIType")]
-        public string UnitAiType { get; set; }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        public IDictionaryContainer<EventEnum, ProtoAge4XmlUnitEvent> Event { get; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "Event", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "Event")]
-        public ProtoAge4XmlUnitEvent[] EventArray
-        {
-            get => Event.Count > 0 ? Event.Gets().ToArray() : null;
-            set
-            {
-                Event.Clear();
-
-                if (value == null)
-                    return;
-
-                var excs = new List<Exception>();
-                foreach (var item in value)
-                    try
-                    {
-                        Event.Add(item);
-                    }
-                    catch (Exception e)
-                    {
-                        excs.Add(new Exception($"Item '{item.Name}'", e));
-                    }
-                if (excs.Count > 0)
-                    throw new AggregateException(excs);
-            }
-        }
-
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "FormationCategory", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "FormationCategory")]
@@ -703,50 +1098,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "BuilderLimit")]
         public int BuilderLimit { get; set; }
 
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "Armor", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "Armor")]
-        public List<Armor> Armor { get; set; }
-
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "Contain", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "Contain")]
-        public HashSet<UnitTypeEnum> Contain { get; set; }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        public IDictionaryContainer<UnitCommandEnum, ProtoAge4XmlUnitCommand> Command { get; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "Command", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "Command")]
-        public ProtoAge4XmlUnitCommand[] CommandArray
-        {
-            get => Command.Count > 0 ? Command.Gets().ToArray() : null;
-            set
-            {
-                Command.Clear();
-
-                if (value == null)
-                    return;
-
-                var excs = new List<Exception>();
-                foreach (var item in value)
-                    try
-                    {
-                        Command.Add(item);
-                    }
-                    catch (Exception e)
-                    {
-                        excs.Add(new Exception($"Item '{item.Name}'", e));
-                    }
-                if (excs.Count > 0)
-                    throw new AggregateException(excs);
-            }
-        }
-
         [DefaultValue(0)]
         [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "UnitLevel", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -783,124 +1134,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "VanTrait1")]
         public string VanTrait1 { get; set; }
 
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "VanTrait2", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "VanTrait2")]
-        public string VanTrait2 { get; set; }
-
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "VanTrait3", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "VanTrait3")]
-        public string VanTrait3 { get; set; }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        public IDictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCost> Cost { get; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "Cost", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "Cost")]
-        public ProtoAge4XmlUnitCost[] CostArray
-        {
-            get => Cost.Count > 0 ? Cost.Gets().ToArray() : null;
-            set
-            {
-                Cost.Clear();
-
-                if (value == null)
-                    return;
-
-                var excs = new List<Exception>();
-                foreach (var item in value)
-                    try
-                    {
-                        Cost.Add(item);
-                    }
-                    catch (Exception e)
-                    {
-                        excs.Add(new Exception($"Item '{item.ResourceType}'", e));
-                    }
-                if (excs.Count > 0)
-                    throw new AggregateException(excs);
-            }
-        }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        public IDictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity> CarryCapacity { get; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "CarryCapacity", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "CarryCapacity")]
-        public ProtoAge4XmlUnitCarryCapacity[] CarryCapacityArray
-        {
-            get => CarryCapacity.Count > 0 ? CarryCapacity.Gets().ToArray() : null;
-            set
-            {
-                CarryCapacity.Clear();
-
-                if (value == null)
-                    return;
-
-                var excs = new List<Exception>();
-                foreach (var item in value)
-                    try
-                    {
-                        CarryCapacity.Add(item);
-                    }
-                    catch (Exception e)
-                    {
-                        excs.Add(new Exception($"Item '{item.ResourceType}'", e));
-                    }
-                if (excs.Count > 0)
-                    throw new AggregateException(excs);
-            }
-        }
-
-        [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "RepairPoints", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "RepairPoints")]
-        public double RepairPoints { get; set; }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        public IDictionaryContainer<string, ProtoAge4XmlRowPageColumn> Tech { get; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "Tech", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "Tech")]
-        public ProtoAge4XmlRowPageColumn[] TechArray
-        {
-            get => Tech.Count > 0 ? Tech.Gets().ToArray() : null;
-            set
-            {
-                Tech.Clear();
-
-                if (value == null)
-                    return;
-
-                var excs = new List<Exception>();
-                foreach (var item in value)
-                    try
-                    {
-                        Tech.Add(item);
-                    }
-                    catch (Exception e)
-                    {
-                        excs.Add(new Exception($"Item '{item.Name}'", e));
-                    }
-                if (excs.Count > 0)
-                    throw new AggregateException(excs);
-            }
-        }
-
         [DefaultValue(0)]
         [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "IdleTimeout", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -933,51 +1166,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "BuildLimit", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "BuildLimit")]
         public int BuildLimit { get; set; }
-
-        [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "MaxContained", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "MaxContained")]
-        public int MaxContained { get; set; }
-
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "InputContext", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "InputContext")]
-        public string InputContext { get; set; }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        public IDictionaryContainer<string, ProtoAge4XmlRowPageColumn> Train { get; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DefaultValue(null)]
-        [JsonProperty(PropertyName = "Train", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "Train")]
-        public ProtoAge4XmlRowPageColumn[] TrainArray
-        {
-            get => Train.Count > 0 ? Train.Gets().ToArray() : null;
-            set
-            {
-                Train.Clear();
-
-                if (value == null)
-                    return;
-
-                var excs = new List<Exception>();
-                foreach (var item in value)
-                    try
-                    {
-                        Train.Add(item);
-                    }
-                    catch (Exception e)
-                    {
-                        excs.Add(new Exception($"Item '{item.Name}'", e));
-                    }
-                if (excs.Count > 0)
-                    throw new AggregateException(excs);
-            }
-        }
 
         [DefaultValue(-1)]
         [Range(-1, int.MaxValue)]
@@ -1023,10 +1211,61 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "DeathMessage", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "DeathMessage")]
         public string DeathMessage { get; set; }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IReadOnlyContainer<string, ProtoAge4XmlRowPageColumn> IProtoAge4UnitReadOnly.Tech => Tech;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IDictionaryContainer<string, ProtoAge4XmlRowPageColumn> IProtoAge4Unit.Tech => Tech;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IReadOnlyContainer<string, ProtoAge4XmlRowPageColumn> IProtoAge4UnitReadOnly.Train => Train;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IDictionaryContainer<string, ProtoAge4XmlRowPageColumn> IProtoAge4Unit.Train => Train;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IDictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity> IProtoAge4Unit.CarryCapacity =>
+            CarryCapacity;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IReadOnlyContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity> IProtoAge4UnitReadOnly.CarryCapacity =>
+            CarryCapacity;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IDictionaryContainer<UnitCommandEnum, ProtoAge4XmlUnitCommand> IProtoAge4Unit.Command => Command;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IReadOnlyContainer<UnitCommandEnum, ProtoAge4XmlUnitCommand> IProtoAge4UnitReadOnly.Command => Command;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IDictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCost> IProtoAge4Unit.Cost => Cost;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IReadOnlyContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCost> IProtoAge4UnitReadOnly.Cost => Cost;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IDictionaryContainer<EventEnum, ProtoAge4XmlUnitEvent> IProtoAge4Unit.Event => Event;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IReadOnlyContainer<EventEnum, ProtoAge4XmlUnitEvent> IProtoAge4UnitReadOnly.Event => Event;
     }
 
     [XmlRoot(ElementName = "Proto")]
-    public class ProtoAge4Xml : DictionaryContainer<string, ProtoAge4XmlUnit>, IProtoAge4, IProtoAge4ReadOnly
+    public class ProtoAge4Xml : DictionaryContainer<string, ProtoAge4XmlUnit, IProtoAge4Unit, IProtoAge4UnitReadOnly>,
+        IProtoAge4Xml
     {
         public ProtoAge4Xml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -1037,7 +1276,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             [JsonProperty(PropertyName = "Unit", Required = Required.Always)] IEnumerable<ProtoAge4XmlUnit> power) :
             base(power, key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
-            Version = version;
+            Version = version >= 0 ? version : throw new ArgumentOutOfRangeException(nameof(version), version, null);
         }
 
         [Browsable(false)]
@@ -1075,14 +1314,54 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlAttribute(AttributeName = "version")]
         public int Version { get; set; }
 
-        public static ProtoAge4Xml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<ProtoAge4Xml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IProtoAge4Unit IProtoAge4.this[string key] => this[key];
+
+        IProtoAge4Unit IProtoAge4.Get(Func<IProtoAge4Unit, bool> critera)
+        {
+            return Get(critera);
+        }
+
+        IProtoAge4Unit IProtoAge4.Get(string key)
+        {
+            return Get(key);
+        }
+
+        IEnumerable<IProtoAge4Unit> IProtoAge4.Gets()
+        {
+            return Gets();
+        }
+
+        IEnumerable<IProtoAge4Unit> IProtoAge4.Gets(Func<IProtoAge4Unit, bool> critera)
+        {
+            return Gets(critera);
+        }
+
+        public bool TryGet(string key, out IProtoAge4Unit value)
+        {
+            if (!TryGet(key, out ProtoAge4XmlUnit item))
+            {
+                value = null;
+                return false;
+            }
+            value = item;
+            return true;
+        }
+
+        public void SetVersion(int version)
+        {
+            Version = version >= 0 ? version : throw new ArgumentOutOfRangeException(nameof(version), version, null);
+        }
+
+        public static ProtoAge4Xml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<ProtoAge4Xml>(file);
         }
     }
 }
