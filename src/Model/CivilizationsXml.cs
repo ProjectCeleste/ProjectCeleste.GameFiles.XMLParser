@@ -506,6 +506,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                 }
             if (excs.Count > 0)
                 throw new AggregateException(excs);
+
+            civs.CivilizationArray = civs.CivilizationArray.OrderBy(key => key.Civid).ToArray();
+
             return civs;
         }
     }
