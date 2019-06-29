@@ -26,7 +26,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "resourcetype", Required = Required.Always)]
         [XmlAttribute(AttributeName = "resourcetype")]
-        public ResourceTypeFixEnum ResourceType { get; set; }
+        public ResourceTypeEnum ResourceType { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]
@@ -151,7 +151,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     {
         public TechTreeXmlTech()
         {
-            Cost = new DictionaryContainer<ResourceTypeFixEnum, TechTreeXmCost>(key => key.ResourceType);
+            Cost = new DictionaryContainer<ResourceTypeEnum, TechTreeXmCost>(key => key.ResourceType);
         }
 
         [Key]
@@ -179,7 +179,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonIgnore]
         [XmlIgnore]
-        public IDictionaryContainer<ResourceTypeFixEnum, TechTreeXmCost> Cost { get; }
+        public IDictionaryContainer<ResourceTypeEnum, TechTreeXmCost> Cost { get; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

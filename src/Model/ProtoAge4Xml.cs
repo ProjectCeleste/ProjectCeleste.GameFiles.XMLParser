@@ -44,7 +44,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "resourcetype", Required = Required.Always)]
         [XmlAttribute(AttributeName = "resourcetype")]
-        public ResourceTypeFixEnum Resourcetype { get; set; }
+        public ResourceTypeEnum Resourcetype { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]
@@ -262,7 +262,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "resourcetype", Required = Required.Always)]
         [XmlAttribute(AttributeName = "resourcetype")]
-        public ResourceTypeFixEnum ResourceType { get; set; }
+        public ResourceTypeEnum ResourceType { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]
@@ -279,7 +279,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "resourcetype", Required = Required.Always)]
         [XmlAttribute(AttributeName = "resourcetype")]
-        public ResourceTypeFixEnum ResourceType { get; set; }
+        public ResourceTypeEnum ResourceType { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]
@@ -419,8 +419,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Tech = new DictionaryContainer<string, ProtoAge4XmlRowPageColumn>(key => key.Name,
                 StringComparer.OrdinalIgnoreCase);
             CarryCapacity =
-                new DictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity>(key => key.ResourceType);
-            Cost = new DictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCost>(key => key.ResourceType);
+                new DictionaryContainer<ResourceTypeEnum, ProtoAge4XmlUnitCarryCapacity>(key => key.ResourceType);
+            Cost = new DictionaryContainer<ResourceTypeEnum, ProtoAge4XmlUnitCost>(key => key.ResourceType);
             Command = new DictionaryContainer<UnitCommandEnum, ProtoAge4XmlUnitCommand>(key => key.Name);
             AllowedAge = -1;
             BuildPoints = -1;
@@ -490,9 +490,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             string vanTrait1,
             string vanTrait2,
             string vanTrait3,
-            DictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCost> cost,
+            DictionaryContainer<ResourceTypeEnum, ProtoAge4XmlUnitCost> cost,
             ProtoAge4XmlUnitCost[] costArray,
-            DictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity> carryCapacity,
+            DictionaryContainer<ResourceTypeEnum, ProtoAge4XmlUnitCarryCapacity> carryCapacity,
             ProtoAge4XmlUnitCarryCapacity[] carryCapacityArray,
             double repairPoints,
             DictionaryContainer<string, ProtoAge4XmlRowPageColumn> tech,
@@ -694,7 +694,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonIgnore]
         [XmlIgnore]
-        public DictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCost> Cost { get; }
+        public DictionaryContainer<ResourceTypeEnum, ProtoAge4XmlUnitCost> Cost { get; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "VanTrait2", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -738,7 +738,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonIgnore]
         [XmlIgnore]
-        public DictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity> CarryCapacity { get; }
+        public DictionaryContainer<ResourceTypeEnum, ProtoAge4XmlUnitCarryCapacity> CarryCapacity { get; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1230,12 +1230,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonIgnore]
         [XmlIgnore]
-        IDictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity> IProtoAge4Unit.CarryCapacity =>
+        IDictionaryContainer<ResourceTypeEnum, ProtoAge4XmlUnitCarryCapacity> IProtoAge4Unit.CarryCapacity =>
             CarryCapacity;
 
         [JsonIgnore]
         [XmlIgnore]
-        IReadOnlyContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity> IProtoAge4UnitReadOnly.CarryCapacity =>
+        IReadOnlyContainer<ResourceTypeEnum, ProtoAge4XmlUnitCarryCapacity> IProtoAge4UnitReadOnly.CarryCapacity =>
             CarryCapacity;
 
         [JsonIgnore]
@@ -1248,11 +1248,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonIgnore]
         [XmlIgnore]
-        IDictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCost> IProtoAge4Unit.Cost => Cost;
+        IDictionaryContainer<ResourceTypeEnum, ProtoAge4XmlUnitCost> IProtoAge4Unit.Cost => Cost;
 
         [JsonIgnore]
         [XmlIgnore]
-        IReadOnlyContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCost> IProtoAge4UnitReadOnly.Cost => Cost;
+        IReadOnlyContainer<ResourceTypeEnum, ProtoAge4XmlUnitCost> IProtoAge4UnitReadOnly.Cost => Cost;
 
         [JsonIgnore]
         [XmlIgnore]

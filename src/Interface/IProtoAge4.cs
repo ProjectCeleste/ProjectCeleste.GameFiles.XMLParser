@@ -22,11 +22,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
         new double BuildingWorkRate { get; set; }
         new int BuildLimit { get; set; }
         new double BuildPoints { get; set; }
-        new IDictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity> CarryCapacity { get; }
+        new IDictionaryContainer<ResourceTypeEnum, ProtoAge4XmlUnitCarryCapacity> CarryCapacity { get; }
         new IDictionaryContainer<UnitCommandEnum, ProtoAge4XmlUnitCommand> Command { get; }
         new HashSet<UnitTypeEnum> Contain { get; set; }
         new double CorpseDecalTime { get; set; }
-        new IDictionaryContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCost> Cost { get; }
+        new IDictionaryContainer<ResourceTypeEnum, ProtoAge4XmlUnitCost> Cost { get; }
         new int Dbid { get; set; }
         new string DeathMessage { get; set; }
         new ProtoAge4XmlUnitDecay Decay { get; set; }
@@ -105,11 +105,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
         double BuildingWorkRate { get; }
         int BuildLimit { get; }
         double BuildPoints { get; }
-        IReadOnlyContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCarryCapacity> CarryCapacity { get; }
+        IReadOnlyContainer<ResourceTypeEnum, ProtoAge4XmlUnitCarryCapacity> CarryCapacity { get; }
         IReadOnlyContainer<UnitCommandEnum, ProtoAge4XmlUnitCommand> Command { get; }
         HashSet<UnitTypeEnum> Contain { get; }
         double CorpseDecalTime { get; }
-        IReadOnlyContainer<ResourceTypeFixEnum, ProtoAge4XmlUnitCost> Cost { get; }
+        IReadOnlyContainer<ResourceTypeEnum, ProtoAge4XmlUnitCost> Cost { get; }
         int Dbid { get; }
         string DeathMessage { get; }
         ProtoAge4XmlUnitDecay Decay { get; }
