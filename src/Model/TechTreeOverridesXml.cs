@@ -78,7 +78,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             base(tech, key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
             UnlockFullTechTree = unlockFullTechTree;
-            MaxAge = maxAge > 0 && maxAge <= 4 ? maxAge : throw new ArgumentOutOfRangeException(nameof(maxAge), maxAge, null);
+            MaxAge = maxAge > 0 && maxAge <= 4
+                ? maxAge
+                : throw new ArgumentOutOfRangeException(nameof(maxAge), maxAge, null);
         }
 
         [Browsable(false)]
@@ -163,7 +165,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void SetMaxAge(int maxAge)
         {
-            MaxAge = maxAge > 0 && maxAge <=4 ? maxAge : throw new ArgumentOutOfRangeException(nameof(maxAge), maxAge, null);
+            MaxAge = maxAge > 0 && maxAge <= 4
+                ? maxAge
+                : throw new ArgumentOutOfRangeException(nameof(maxAge), maxAge, null);
         }
 
         public void SetUnlockFullTechTree(bool unlockFullTechTree)

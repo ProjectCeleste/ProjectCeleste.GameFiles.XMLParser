@@ -398,7 +398,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void SetMaxLevel(int maxLevel)
         {
-            if(!TryGet(maxLevel, out _))
+            if (!TryGet(maxLevel, out _))
                 throw new KeyNotFoundException("Level not found");
 
             MaxLevel = maxLevel < 0 || maxLevel > 99
