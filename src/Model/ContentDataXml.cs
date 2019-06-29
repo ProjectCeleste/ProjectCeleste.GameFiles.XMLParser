@@ -116,7 +116,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
-        [JsonIgnore]
         [JsonProperty(PropertyName = "content", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "content")]
         public ContentDataXmlContent[] ContentArray
