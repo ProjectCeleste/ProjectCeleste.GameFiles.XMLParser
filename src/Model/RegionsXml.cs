@@ -238,6 +238,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             if (excs.Count > 0)
                 throw new AggregateException(excs);
 
+            regionsXml.RegionArray = regionsXml.RegionArray.OrderBy(key => key.Id).ToArray();
+
             return regionsXml;
         }
     }
