@@ -38,7 +38,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     public class CivilizationXmlCharactertype
     {
         [XmlElement(ElementName = "type")]
-        public CharTypeEnum Type { get; set; }
+        public CharacterTypeEnum Type { get; set; }
 
         [XmlElement(ElementName = "file")]
         public string File { get; set; }

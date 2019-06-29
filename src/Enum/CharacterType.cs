@@ -10,7 +10,7 @@ using Newtonsoft.Json.Converters;
 namespace ProjectCeleste.GameFiles.XMLParser.Enum
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum CharTypeEnum : byte
+    public enum CharacterTypeEnum : byte
     {
         [XmlEnum("cCharTypeInvalid")] [EnumMember(Value = "cCharTypeInvalid")] Invalid = 0,
         [XmlEnum("cCharTypeNormal")] [EnumMember(Value = "cCharTypeNormal")] Normal = 1,
