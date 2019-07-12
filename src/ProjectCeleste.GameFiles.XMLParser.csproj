@@ -4,10 +4,10 @@
     <TargetFrameworks>netstandard2.0;netcoreapp2.0;net47</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <PackageLicenseUrl>https://github.com/ProjectCeleste/ProjectCeleste.GameFiles.Tools/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/ProjectCeleste/ProjectCeleste.GameFiles.XMLParser/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://www.projectceleste.com</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/ProjectCeleste/ProjectCeleste.GameFiles.Tools/master/icon.ico</PackageIconUrl>
-    <RepositoryUrl>https://github.com/ProjectCeleste/ProjectCeleste.GameFiles.Tools</RepositoryUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/ProjectCeleste/ProjectCeleste.GameFiles.XMLParser/master/icon.ico</PackageIconUrl>
+    <RepositoryUrl>https://github.com/ProjectCeleste/ProjectCeleste.GameFiles.XMLParser</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Description>GameFiles Xml Parser For Age Of Empires Online Celeste Fan Project
 
@@ -21,6 +21,10 @@ Age of Empires Online © Microsoft Corporation. Celeste Fan Project was created 
     <Version>2.0.0</Version>
     <AssemblyVersion>2.0.0</AssemblyVersion>
     <FileVersion>2.0.0</FileVersion>
+	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
+	  <IncludeSymbols>true</IncludeSymbols>
+	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	  <LangVersion>latest</LangVersion>
   </PropertyGroup>
 	<PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' And '$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<AllowUnsafeBlocks>false</AllowUnsafeBlocks>
@@ -55,4 +59,10 @@ Age of Empires Online © Microsoft Corporation. Celeste Fan Project was created 
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Xml" />
   </ItemGroup>
+	<ItemGroup>
+		<!-- Required -->
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-*" PrivateAssets="All"/>
+		<!-- Required if your repository is on GitLab -->
+		<!--<PackageReference Include="Microsoft.SourceLink.GitLab" Version="1.0.0-*" PrivateAssets="All"/>-->
+	</ItemGroup>
 </Project>
