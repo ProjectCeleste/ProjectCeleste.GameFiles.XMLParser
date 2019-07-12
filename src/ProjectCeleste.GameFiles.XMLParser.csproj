@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;netcoreapp2.0;net47</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-	<PackageId>ProjectCeleste.GameFiles.XMLParser</PackageId>
+    <PackageId>ProjectCeleste.GameFiles.XMLParser</PackageId>
     <PackageLicenseUrl>https://github.com/ProjectCeleste/ProjectCeleste.GameFiles.XMLParser/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://www.projectceleste.com</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/ProjectCeleste/ProjectCeleste.GameFiles.XMLParser/master/icon.ico</PackageIconUrl>
@@ -61,10 +61,10 @@ Age of Empires Online © Microsoft Corporation. Celeste Fan Project was created 
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-	<ItemGroup>
-		<!-- Required -->
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-*" PrivateAssets="All" />
-		<!-- Required if your repository is on GitLab -->
-		<!--<PackageReference Include="Microsoft.SourceLink.GitLab" Version="1.0.0-*" PrivateAssets="All"/>-->
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19351-01">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 </Project>
