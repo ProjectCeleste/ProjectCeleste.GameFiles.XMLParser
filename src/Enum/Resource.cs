@@ -16,6 +16,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("Wood")] [EnumMember(Value = "Wood")] Wood = 1,
         [XmlEnum("Food")] [EnumMember(Value = "Food")] Food = 2,
         [XmlEnum("Stone")] [EnumMember(Value = "Stone")] Stone = 3,
+        [XmlEnum("stone")] [EnumMember(Value = "stone")] stone = Stone, //TEMP
         [XmlEnum("Gold")] [EnumMember(Value = "Gold")] Gold = 4,
         [XmlEnum("SkillPoints")] [EnumMember(Value = "SkillPoints")] SkillPoints = 5,
         [XmlEnum("XP")] [EnumMember(Value = "XP")] Xp = 6,
@@ -34,18 +35,5 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("meat")] [EnumMember(Value = "meat")] Meat = 6,
         [XmlEnum("Stone")] [EnumMember(Value = "Stone")] Stone = 7,
         [XmlEnum("Wood")] [EnumMember(Value = "Wood")] Wood = 8
-    }
-
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ResourceTypeFixEnum
-    {
-        [XmlEnum("invalid")] [EnumMember(Value = "invalid")] Invalid = ResourceTypeEnum.Invalid,
-        [XmlEnum("Wood")] [EnumMember(Value = "Wood")] Wood = ResourceTypeEnum.Wood,
-        [XmlEnum("Food")] [EnumMember(Value = "Food")] Food = ResourceTypeEnum.Food,
-        [XmlEnum("stone")] [EnumMember(Value = "stone")] Stone = ResourceTypeEnum.Stone,
-        [XmlEnum("Gold")] [EnumMember(Value = "Gold")] Gold = ResourceTypeEnum.Gold,
-        [XmlEnum("SkillPoints")] [EnumMember(Value = "SkillPoints")] SkillPoints = ResourceTypeEnum.SkillPoints,
-        [XmlEnum("XP")] [EnumMember(Value = "XP")] Xp = ResourceTypeEnum.Xp,
-        [XmlEnum("Ships")] [EnumMember(Value = "Ships")] Ships = ResourceTypeEnum.Ships
     }
 }

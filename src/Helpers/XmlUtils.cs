@@ -32,7 +32,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Helpers
             {
                 if (backup)
                 {
-                    var backupFile = $"{xmlFilePath}.bak";
+                    var backupFile = $"{xmlFilePath}.{DateTime.UtcNow.ToFileTimeUtc()}.bak";
 
                     if (File.Exists(backupFile))
                         File.Delete(backupFile);
