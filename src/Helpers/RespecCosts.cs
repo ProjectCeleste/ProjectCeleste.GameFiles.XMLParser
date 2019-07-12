@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Model;
+using ProjectCeleste.GameFiles.XMLParser.Model.Common;
 
 #endregion
 
-namespace ProjectCeleste.GameFiles.XMLParser.Model.Common
+namespace ProjectCeleste.GameFiles.XMLParser.Helpers
 {
     public class RarityInfo
     {
