@@ -8,7 +8,6 @@ using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using ProjectCeleste.GameFiles.XMLParser.Container;
-using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
 using ProjectCeleste.GameFiles.XMLParser.Model.Common;
@@ -210,7 +209,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "itemsets", Description = "")]
     [XmlRoot(ElementName = "itemsets")]
-    public class EconVendorXmlItemsets : IEconVendorItemsets, IEconVendorItemsetsReadOnly
+    public class EconVendorXmlItemsets : IEconVendorItemsets
     {
         [Required]
         [JsonProperty(PropertyName = "itemset", Required = Required.Always)]
@@ -220,7 +219,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "vendor", Description = "")]
     [XmlRoot(ElementName = "vendor")]
-    public class EconVendorXml : IEconVendor, IEconVendorReadOnly
+    public class EconVendorXml : IEconVendor
     {
         [Key]
         [Required(AllowEmptyStrings = false)]
@@ -238,15 +237,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
 
+        [XmlIgnore]
+        [JsonIgnore]
         IEconVendorItemsets IEconVendor.Itemsets => Itemsets;
-
-        IEconVendorItemsetsReadOnly IEconVendorReadOnly.Itemsets => Itemsets;
     }
 
     [JsonObject(Title = "vendors", Description = "")]
     [XmlRoot(ElementName = "vendors")]
-    public class EconVendorsXml : DictionaryContainer<string, EconVendorXml, IEconVendor>, IEconVendorsXml,
-        IEconVendors, IEconVendorsReadOnly
+    public class EconVendorsXml : DictionaryContainer<string, EconVendorXml, IEconVendor>, IEconVendorsXml
     {
         public EconVendorsXml() : base(key => key.Protounit, StringComparer.OrdinalIgnoreCase)
         {
@@ -287,43 +285,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                 if (excs.Count > 0)
                     throw new AggregateException(excs);
             }
-        }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IEconVendorReadOnly IReadOnlyContainer<string, IEconVendorReadOnly>.this[string key] => this[key];
-
-        IEconVendorReadOnly IReadOnlyContainer<string, IEconVendorReadOnly>.Get(Func<IEconVendorReadOnly, bool> critera)
-        {
-            return Get(critera);
-        }
-
-        IEconVendorReadOnly IReadOnlyContainer<string, IEconVendorReadOnly>.Get(string key)
-        {
-            return Get(key);
-        }
-
-        IEnumerable<IEconVendorReadOnly> IReadOnlyContainer<string, IEconVendorReadOnly>.Gets()
-        {
-            return Gets();
-        }
-
-        IEnumerable<IEconVendorReadOnly> IReadOnlyContainer<string, IEconVendorReadOnly>.Gets(
-            Func<IEconVendorReadOnly, bool> critera)
-        {
-            return Gets(critera);
-        }
-
-        bool IReadOnlyContainer<string, IEconVendorReadOnly>.TryGet(string key, out IEconVendorReadOnly value)
-        {
-            if (!TryGet(key, out EconVendorXml item))
-            {
-                value = null;
-                return false;
-            }
-
-            value = item;
-            return true;
         }
 
         public static EconVendorsXml FromXmlFile(string file)

@@ -10,8 +10,4 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
     public interface IRegions : IDictionaryContainer<int, RegionXml>
     {
     }
-
-    public interface IRegionsReadOnly : IReadOnlyContainer<int, RegionXml>
-    {
-    }
 }

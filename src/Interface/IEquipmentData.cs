@@ -10,8 +10,4 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
     public interface IEquipmentData : IDictionaryContainer<int, EquipmentDataXmlEquipment>
     {
     }
-
-    public interface IEquipmentDataReadOnly : IDictionaryContainer<int, EquipmentDataXmlEquipment>
-    {
-    }
 }

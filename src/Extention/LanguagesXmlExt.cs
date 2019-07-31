@@ -11,7 +11,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
 {
     public static class LanguagesXmlExt
     {
-        public static string GetAgeLocalizedString(ILanguagesReadOnly languages, [Range(0, 3)] int age,
+        public static string GetAgeLocalizedString(ILanguages languages, [Range(0, 3)] int age,
             string language = "English")
         {
             switch (age)
@@ -33,7 +33,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             }
         }
 
-        public static string ToLocalizedString(this ResourceTypeEnum type, ILanguagesReadOnly languages,
+        public static string ToLocalizedString(this ResourceTypeEnum type, ILanguages languages,
             string language = "English")
         {
             switch (type)
@@ -66,7 +66,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             }
         }
 
-        public static string ToLocalizedString(this InventoryItemTypeEnum type, ILanguagesReadOnly languages,
+        public static string ToLocalizedString(this InventoryItemTypeEnum type, ILanguages languages,
             string language = "English")
         {
             switch (type)
@@ -112,13 +112,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             }
         }
 
-        public static string ToLocalizedString(this RarityEnum rarity, ILanguagesReadOnly languages,
+        public static string ToLocalizedString(this RarityEnum rarity, ILanguages languages,
             string language = "English")
         {
             return ToLocalizedString((CRarityEnum) rarity, languages, language);
         }
 
-        public static string ToLocalizedString(this CRarityEnum rarity, ILanguagesReadOnly languages,
+        public static string ToLocalizedString(this CRarityEnum rarity, ILanguages languages,
             string language = "English")
         {
             switch (rarity)
@@ -148,7 +148,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             }
         }
 
-        public static string ToLocalizedString(this GameCurrencyTypeEnum type, ILanguagesReadOnly languages,
+        public static string ToLocalizedString(this GameCurrencyTypeEnum type, ILanguages languages,
             string language = "English")
         {
             switch (type)
@@ -163,7 +163,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             }
         }
 
-        public static string ToLocalizedString(this CapitalResourceTypeEnum type, ILanguagesReadOnly languages,
+        public static string ToLocalizedString(this CapitalResourceTypeEnum type, ILanguages languages,
             string language = "English")
         {
             switch (type)

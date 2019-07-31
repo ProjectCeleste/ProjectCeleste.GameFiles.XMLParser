@@ -47,7 +47,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [JsonObject(Title = "rewards", Description = "")]
     [XmlRoot(ElementName = "rewards")]
     public class MilestoneRewardDataXmlRewards : DictionaryContainer<string, MilestoneRewardDataXmlReward>,
-        IMilestoneRewardDataRewards, IMilestoneRewardDataRewardsReadOnly
+        IMilestoneRewardDataRewards
     {
         public MilestoneRewardDataXmlRewards() : base(key => key.Id, StringComparer.OrdinalIgnoreCase)
         {
@@ -126,7 +126,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [JsonObject(Title = "tiers", Description = "")]
     [XmlRoot(ElementName = "tiers")]
     public class MilestoneRewardDataXmlTiers : DictionaryContainer<string, MilestoneRewardDataXmlTier>,
-        IMilestoneRewardDataTiers, IMilestoneRewardDataTiersReadOnly
+        IMilestoneRewardDataTiers
     {
         public MilestoneRewardDataXmlTiers() : base(key => $"{key.CivId}-{key.Level}", StringComparer.OrdinalIgnoreCase)
         {
@@ -173,7 +173,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "milestonerewarddata", Description = "")]
     [XmlRoot(ElementName = "milestonerewarddata")]
-    public class MilestoneRewardDataXml : IMilestoneRewardData, IMilestoneRewardDataReadOnly
+    public class MilestoneRewardDataXml : IMilestoneRewardData
     {
         [Required]
         [JsonProperty(PropertyName = "rewards", Required = Required.Always)]
@@ -192,14 +192,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonIgnore]
         [XmlIgnore]
         IMilestoneRewardDataTiers IMilestoneRewardData.Tiers => Tiers;
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IMilestoneRewardDataRewardsReadOnly IMilestoneRewardDataReadOnly.Rewards => Rewards;
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IMilestoneRewardDataTiersReadOnly IMilestoneRewardDataReadOnly.Tiers => Tiers;
 
         public static MilestoneRewardDataXml FromXmlFile(string file)
         {

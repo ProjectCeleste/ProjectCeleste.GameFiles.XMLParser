@@ -446,8 +446,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     }
 
     [XmlRoot(ElementName = "civilizations")]
-    public class CivilizationsXml : DictionaryContainer<CivilizationEnum, CivilizationXml>, ICivilizations,
-        ICivilizationsReadOnly
+    public class CivilizationsXml : DictionaryContainer<CivilizationEnum, CivilizationXml>, ICivilizations
     {
         public CivilizationsXml() : base(key => key.Civid)
         {

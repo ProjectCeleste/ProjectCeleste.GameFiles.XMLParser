@@ -413,7 +413,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "trait", Description = "")]
     [XmlRoot(ElementName = "traits")]
-    public class EconTraitsXml : DictionaryContainer<string, EconTraitXml>, IEconTraits, IEconTraitsReadOnly
+    public class EconTraitsXml : DictionaryContainer<string, EconTraitXml>, IEconTraits
     {
         public EconTraitsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {

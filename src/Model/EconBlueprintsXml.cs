@@ -206,8 +206,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "blueprints", Description = "")]
     [XmlRoot(ElementName = "blueprints")]
-    public class EconBlueprintsXml : DictionaryContainer<string, EconBlueprintXml>, IEconBlueprints,
-        IEconBlueprintsReadOnly
+    public class EconBlueprintsXml : DictionaryContainer<string, EconBlueprintXml>, IEconBlueprints
     {
         public EconBlueprintsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {

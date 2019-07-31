@@ -121,7 +121,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "materials", Description = "")]
     [XmlRoot(ElementName = "materials")]
-    public class EconMaterialsXml : DictionaryContainer<string, EconMaterialXml>, IEconMaterials, IEconMaterialsReadOnly
+    public class EconMaterialsXml : DictionaryContainer<string, EconMaterialXml>, IEconMaterials
     {
         public EconMaterialsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {

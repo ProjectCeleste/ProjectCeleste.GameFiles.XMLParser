@@ -10,8 +10,4 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
     public interface IAiCharacters : IDictionaryContainer<string, AiCharacterXml>
     {
     }
-
-    public interface IAiCharactersReadOnly : IReadOnlyContainer<string, AiCharacterXml>
-    {
-    }
 }

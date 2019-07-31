@@ -87,7 +87,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "language", Description = "")]
     [XmlRoot(ElementName = "language")]
-    public class LanguageXml : DictionaryContainer<int, LanguageStringXml, ILanguageString, ILanguageStringReadOnly>,
+    public class LanguageXml : DictionaryContainer<int, LanguageStringXml, ILanguageString>,
         ILanguage
     {
         public LanguageXml() : base(key => key.LocId)
@@ -145,40 +145,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         {
             Name = !string.IsNullOrWhiteSpace(name) ? name : throw new ArgumentNullException(nameof(name));
         }
-
-        ILanguageString ILanguage.Get(Func<ILanguageString, bool> critera)
-        {
-            return Get(critera);
-        }
-
-        ILanguageString ILanguage.Get(int key)
-        {
-            return Get(key);
-        }
-
-        IEnumerable<ILanguageString> ILanguage.Gets()
-        {
-            return Gets();
-        }
-
-        IEnumerable<ILanguageString> ILanguage.Gets(Func<ILanguageString, bool> critera)
-        {
-            return Gets(critera);
-        }
-
-        bool ILanguage.TryGet(int key, out ILanguageString value)
-        {
-            throw new NotImplementedException();
-        }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        ILanguageString ILanguage.this[int key] => this[key];
     }
 
     [JsonObject(Title = "stringtable", Description = "")]
     [XmlRoot(ElementName = "stringtable")]
-    public class StringTableXml : DictionaryContainer<string, LanguageXml, ILanguage, ILanguageReadOnly>, IStringTable
+    public class StringTableXml : DictionaryContainer<string, LanguageXml, ILanguage>, IStringTable
     {
         public StringTableXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -228,10 +199,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                     throw new AggregateException(excs);
             }
         }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        ILanguage IStringTable.this[string key] => this[key];
 
         [Key]
         [Required(AllowEmptyStrings = false)]
@@ -288,31 +255,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             throw new NotImplementedException();
         }
 
-        ILanguage IStringTable.Get(Func<ILanguage, bool> critera)
-        {
-            return Get(critera);
-        }
-
-        ILanguage IStringTable.Get(string key)
-        {
-            return Get(key);
-        }
-
-        IEnumerable<ILanguage> IStringTable.Gets()
-        {
-            return Gets();
-        }
-
-        IEnumerable<ILanguage> IStringTable.Gets(Func<ILanguage, bool> critera)
-        {
-            return Gets(critera);
-        }
-
-        bool IStringTable.TryGet(string key, out ILanguage value)
-        {
-            throw new NotImplementedException();
-        }
-
         public static StringTableXml FromXmlFile(string file)
         {
             var languageXml = XmlUtils.FromXmlFile<StringTableXml>(file);
@@ -344,7 +286,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "languages", Description = "")]
     [XmlRoot(ElementName = "languages")]
-    public class LanguagesXml : DictionaryContainer<string, StringTableXml, IStringTable, IStringTableReadOnly>,
+    public class LanguagesXml : DictionaryContainer<string, StringTableXml, IStringTable>,
         ILanguagesXml
     {
         public LanguagesXml() : base(key => key.Id, StringComparer.OrdinalIgnoreCase)
@@ -384,35 +326,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                 if (excs.Count > 0)
                     throw new AggregateException(excs);
             }
-        }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IStringTable ILanguages.this[string key] => this[key];
-
-        IStringTable ILanguages.Get(Func<IStringTable, bool> critera)
-        {
-            return Get(critera);
-        }
-
-        IStringTable ILanguages.Get(string key)
-        {
-            return Get(key);
-        }
-
-        IEnumerable<IStringTable> ILanguages.Gets()
-        {
-            return Gets();
-        }
-
-        IEnumerable<IStringTable> ILanguages.Gets(Func<IStringTable, bool> critera)
-        {
-            return Gets(critera);
-        }
-
-        bool ILanguages.TryGet(string key, out IStringTable value)
-        {
-            throw new NotImplementedException();
         }
 
         public static ILanguagesXml LanguagesFromXmlFiles(string languagesFolder)

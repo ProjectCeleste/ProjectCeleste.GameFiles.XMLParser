@@ -249,7 +249,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "powers", Description = "")]
     [XmlRoot(ElementName = "powers")]
-    public class PowersXml : DictionaryContainer<string, PowerXml>, IPowers, IPowersReadOnly
+    public class PowersXml : DictionaryContainer<string, PowerXml>, IPowers
     {
         public PowersXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {

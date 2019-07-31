@@ -1214,15 +1214,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonIgnore]
         [XmlIgnore]
-        IReadOnlyContainer<string, ProtoAge4XmlRowPageColumn> IProtoAge4UnitReadOnly.Tech => Tech;
-
-        [JsonIgnore]
-        [XmlIgnore]
         IDictionaryContainer<string, ProtoAge4XmlRowPageColumn> IProtoAge4Unit.Tech => Tech;
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IReadOnlyContainer<string, ProtoAge4XmlRowPageColumn> IProtoAge4UnitReadOnly.Train => Train;
 
         [JsonIgnore]
         [XmlIgnore]
@@ -1235,16 +1227,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonIgnore]
         [XmlIgnore]
-        IReadOnlyContainer<ResourceTypeEnum, ProtoAge4XmlUnitCarryCapacity> IProtoAge4UnitReadOnly.CarryCapacity =>
-            CarryCapacity;
-
-        [JsonIgnore]
-        [XmlIgnore]
         IDictionaryContainer<UnitCommandEnum, ProtoAge4XmlUnitCommand> IProtoAge4Unit.Command => Command;
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IReadOnlyContainer<UnitCommandEnum, ProtoAge4XmlUnitCommand> IProtoAge4UnitReadOnly.Command => Command;
 
         [JsonIgnore]
         [XmlIgnore]
@@ -1252,19 +1235,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonIgnore]
         [XmlIgnore]
-        IReadOnlyContainer<ResourceTypeEnum, ProtoAge4XmlUnitCost> IProtoAge4UnitReadOnly.Cost => Cost;
-
-        [JsonIgnore]
-        [XmlIgnore]
         IDictionaryContainer<EventEnum, ProtoAge4XmlUnitEvent> IProtoAge4Unit.Event => Event;
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IReadOnlyContainer<EventEnum, ProtoAge4XmlUnitEvent> IProtoAge4UnitReadOnly.Event => Event;
     }
 
     [XmlRoot(ElementName = "Proto")]
-    public class ProtoAge4Xml : DictionaryContainer<string, ProtoAge4XmlUnit, IProtoAge4Unit, IProtoAge4UnitReadOnly>,
+    public class ProtoAge4Xml : DictionaryContainer<string, ProtoAge4XmlUnit, IProtoAge4Unit>,
         IProtoAge4Xml
     {
         public ProtoAge4Xml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
@@ -1317,30 +1292,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
-        }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IProtoAge4Unit IProtoAge4.this[string key] => this[key];
-
-        IProtoAge4Unit IProtoAge4.Get(Func<IProtoAge4Unit, bool> critera)
-        {
-            return Get(critera);
-        }
-
-        IProtoAge4Unit IProtoAge4.Get(string key)
-        {
-            return Get(key);
-        }
-
-        IEnumerable<IProtoAge4Unit> IProtoAge4.Gets()
-        {
-            return Gets();
-        }
-
-        IEnumerable<IProtoAge4Unit> IProtoAge4.Gets(Func<IProtoAge4Unit, bool> critera)
-        {
-            return Gets(critera);
         }
 
         public bool TryGet(string key, out IProtoAge4Unit value)

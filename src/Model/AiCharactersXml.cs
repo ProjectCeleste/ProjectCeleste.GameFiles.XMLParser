@@ -320,7 +320,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "characters", Description = "")]
     [XmlRoot(ElementName = "characters")]
-    public class AiCharactersXml : DictionaryContainer<string, AiCharacterXml>, IAiCharacters, IAiCharactersReadOnly
+    public class AiCharactersXml : DictionaryContainer<string, AiCharacterXml>, IAiCharacters
     {
         public AiCharactersXml() : base(key => key.FileName, StringComparer.OrdinalIgnoreCase)
         {

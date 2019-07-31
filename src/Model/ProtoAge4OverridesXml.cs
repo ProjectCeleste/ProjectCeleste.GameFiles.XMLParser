@@ -24,7 +24,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [JsonObject(Title = "ProtoUnitOverrides", Description = "")]
     [XmlRoot(ElementName = "ProtoUnitOverrides")]
     public class ProtoUnitOverridesXml :
-        DictionaryContainer<string, ProtoUnitOverrideXml, IProtoAge4Unit, IProtoAge4UnitReadOnly>,
+        DictionaryContainer<string, ProtoUnitOverrideXml, IProtoAge4Unit>,
         IProtoUnitOverridesXml
     {
         public ProtoUnitOverridesXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
@@ -67,44 +67,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        [JsonIgnore]
-        [XmlIgnore]
-        IProtoAge4Unit IProtoUnitOverrides.this[string key] => this[key];
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
-        }
-
-        IProtoAge4Unit IProtoUnitOverrides.Get(Func<IProtoAge4Unit, bool> critera)
-        {
-            return Get(critera);
-        }
-
-        IProtoAge4Unit IProtoUnitOverrides.Get(string key)
-        {
-            return Get(key);
-        }
-
-        IEnumerable<IProtoAge4Unit> IProtoUnitOverrides.Gets()
-        {
-            return Gets();
-        }
-
-        IEnumerable<IProtoAge4Unit> IProtoUnitOverrides.Gets(Func<IProtoAge4Unit, bool> critera)
-        {
-            return Gets(critera);
-        }
-
-        bool IProtoUnitOverrides.TryGet(string key, out IProtoAge4Unit value)
-        {
-            if (!TryGet(key, out ProtoUnitOverrideXml item))
-            {
-                value = null;
-                return false;
-            }
-            value = item;
-            return true;
         }
 
         public static ProtoUnitOverridesXml FromXmlFile(string file)

@@ -373,7 +373,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "questgivers", Description = "")]
     [XmlRoot(ElementName = "questgivers")]
-    public class QuestGiversXml : DictionaryContainer<string, QuestGiverXml>, IQuestGivers, IQuestGiversReadOnly
+    public class QuestGiversXml : DictionaryContainer<string, QuestGiverXml>, IQuestGivers
     {
         public QuestGiversXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -418,7 +418,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "questgivermanager", Description = "")]
     [XmlRoot(ElementName = "questgivermanager")]
-    public class QuestGiverManagerXml : IQuestGiverManager, IQuestGiverManagerReadOnly
+    public class QuestGiverManagerXml : IQuestGiverManager
     {
         public QuestGiverManagerXml()
         {
@@ -445,10 +445,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonIgnore]
         [XmlIgnore]
         IQuestGivers IQuestGiverManager.QuestGivers => QuestGivers;
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IQuestGiversReadOnly IQuestGiverManagerReadOnly.QuestGivers => QuestGivers;
 
         public static QuestGiverManagerXml FromXmlFile(string file)
         {

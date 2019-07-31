@@ -7,11 +7,7 @@ using ProjectCeleste.GameFiles.XMLParser.Model;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Interface
 {
-    public interface IEconConsumables : IDictionaryContainer<string, EconConsumableXml>
-    {
-    }
-
-    public interface IEconConsumablesReadOnly : IReadOnlyContainer<string, EconConsumableXml>
+    public interface IEconConsumables : IDictionaryContainerWithEvent<string, EconConsumableXml>
     {
     }
 }

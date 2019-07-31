@@ -7,11 +7,7 @@ using ProjectCeleste.GameFiles.XMLParser.Model;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Interface
 {
-    public interface IEconAdvisors : IDictionaryContainer<string, EconAdvisorXml>
-    {
-    }
-
-    public interface IEconAdvisorsReadOnly : IReadOnlyContainer<string, EconAdvisorXml>
+    public interface IEconAdvisors : IDictionaryContainerWithEvent<string, EconAdvisorXml>
     {
     }
 }

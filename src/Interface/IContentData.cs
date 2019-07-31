@@ -12,10 +12,4 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
         IDictionaryContainer<string, ContentDataXmlContent> Content { get; }
         IDictionaryContainer<string, ContentDataXmlCurrencycontent> CurrencyContent { get; }
     }
-
-    public interface IContentDataReadOnly
-    {
-        IReadOnlyContainer<string, ContentDataXmlContent> Content { get; }
-        IReadOnlyContainer<string, ContentDataXmlCurrencycontent> CurrencyContent { get; }
-    }
 }

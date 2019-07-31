@@ -162,7 +162,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "quests", Description = "")]
     [XmlRoot(ElementName = "quests")]
-    public class EconQuestsXml : DictionaryContainer<string, EconQuestXml>, IEconQuests, IEconQuestsReadOnly
+    public class EconQuestsXml : DictionaryContainer<string, EconQuestXml>, IEconQuests
     {
         public EconQuestsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {

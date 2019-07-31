@@ -63,8 +63,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "TechTreeOverrides", Description = "")]
     [XmlRoot(ElementName = "TechTreeOverrides")]
-    public class TechTreeOverridesXml : DictionaryContainer<string, TechTreeOverridesXmlTech, ITechTreeOverridesTech,
-        ITechTreeOverridesTechReadOnly>, ITechTreeOverridesXml
+    public class TechTreeOverridesXml : DictionaryContainer<string, TechTreeOverridesXmlTech, ITechTreeOverridesTech>,
+        ITechTreeOverridesXml
     {
         public TechTreeOverridesXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -126,41 +126,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
-        }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        ITechTreeOverridesTech ITechTreeOverrides.this[string key] => this[key];
-
-        ITechTreeOverridesTech ITechTreeOverrides.Get(Func<ITechTreeOverridesTech, bool> critera)
-        {
-            return Get(critera);
-        }
-
-        ITechTreeOverridesTech ITechTreeOverrides.Get(string key)
-        {
-            return Get(key);
-        }
-
-        IEnumerable<ITechTreeOverridesTech> ITechTreeOverrides.Gets()
-        {
-            return Gets();
-        }
-
-        IEnumerable<ITechTreeOverridesTech> ITechTreeOverrides.Gets(Func<ITechTreeOverridesTech, bool> critera)
-        {
-            return Gets(critera);
-        }
-
-        bool ITechTreeOverrides.TryGet(string key, out ITechTreeOverridesTech value)
-        {
-            if (!TryGet(key, out TechTreeOverridesXmlTech item))
-            {
-                value = null;
-                return false;
-            }
-            value = item;
-            return true;
         }
 
         public void SetMaxAge(int maxAge)

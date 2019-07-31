@@ -10,8 +10,4 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
     public interface IServerProtoData : IDictionaryContainer<string, ServerProtoDataXmlProtoUnit>
     {
     }
-
-    public interface IServerProtoDataReadOnly : IReadOnlyContainer<string, ServerProtoDataXmlProtoUnit>
-    {
-    }
 }

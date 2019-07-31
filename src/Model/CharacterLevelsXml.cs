@@ -218,15 +218,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [XmlIgnore]
         [JsonIgnore]
-        ICharacterLevelGameCurrencyEffectReadOnly ICharacterLevelReadOnly.GameCurrencyEffect => _gameCurrencyEffect;
-
-        [XmlIgnore]
-        [JsonIgnore]
         ICharacterLevelSkillPointsEffect ICharacterLevel.SkillPointsEffect => _skillPointsEffect;
-
-        [XmlIgnore]
-        [JsonIgnore]
-        ICharacterLevelSkillPointsEffectReadOnly ICharacterLevelReadOnly.SkillPointsEffect => _skillPointsEffect;
 
         [XmlIgnore]
         [JsonIgnore]
@@ -234,16 +226,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [XmlIgnore]
         [JsonIgnore]
-        ICharacterLevelAgeUpEffectReadOnly ICharacterLevelReadOnly.AgeUpEffect => AgeUpEffect;
-
-        [XmlIgnore]
-        [JsonIgnore]
         IEnumerable<ICharacterLevelUnlockRegionEffect> ICharacterLevel.UnlockRegionEffect => _unlockRegionEffect;
-
-        [XmlIgnore]
-        [JsonIgnore]
-        IEnumerable<ICharacterLevelUnlockRegionEffectReadOnly> ICharacterLevelReadOnly.UnlockRegionEffect =>
-            _unlockRegionEffect;
 
         //public void SetLevel(int level)
         //{
@@ -306,7 +289,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [JsonObject(Title = "xplevels", Description = "")]
     [XmlRoot(ElementName = "xplevels")]
     public class CharacterLevelsXml :
-        DictionaryContainer<int, CharacterLevelXml, ICharacterLevel, ICharacterLevelReadOnly>, ICharacterLevelsXml
+        DictionaryContainer<int, CharacterLevelXml, ICharacterLevel>, ICharacterLevelsXml
     {
         public CharacterLevelsXml() : base(key => key.Level)
         {
@@ -359,41 +342,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                 if (excs.Count > 0)
                     throw new AggregateException(excs);
             }
-        }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        ICharacterLevel ICharacterLevels.this[int key] => this[key];
-
-        ICharacterLevel ICharacterLevels.Get(Func<ICharacterLevel, bool> critera)
-        {
-            return Get(critera);
-        }
-
-        ICharacterLevel ICharacterLevels.Get(int key)
-        {
-            return Get(key);
-        }
-
-        IEnumerable<ICharacterLevel> ICharacterLevels.Gets()
-        {
-            return Gets();
-        }
-
-        IEnumerable<ICharacterLevel> ICharacterLevels.Gets(Func<ICharacterLevel, bool> critera)
-        {
-            return Gets(critera);
-        }
-
-        bool ICharacterLevels.TryGet(int key, out ICharacterLevel value)
-        {
-            if (!TryGet(key, out CharacterLevelXml item))
-            {
-                value = null;
-                return false;
-            }
-            value = item;
-            return true;
         }
 
         public void SetMaxLevel(int maxLevel)

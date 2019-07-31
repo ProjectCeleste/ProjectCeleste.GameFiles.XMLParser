@@ -14,12 +14,5 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
                 ? characterLevelsXml[characterLevelsXml.MaxLevel].Xp
                 : characterLevelsXml[currentLevel + 1].Xp;
         }
-
-        public static int GetLevelMaxXp(this ICharacterLevelsReadOnly characterLevelsXml, int currentLevel)
-        {
-            return currentLevel >= characterLevelsXml.MaxLevel
-                ? characterLevelsXml[characterLevelsXml.MaxLevel].Xp
-                : characterLevelsXml[currentLevel + 1].Xp;
-        }
     }
 }

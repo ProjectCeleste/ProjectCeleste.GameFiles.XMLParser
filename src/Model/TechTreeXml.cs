@@ -256,7 +256,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     }
 
     [XmlRoot(ElementName = "TechTree")]
-    public class TechTreeXml : DictionaryContainer<string, TechTreeXmlTech>, ITechTree, ITechTreeReadOnly
+    public class TechTreeXml : DictionaryContainer<string, TechTreeXmlTech>, ITechTree
     {
         public TechTreeXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {

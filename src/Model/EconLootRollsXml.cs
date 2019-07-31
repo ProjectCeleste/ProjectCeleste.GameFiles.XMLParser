@@ -110,7 +110,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "lootrolls", Description = "")]
     [XmlRoot(ElementName = "lootrolls")]
-    public class EconLootRollsXml : DictionaryContainer<string, EconLootRollXml>, IEconLootRolls, IEconLootRollsReadOnly
+    public class EconLootRollsXml : DictionaryContainer<string, EconLootRollXml>, IEconLootRolls
     {
         public EconLootRollsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {

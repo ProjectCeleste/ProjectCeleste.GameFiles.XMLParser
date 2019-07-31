@@ -12,16 +12,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
         IQuestGivers QuestGivers { get; }
     }
 
-    public interface IQuestGiverManagerReadOnly
-    {
-        IQuestGiversReadOnly QuestGivers { get; }
-    }
-
     public interface IQuestGivers : IDictionaryContainer<string, QuestGiverXml>
-    {
-    }
-
-    public interface IQuestGiversReadOnly : IReadOnlyContainer<string, QuestGiverXml>
     {
     }
 }

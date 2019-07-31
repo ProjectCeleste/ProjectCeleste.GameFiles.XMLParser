@@ -272,7 +272,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "charactermodifiers", Description = "")]
     [XmlRoot(ElementName = "charactermodifiers")]
-    public class CharacterModifiersXml : ICharacterModifiers, ICharacterModifiersReadOnly
+    public class CharacterModifiersXml : ICharacterModifiers
     {
         public CharacterModifiersXml()
         {

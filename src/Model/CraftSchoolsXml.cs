@@ -127,8 +127,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "craftschools", Description = "")]
     [XmlRoot(ElementName = "craftschools")]
-    public class CraftSchoolsXml : DictionaryContainer<CraftSchoolEnum, CraftSchoolXml>, ICraftSchools,
-        ICraftSchoolsReadOnly
+    public class CraftSchoolsXml : DictionaryContainer<CraftSchoolEnum, CraftSchoolXml>, ICraftSchools
     {
         public CraftSchoolsXml() : base(key => key.Tag)
         {

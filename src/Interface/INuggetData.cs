@@ -13,17 +13,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
         INuggetLogic NuggetLogic { get; }
     }
 
-    public interface INuggetDataReadOnly
-    {
-        INuggetsReadOnly Nuggets { get; }
-        INuggetLogicReadOnly NuggetLogic { get; }
-    }
-
     public interface INuggets : IDictionaryContainer<int, NuggetXml>
-    {
-    }
-
-    public interface INuggetsReadOnly : IReadOnlyContainer<int, NuggetXml>
     {
     }
 
@@ -31,11 +21,5 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
     {
         IDictionaryContainer<string, NuggetLogicXmlEventNuggetOverride> EventNuggetOverride { get; }
         IDictionaryContainer<string, NuggetLogicXmlRandomMapRegion> RandomMapRegion { get; }
-    }
-
-    public interface INuggetLogicReadOnly
-    {
-        IReadOnlyContainer<string, NuggetLogicXmlEventNuggetOverride> EventNuggetOverride { get; }
-        IReadOnlyContainer<string, NuggetLogicXmlRandomMapRegion> RandomMapRegion { get; }
     }
 }

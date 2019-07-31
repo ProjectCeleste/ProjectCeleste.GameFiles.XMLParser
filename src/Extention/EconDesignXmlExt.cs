@@ -12,13 +12,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
 {
     public static class EconDesignXmlExt
     {
-        public static string GetDisplayNameLocalized(this EconDesignXml item, ILanguagesReadOnly languages,
+        public static string GetDisplayNameLocalized(this EconDesignXml item, ILanguages languages,
             string language = "English")
         {
             return languages["econstrings"][language][item.DisplayNameId].Text;
         }
 
-        public static string GetRollOverTextLocalized(this EconDesignXml item, ILanguagesReadOnly languages,
+        public static string GetRollOverTextLocalized(this EconDesignXml item, ILanguages languages,
             string language = "English")
         {
             return languages["stringtablex"][language][item.RollOverTextId].Text;

@@ -14,19 +14,19 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
 {
     public static class EconTraitXmlExt
     {
-        public static string GetDisplayNameLocalized(this EconTraitXml item, ILanguagesReadOnly languages,
+        public static string GetDisplayNameLocalized(this EconTraitXml item, ILanguages languages,
             string language = "English")
         {
             return languages["stringtablex"][language][item.DisplayNameId].Text;
         }
 
-        public static string GetRollOverTextLocalized(this EconTraitXml item, ILanguagesReadOnly languages,
+        public static string GetRollOverTextLocalized(this EconTraitXml item, ILanguages languages,
             string language = "English")
         {
             return languages["stringtablex"][language][item.RollOverTextId].Text;
         }
 
-        public static string GetDisplayNameLocalized(this EconTraitXmlEffect effect, ILanguagesReadOnly languages,
+        public static string GetDisplayNameLocalized(this EconTraitXmlEffect effect, ILanguages languages,
             string language = "English")
         {
             switch (effect.SubType)
@@ -160,7 +160,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             }
         }
 
-        public static string GetDisplayNameLocalized(this EffectActionTypeEnum type, ILanguagesReadOnly languages,
+        public static string GetDisplayNameLocalized(this EffectActionTypeEnum type, ILanguages languages,
             string language = "English")
         {
             switch (type)
@@ -193,7 +193,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             }
         }
 
-        public static string GetDisplayNameLocalized(this EffectUnitTypeEnum type, ILanguagesReadOnly languages,
+        public static string GetDisplayNameLocalized(this EffectUnitTypeEnum type, ILanguages languages,
             string language = "English")
         {
             switch (type)
@@ -253,7 +253,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             }
         }
 
-        public static string GetDisplayNameLocalized(this DamageTypeEnum type, ILanguagesReadOnly languages,
+        public static string GetDisplayNameLocalized(this DamageTypeEnum type, ILanguages languages,
             string language = "English")
         {
             switch (type)
@@ -273,7 +273,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             }
         }
 
-        public static string GetStatsLocalized(this EconTraitXml item, ILanguagesReadOnly languages, int lvl,
+        public static string GetStatsLocalized(this EconTraitXml item, ILanguages languages, int lvl,
             int seed = 0,
             string language = "English")
         {

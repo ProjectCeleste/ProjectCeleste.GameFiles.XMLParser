@@ -10,8 +10,4 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
     public interface IRandomMapSets : IDictionaryContainer<string, RandomMapSetXml>
     {
     }
-
-    public interface IRandomMapSetsReadOnly : IReadOnlyContainer<string, RandomMapSetXml>
-    {
-    }
 }

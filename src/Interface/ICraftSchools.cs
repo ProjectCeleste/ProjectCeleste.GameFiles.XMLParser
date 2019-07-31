@@ -11,8 +11,4 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
     public interface ICraftSchools : IDictionaryContainer<CraftSchoolEnum, CraftSchoolXml>
     {
     }
-
-    public interface ICraftSchoolsReadOnly : IReadOnlyContainer<CraftSchoolEnum, CraftSchoolXml>
-    {
-    }
 }

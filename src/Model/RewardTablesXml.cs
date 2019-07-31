@@ -171,7 +171,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "rewardtables", Description = "")]
     [XmlRoot(ElementName = "rewardtables")]
-    public class RewardTablesXml : DictionaryContainer<string, RewardTableXml>, IRewardTables, IRewardTablesReadOnly
+    public class RewardTablesXml : DictionaryContainer<string, RewardTableXml>, IRewardTables
     {
         public RewardTablesXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {

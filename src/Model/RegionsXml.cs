@@ -177,7 +177,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "Regions", Description = "")]
     [XmlRoot(ElementName = "Regions")]
-    public class RegionsXml : DictionaryContainer<int, RegionXml>, IRegions, IRegionsReadOnly
+    public class RegionsXml : DictionaryContainer<int, RegionXml>, IRegions
     {
         public RegionsXml() : base(key => key.Id)
         {

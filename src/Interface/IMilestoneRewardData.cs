@@ -13,25 +13,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
         IMilestoneRewardDataTiers Tiers { get; }
     }
 
-    public interface IMilestoneRewardDataReadOnly
-    {
-        IMilestoneRewardDataRewardsReadOnly Rewards { get; }
-        IMilestoneRewardDataTiersReadOnly Tiers { get; }
-    }
-
     public interface IMilestoneRewardDataRewards : IDictionaryContainer<string, MilestoneRewardDataXmlReward>
     {
     }
 
-    public interface IMilestoneRewardDataRewardsReadOnly : IReadOnlyContainer<string, MilestoneRewardDataXmlReward>
-    {
-    }
-
     public interface IMilestoneRewardDataTiers : IDictionaryContainer<string, MilestoneRewardDataXmlTier>
-    {
-    }
-
-    public interface IMilestoneRewardDataTiersReadOnly : IReadOnlyContainer<string, MilestoneRewardDataXmlTier>
     {
     }
 }

@@ -11,8 +11,4 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
     public interface ICivilizations : IDictionaryContainer<CivilizationEnum, CivilizationXml>
     {
     }
-
-    public interface ICivilizationsReadOnly : IReadOnlyContainer<CivilizationEnum, CivilizationXml>
-    {
-    }
 }

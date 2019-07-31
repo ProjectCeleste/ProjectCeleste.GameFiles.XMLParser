@@ -200,8 +200,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "equipmentdata", Description = "")]
     [XmlRoot(ElementName = "equipmentdata")]
-    public class EquipmentDataXml : DictionaryContainer<int, EquipmentDataXmlEquipment>, IEquipmentData,
-        IEquipmentDataReadOnly
+    public class EquipmentDataXml : DictionaryContainer<int, EquipmentDataXmlEquipment>, IEquipmentData
     {
         public EquipmentDataXml() : base(key => key.Id)
         {

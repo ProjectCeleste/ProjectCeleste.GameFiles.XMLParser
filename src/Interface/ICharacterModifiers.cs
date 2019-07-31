@@ -8,13 +8,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
 {
     public interface ICharacterModifiers
     {
-        CharacterModifiersModifiersXml Modifiers { get; set; }
-        CharacterModifierXmlModifierTypeData ModifierTypeData { get; set; }
-    }
-
-    public interface ICharacterModifiersReadOnly
-    {
-        CharacterModifiersModifiersXml Modifiers { get; set; }
-        CharacterModifierXmlModifierTypeData ModifierTypeData { get; set; }
+        CharacterModifiersModifiersXml Modifiers { get; }
+        CharacterModifierXmlModifierTypeData ModifierTypeData { get; }
     }
 }

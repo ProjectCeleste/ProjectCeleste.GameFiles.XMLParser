@@ -9,13 +9,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
 {
     public static class EconAdvisorXmlExt
     {
-        public static string GetDisplayNameLocalized(this EconAdvisorXml item, ILanguagesReadOnly languages,
+        public static string GetDisplayNameLocalized(this EconAdvisorXml item, ILanguages languages,
             string language = "English")
         {
             return languages["stringtablex"][language][item.DisplayNameId].Text;
         }
 
-        public static string GetDisplayDescriptionLocalized(this EconAdvisorXml item, ILanguagesReadOnly languages,
+        public static string GetDisplayDescriptionLocalized(this EconAdvisorXml item, ILanguages languages,
             string language = "English")
         {
             return languages["stringtablex"][language][item.DisplayDescriptionId].Text;

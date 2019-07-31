@@ -116,7 +116,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     }
 
     [XmlRoot(ElementName = "nuggets")]
-    public class NuggetsXml : DictionaryContainer<int, NuggetXml>, INuggets, INuggetsReadOnly
+    public class NuggetsXml : DictionaryContainer<int, NuggetXml>, INuggets
     {
         public NuggetsXml() : base(key => key.Dbid)
         {
@@ -305,7 +305,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     }
 
     [XmlRoot(ElementName = "nuggetlogic")]
-    public class NuggetLogicXml : INuggetLogic, INuggetLogicReadOnly
+    public class NuggetLogicXml : INuggetLogic
     {
         public NuggetLogicXml()
         {
@@ -407,20 +407,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonIgnore]
         [XmlIgnore]
         IDictionaryContainer<string, NuggetLogicXmlRandomMapRegion> INuggetLogic.RandomMapRegion => RandomMapRegion;
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IReadOnlyContainer<string, NuggetLogicXmlEventNuggetOverride> INuggetLogicReadOnly.EventNuggetOverride =>
-            EventNuggetOverride;
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IReadOnlyContainer<string, NuggetLogicXmlRandomMapRegion> INuggetLogicReadOnly.RandomMapRegion =>
-            RandomMapRegion;
     }
 
     [XmlRoot(ElementName = "nuggetdata")]
-    public class NuggetDataXml : INuggetData, INuggetDataReadOnly
+    public class NuggetDataXml : INuggetData
     {
         public NuggetDataXml()
         {
@@ -455,14 +445,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonIgnore]
         [XmlIgnore]
         INuggetLogic INuggetData.NuggetLogic => NuggetLogic;
-
-        [JsonIgnore]
-        [XmlIgnore]
-        INuggetsReadOnly INuggetDataReadOnly.Nuggets => Nuggets;
-
-        [JsonIgnore]
-        [XmlIgnore]
-        INuggetLogicReadOnly INuggetDataReadOnly.NuggetLogic => NuggetLogic;
 
         public void SaveToXmlFile(string file)
         {

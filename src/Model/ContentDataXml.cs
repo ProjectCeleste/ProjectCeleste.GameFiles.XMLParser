@@ -111,7 +111,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "contentinfo", Description = "")]
     [XmlRoot(ElementName = "contentinfo")]
-    public class ContentDataXml : IContentData, IContentDataReadOnly
+    public class ContentDataXml : IContentData
     {
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -189,15 +189,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonIgnore]
         [XmlIgnore]
         IDictionaryContainer<string, ContentDataXmlCurrencycontent> IContentData.CurrencyContent => CurrencyContent;
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IReadOnlyContainer<string, ContentDataXmlContent> IContentDataReadOnly.Content => Content;
-
-        [JsonIgnore]
-        [XmlIgnore]
-        IReadOnlyContainer<string, ContentDataXmlCurrencycontent> IContentDataReadOnly.CurrencyContent =>
-            CurrencyContent;
 
         public static ContentDataXml FromXmlFile(string file)
         {

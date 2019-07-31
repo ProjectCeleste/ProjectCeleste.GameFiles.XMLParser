@@ -153,7 +153,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "RandomMapSet", Description = "")]
     [XmlRoot(ElementName = "RandomMapSet")]
-    public class RandomMapSetsXml : DictionaryContainer<string, RandomMapSetXml>, IRandomMapSets, IRandomMapSetsReadOnly
+    public class RandomMapSetsXml : DictionaryContainer<string, RandomMapSetXml>, IRandomMapSets
     {
         public RandomMapSetsXml() : base(key => key.Id, StringComparer.OrdinalIgnoreCase)
         {

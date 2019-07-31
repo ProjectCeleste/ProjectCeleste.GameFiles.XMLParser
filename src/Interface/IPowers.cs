@@ -10,8 +10,4 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
     public interface IPowers : IDictionaryContainer<string, PowerXml>
     {
     }
-
-    public interface IPowersReadOnly : IReadOnlyContainer<string, PowerXml>
-    {
-    }
 }
