@@ -209,7 +209,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "trait", Description = "")]
     [XmlRoot(ElementName = "trait")]
-    public class EconTraitXml
+    public class EconTraitXml : IEconTrait
     {
         public EconTraitXml()
         {
@@ -413,7 +413,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "trait", Description = "")]
     [XmlRoot(ElementName = "traits")]
-    public class EconTraitsXml : DictionaryContainer<string, EconTraitXml>, IEconTraits
+    public class EconTraitsXml : DictionaryContainer<string, EconTraitXml, IEconTrait>, IEconTraitsXml
     {
         public EconTraitsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -455,14 +455,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static EconTraitsXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<EconTraitsXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IEconTraitsXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<EconTraitsXml>(file);
         }
     }
 }

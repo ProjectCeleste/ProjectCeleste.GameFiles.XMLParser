@@ -22,8 +22,23 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
     [JsonObject(Title = "material", Description = "")]
     [XmlRoot(ElementName = "material")]
-    public class EconMaterialXml
+    public class EconMaterialXml : IEconMaterial
     {
+        [Required]
+        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
+        [XmlElement(ElementName = "tradeable")]
+        public bool Tradeable { get; set; }
+
+        [Required]
+        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
+        [XmlElement(ElementName = "destroyable")]
+        public bool Destroyable { get; set; }
+
+        [Required]
+        [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
+        [XmlElement(ElementName = "sellcostoverride")]
+        public ItemCostXml SellCostOverride { get; set; }
+
         [Key]
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
@@ -74,20 +89,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "sellable")]
         public bool Sellable { get; set; }
 
-        [Required]
-        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
-        [XmlElement(ElementName = "tradeable")]
-        public bool Tradeable { get; set; }
-
-        [Required]
-        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
-        [XmlElement(ElementName = "destroyable")]
-        public bool Destroyable { get; set; }
-
-        [Required]
-        [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
-        [XmlElement(ElementName = "sellcostoverride")]
-        public ItemCostXml SellCostOverride { get; set; }
+        [JsonIgnore]
+        [XmlIgnore]
+        IItemCost IEconMaterial.SellCostOverride => SellCostOverride;
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -117,11 +121,38 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "alliance", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "alliance")]
         public EAllianceEnum Alliance { get; set; } = EAllianceEnum.None;
+
+        public void SetSellCostOverride(CapitalResourceTypeEnum type, double amount)
+        {
+            SellCostOverride = new ItemCostXml(type, amount);
+        }
+
+        public void SetSellCostOverride(GameCurrencyTypeEnum type, double amount)
+        {
+            SellCostOverride = new ItemCostXml(type, amount);
+        }
+
+        public void RemoveSellCostOverride()
+        {
+            SellCostOverride = null;
+        }
+
+        public void SetSellCostOverride(IItemCost cost)
+        {
+            if (cost == null)
+                RemoveSellCostOverride();
+            else if (cost.CapitalResource?.Quantity > 0)
+                SetSellCostOverride(cost.CapitalResource.Type, cost.CapitalResource.Quantity);
+            else if (cost.GameCurrency?.Quantity > 0)
+                SetSellCostOverride(cost.GameCurrency.Type, cost.GameCurrency.Quantity);
+            else
+                throw new ArgumentException("Invalid Cost ", nameof(cost));
+        }
     }
 
     [JsonObject(Title = "materials", Description = "")]
     [XmlRoot(ElementName = "materials")]
-    public class EconMaterialsXml : DictionaryContainer<string, EconMaterialXml>, IEconMaterials
+    public class EconMaterialsXml : DictionaryContainer<string, EconMaterialXml, IEconMaterial>, IEconMaterialsXml
     {
         public EconMaterialsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -162,14 +193,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static EconMaterialsXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<EconMaterialsXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IEconMaterialsXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<EconMaterialsXml>(file);
         }
     }
 }

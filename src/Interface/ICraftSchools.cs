@@ -8,7 +8,26 @@ using ProjectCeleste.GameFiles.XMLParser.Model;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Interface
 {
-    public interface ICraftSchools : IDictionaryContainer<CraftSchoolEnum, CraftSchoolXml>
+    public interface ICraftSchool
     {
+        CraftschoolAllowedCapitalsXml AllowedCapitals { get; }
+        string CraftingSound { get; }
+        int Description { get; }
+        string Design { get; }
+        int DisplayName { get; }
+        CraftSchoolGearIconsXml GearIcons { get; }
+        string Icon { get; }
+        CraftSchoolItemsXml Items { get; }
+        string StartingBlueprint { get; }
+        CraftSchoolEnum Tag { get; }
+    }
+
+    public interface ICraftSchools : IDictionaryContainer<CraftSchoolEnum, ICraftSchool>
+    {
+    }
+
+    public interface ICraftSchoolsXml : ICraftSchools
+    {
+        void SaveToXmlFile(string file);
     }
 }

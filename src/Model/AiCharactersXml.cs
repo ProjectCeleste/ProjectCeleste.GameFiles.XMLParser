@@ -207,7 +207,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "character", Description = "")]
     [XmlRoot(ElementName = "character")]
-    public class AiCharacterXml
+    public class AiCharacterXml : IAiCharacter
     {
         [Required]
         [Range(0, int.MaxValue)]
@@ -320,14 +320,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "characters", Description = "")]
     [XmlRoot(ElementName = "characters")]
-    public class AiCharactersXml : DictionaryContainer<string, AiCharacterXml>, IAiCharacters
+    public class AiCharactersXml : DictionaryContainer<string, AiCharacterXml, IAiCharacter>, IAiCharactersXml
     {
         public AiCharactersXml() : base(key => key.FileName, StringComparer.OrdinalIgnoreCase)
-        {
-        }
-
-        public AiCharactersXml(IDictionary<string, AiCharacterXml> values) : base(values, key => key.FileName,
-            StringComparer.OrdinalIgnoreCase)
         {
         }
 
@@ -369,9 +364,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static AiCharactersXml AiCharacterFromFolder(string folder)
+        public void SaveToXmlFile(string id, string file)
         {
-            var aiCharacters = new Dictionary<string, AiCharacterXml>(StringComparer.OrdinalIgnoreCase);
+            this[id].SaveToXmlFile(file);
+        }
+
+        public static IAiCharactersXml AiCharacterFromFolder(string folder)
+        {
+            var aiCharacters = new List<AiCharacterXml>();
             var excs = new List<Exception>();
             foreach (var file in Directory.GetFiles(folder, "*.character", SearchOption.AllDirectories))
                 try
@@ -381,7 +381,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                             "defaultai", StringComparison.OrdinalIgnoreCase))
                         continue;
                     var newClass = AiCharacterXml.FromXmlFile(file, folder);
-                    aiCharacters.Add(newClass.FileName, newClass);
+                    aiCharacters.Add(newClass);
                 }
                 catch (Exception e)
                 {

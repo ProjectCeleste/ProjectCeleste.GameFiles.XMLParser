@@ -160,14 +160,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "onunitcount", Description = "")]
     [XmlRoot(ElementName = "onunitcount")]
-    public class QuestGiversXmlOnunitcount
+    public class QuestGiversXmlOnUnitCount
     {
-        public QuestGiversXmlOnunitcount()
+        public QuestGiversXmlOnUnitCount()
         {
         }
 
         [JsonConstructor]
-        public QuestGiversXmlOnunitcount(
+        public QuestGiversXmlOnUnitCount(
             [JsonProperty(PropertyName = "countunittype", Required = Required.Always, Order = 1)] string countunittype,
             [JsonProperty(PropertyName = "comparetype", Required = Required.Always, Order = 2)] string comparetype,
             [JsonProperty(PropertyName = "count", Required = Required.Always, Order = 3)] int count)
@@ -230,7 +230,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonConstructor]
         public QuestGiverXmlSpawnTrigger(
             [JsonProperty(PropertyName = "onunitcount", DefaultValueHandling = DefaultValueHandling.Ignore)]
-            QuestGiversXmlOnunitcount onunitcount,
+            QuestGiversXmlOnUnitCount onunitcount,
             [JsonProperty(PropertyName = "onquest", DefaultValueHandling = DefaultValueHandling.Ignore)]
             QuestGiversXmlOnQuest onquest)
         {
@@ -241,7 +241,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "onunitcount", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "onunitcount")]
-        public QuestGiversXmlOnunitcount OnUnitCount { get; set; }
+        public QuestGiversXmlOnUnitCount OnUnitCount { get; set; }
 
         [DefaultValue(null)]
         [JsonProperty(PropertyName = "onquest", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -251,7 +251,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "questgiver", Description = "")]
     [XmlRoot(ElementName = "questgiver")]
-    public class QuestGiverXml
+    public class QuestGiverXml : IQuestGiver
     {
         public QuestGiverXml()
         {
@@ -373,7 +373,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "questgivers", Description = "")]
     [XmlRoot(ElementName = "questgivers")]
-    public class QuestGiversXml : DictionaryContainer<string, QuestGiverXml>, IQuestGivers
+    public class QuestGiversXml : DictionaryContainer<string, QuestGiverXml, IQuestGiver>, IQuestGivers
     {
         public QuestGiversXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -418,7 +418,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "questgivermanager", Description = "")]
     [XmlRoot(ElementName = "questgivermanager")]
-    public class QuestGiverManagerXml : IQuestGiverManager
+    public class QuestGiverManagerXml : IQuestGiverManagerXml
     {
         public QuestGiverManagerXml()
         {
@@ -435,7 +435,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         //[Required]
         //[JsonProperty(PropertyName = "questgivertemplates", Required = Required.Always, Order = 1)]
         //[XmlElement(ElementName = "questgivertemplates")]
-        //public string QuestGiverTemplates { get; set; }
+        //public string QuestGiverTemplates { get;  set;}
 
         [Required]
         [JsonProperty(PropertyName = "questgivers", Required = Required.Always, Order = 1)]
@@ -446,14 +446,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlIgnore]
         IQuestGivers IQuestGiverManager.QuestGivers => QuestGivers;
 
-        public static QuestGiverManagerXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<QuestGiverManagerXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IQuestGiverManagerXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<QuestGiverManagerXml>(file);
         }
     }
 }

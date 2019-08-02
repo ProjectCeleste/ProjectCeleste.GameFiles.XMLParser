@@ -173,7 +173,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "milestonerewarddata", Description = "")]
     [XmlRoot(ElementName = "milestonerewarddata")]
-    public class MilestoneRewardDataXml : IMilestoneRewardData
+    public class MilestoneRewardDataXml : IMilestoneRewardDataXml
     {
         [Required]
         [JsonProperty(PropertyName = "rewards", Required = Required.Always)]
@@ -193,14 +193,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlIgnore]
         IMilestoneRewardDataTiers IMilestoneRewardData.Tiers => Tiers;
 
-        public static MilestoneRewardDataXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<MilestoneRewardDataXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IMilestoneRewardDataXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<MilestoneRewardDataXml>(file);
         }
     }
 }

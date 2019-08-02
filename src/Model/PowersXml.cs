@@ -140,7 +140,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "power", Description = "")]
     [XmlRoot(ElementName = "power")]
-    public class PowerXml
+    public class PowerXml : IPower
     {
         [Key]
         [Required(AllowEmptyStrings = false)]
@@ -249,7 +249,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "powers", Description = "")]
     [XmlRoot(ElementName = "powers")]
-    public class PowersXml : DictionaryContainer<string, PowerXml>, IPowers
+    public class PowersXml : DictionaryContainer<string, PowerXml, IPower>, IPowersXml
     {
         public PowersXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -290,14 +290,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static PowersXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<PowersXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IPowersXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<PowersXml>(file);
         }
     }
 }

@@ -311,7 +311,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     }
 
     [XmlRoot(ElementName = "civ")]
-    public class CivilizationXml
+    public class CivilizationXml : ICivilization
     {
         [XmlElement(ElementName = "agetech")]
         public List<CivilizationXmlAgetech> Agetech { get; set; }
@@ -446,7 +446,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     }
 
     [XmlRoot(ElementName = "civilizations")]
-    public class CivilizationsXml : DictionaryContainer<CivilizationEnum, CivilizationXml>, ICivilizations
+    public class CivilizationsXml : DictionaryContainer<CivilizationEnum, CivilizationXml, ICivilization>,
+        ICivilizationsXml
     {
         public CivilizationsXml() : base(key => key.Civid)
         {
@@ -488,7 +489,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static CivilizationsXml FromFolder(string folder)
+        public void SaveToXmlFile(CivilizationEnum id, string file)
+        {
+            this[id].SaveToXmlFile(file);
+        }
+
+        public static ICivilizationsXml FromFolder(string folder)
         {
             var civs = new CivilizationsXml();
             var excs = new List<Exception>();

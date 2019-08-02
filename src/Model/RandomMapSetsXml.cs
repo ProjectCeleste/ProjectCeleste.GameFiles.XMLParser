@@ -47,7 +47,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "randomMaps", Description = "")]
     [XmlRoot(ElementName = "randomMaps")]
-    public class RandomMapSetXml
+    public class RandomMapSetXml : IRandomMapSet
     {
         public RandomMapSetXml()
         {
@@ -73,6 +73,34 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             CannotReplace = isCannotReplace;
             Map = new DictionaryContainer<string, RandomMapSetXmlMap>(map, key => key.Path,
                 StringComparer.OrdinalIgnoreCase);
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Required]
+        [JsonProperty(PropertyName = "map", Required = Required.Always, Order = 6)]
+        [XmlElement(ElementName = "map")]
+        public RandomMapSetXmlMap[] MapArray
+        {
+            get => Map.Gets().ToArray();
+            set
+            {
+                Map.Clear();
+                if (value == null)
+                    return;
+                var excs = new List<Exception>();
+                foreach (var item in value)
+                    try
+                    {
+                        Map.Add(item);
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(new Exception($"Item '{item.Path}'", e));
+                    }
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
+            }
         }
 
         [Key]
@@ -107,34 +135,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlIgnore]
         public IDictionaryContainer<string, RandomMapSetXmlMap> Map { get; }
 
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
-        [JsonProperty(PropertyName = "map", Required = Required.Always, Order = 6)]
-        [XmlElement(ElementName = "map")]
-        public RandomMapSetXmlMap[] MapArray
-        {
-            get => Map.Gets().ToArray();
-            set
-            {
-                Map.Clear();
-                if (value == null)
-                    return;
-                var excs = new List<Exception>();
-                foreach (var item in value)
-                    try
-                    {
-                        Map.Add(item);
-                    }
-                    catch (Exception e)
-                    {
-                        excs.Add(new Exception($"Item '{item.Path}'", e));
-                    }
-                if (excs.Count > 0)
-                    throw new AggregateException(excs);
-            }
-        }
-
         public static RandomMapSetXml FromXmlFile(string file)
         {
             var randomMapSetXml = XmlUtils.FromXmlFile<RandomMapSetXml>(file);
@@ -153,7 +153,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "RandomMapSet", Description = "")]
     [XmlRoot(ElementName = "RandomMapSet")]
-    public class RandomMapSetsXml : DictionaryContainer<string, RandomMapSetXml>, IRandomMapSets
+    public class RandomMapSetsXml : DictionaryContainer<string, RandomMapSetXml, IRandomMapSet>, IRandomMapSetsXml
     {
         public RandomMapSetsXml() : base(key => key.Id, StringComparer.OrdinalIgnoreCase)
         {
@@ -193,6 +193,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                 if (excs.Count > 0)
                     throw new AggregateException(excs);
             }
+        }
+
+        public void SaveToXmlFile(string id, string file)
+        {
+            this[id].SaveToXmlFile(file);
         }
 
         public static RandomMapSetsXml RandomMapSetsFromFolder(string folder)

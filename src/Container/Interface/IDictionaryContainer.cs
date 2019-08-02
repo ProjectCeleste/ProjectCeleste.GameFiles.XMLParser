@@ -12,10 +12,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container.Interface
         void Clear();
         bool Remove(T1 key);
         bool Update(T2 value);
-    }
-
-    public interface IDictionaryContainerWithEvent<in T1, T2> : IDictionaryContainer<T1, T2>
-    {
         event EventHandler<T2> OnAdd;
         event EventHandler<T2> OnRemoved;
         event EventHandler<T2> OnUpdated;

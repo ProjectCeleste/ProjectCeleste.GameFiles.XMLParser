@@ -287,14 +287,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static EconVendorsXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<EconVendorsXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IEconVendorsXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<EconVendorsXml>(file);
         }
     }
 }

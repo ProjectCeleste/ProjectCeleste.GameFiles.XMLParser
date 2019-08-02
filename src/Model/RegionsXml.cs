@@ -21,7 +21,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
     [JsonObject(Title = "Region", Description = "")]
     [XmlRoot(ElementName = "Region")]
-    public class RegionXml
+    public class RegionXml : IRegion
     {
         public RegionXml()
         {
@@ -177,7 +177,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "Regions", Description = "")]
     [XmlRoot(ElementName = "Regions")]
-    public class RegionsXml : DictionaryContainer<int, RegionXml>, IRegions
+    public class RegionsXml : DictionaryContainer<int, RegionXml, IRegion>, IRegionsXml
     {
         public RegionsXml() : base(key => key.Id)
         {
@@ -219,7 +219,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static RegionsXml RegionsFromFolder(string regionFolder)
+        public void SaveToXmlFile(int id, string file)
+        {
+            this[id].SaveToXmlFile(file);
+        }
+
+        public static IRegionsXml RegionsFromFolder(string regionFolder)
         {
             var regionsXml = new RegionsXml();
             var excs = new List<Exception>();

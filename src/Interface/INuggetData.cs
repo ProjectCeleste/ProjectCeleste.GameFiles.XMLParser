@@ -22,4 +22,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
         IDictionaryContainer<string, NuggetLogicXmlEventNuggetOverride> EventNuggetOverride { get; }
         IDictionaryContainer<string, NuggetLogicXmlRandomMapRegion> RandomMapRegion { get; }
     }
+
+    public interface INuggetDataXml : INuggetData
+    {
+        void SaveToXmlFile(string file);
+    }
 }

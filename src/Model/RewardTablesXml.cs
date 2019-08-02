@@ -73,7 +73,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "rewardtable", Description = "")]
     [XmlRoot(ElementName = "rewardtable")]
-    public class RewardTableXml
+    public class RewardTableXml : IRewardTable
     {
         public RewardTableXml()
         {
@@ -90,16 +90,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Rewards = new DictionaryContainer<string, RewardTableXmlRewards>(rewards, key => key.Key,
                 StringComparer.OrdinalIgnoreCase);
         }
-
-        [Key]
-        [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "name", Required = Required.Always, Order = 1)]
-        [XmlAttribute(AttributeName = "name")]
-        public string Name { get; set; }
-
-        [JsonIgnore]
-        [XmlIgnore]
-        public IDictionaryContainer<string, RewardTableXmlRewards> Rewards { get; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -128,6 +118,16 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                     throw new AggregateException(excs);
             }
         }
+
+        [Key]
+        [Required(AllowEmptyStrings = false)]
+        [JsonProperty(PropertyName = "name", Required = Required.Always, Order = 1)]
+        [XmlAttribute(AttributeName = "name")]
+        public string Name { get; set; }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        public IDictionaryContainer<string, RewardTableXmlRewards> Rewards { get; }
     }
 
     [JsonObject(Title = "capitalresource", Description = "")]
@@ -171,7 +171,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "rewardtables", Description = "")]
     [XmlRoot(ElementName = "rewardtables")]
-    public class RewardTablesXml : DictionaryContainer<string, RewardTableXml>, IRewardTables
+    public class RewardTablesXml : DictionaryContainer<string, RewardTableXml, IRewardTable>, IRewardTablesXml
     {
         public RewardTablesXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -214,14 +214,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static RewardTablesXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<RewardTablesXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IRewardTablesXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<RewardTablesXml>(file);
         }
     }
 }

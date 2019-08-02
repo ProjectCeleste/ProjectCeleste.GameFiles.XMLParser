@@ -14,7 +14,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model.Common
 {
     [JsonObject(Title = "gamecurrency", Description = "")]
     [XmlRoot(ElementName = "gamecurrency")]
-    public class ItemCostGameCurrencyXml
+    public class ItemCostGameCurrencyXml : IItemCostGameCurrency
     {
         public ItemCostGameCurrencyXml()
         {
@@ -46,7 +46,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model.Common
 
     [JsonObject(Title = "capitalresource", Description = "")]
     [XmlRoot(ElementName = "capitalresource")]
-    public class ItemCostCapitalResourceXml
+    public class ItemCostCapitalResourceXml : IItemCostCapitalResource
     {
         public ItemCostCapitalResourceXml()
         {
@@ -78,7 +78,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model.Common
 
     [JsonObject(Title = "Cost", Description = "")]
     [XmlRoot(ElementName = "Cost")]
-    public class ItemCostXml
+    public class ItemCostXml : IItemCost
     {
         public ItemCostXml()
         {
@@ -124,5 +124,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model.Common
         [JsonProperty(PropertyName = "gamecurrency", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "gamecurrency")]
         public ItemCostGameCurrencyXml GameCurrency { get; set; }
+
+        [XmlIgnore]
+        [JsonIgnore]
+        IItemCostCapitalResource IItemCost.CapitalResource => CapitalResource;
+
+        [XmlIgnore]
+        [JsonIgnore]
+        IItemCostGameCurrency IItemCost.GameCurrency => GameCurrency;
     }
 }

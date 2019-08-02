@@ -23,7 +23,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
     [JsonObject(Title = "content", Description = "")]
     [XmlRoot(ElementName = "content")]
-    public class ContentDataXmlContent
+    public class ContentDataXmlContent : IContentDataContent
     {
         [Key]
         [Required(AllowEmptyStrings = false)]
@@ -97,7 +97,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "currencycontent", Description = "")]
     [XmlRoot(ElementName = "currencycontent")]
-    public class ContentDataXmlCurrencycontent : ContentDataXmlContent
+    public class ContentDataXmlCurrencyContent : ContentDataXmlContent, IContentDataCurrencyContent
     {
         [Required]
         [XmlElement(ElementName = "cost")]
@@ -111,7 +111,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "contentinfo", Description = "")]
     [XmlRoot(ElementName = "contentinfo")]
-    public class ContentDataXml : IContentData
+    public class ContentDataXml : IContentDataXml
     {
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -147,7 +147,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [Required]
         [JsonProperty(PropertyName = "currencycontent", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "currencycontent")]
-        public ContentDataXmlCurrencycontent[] CurrencyContentArray
+        public ContentDataXmlCurrencyContent[] CurrencyContentArray
         {
             get => CurrencyContent.Gets().ToArray();
             set
@@ -173,31 +173,35 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonIgnore]
         [XmlIgnore]
-        public DictionaryContainer<string, ContentDataXmlContent> Content { get; } =
-            new DictionaryContainer<string, ContentDataXmlContent>(key => key.Name, StringComparer.OrdinalIgnoreCase);
-
-        [JsonIgnore]
-        [XmlIgnore]
-        public DictionaryContainer<string, ContentDataXmlCurrencycontent> CurrencyContent { get; } =
-            new DictionaryContainer<string, ContentDataXmlCurrencycontent>(key => key.Name,
+        public DictionaryContainer<string, ContentDataXmlContent, IContentDataContent> Content { get; } =
+            new DictionaryContainer<string, ContentDataXmlContent, IContentDataContent>(key => key.Name,
                 StringComparer.OrdinalIgnoreCase);
 
         [JsonIgnore]
         [XmlIgnore]
-        IDictionaryContainer<string, ContentDataXmlContent> IContentData.Content => Content;
+        public DictionaryContainer<string, ContentDataXmlCurrencyContent, IContentDataCurrencyContent> CurrencyContent
+        {
+            get;
+        } =
+            new DictionaryContainer<string, ContentDataXmlCurrencyContent, IContentDataCurrencyContent>(key => key.Name,
+                StringComparer.OrdinalIgnoreCase);
 
         [JsonIgnore]
         [XmlIgnore]
-        IDictionaryContainer<string, ContentDataXmlCurrencycontent> IContentData.CurrencyContent => CurrencyContent;
+        IDictionaryContainer<string, IContentDataContent> IContentData.Content => Content;
 
-        public static ContentDataXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<ContentDataXml>(file);
-        }
+        [JsonIgnore]
+        [XmlIgnore]
+        IDictionaryContainer<string, IContentDataCurrencyContent> IContentData.CurrencyContent => CurrencyContent;
 
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IContentDataXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<ContentDataXml>(file);
         }
     }
 }

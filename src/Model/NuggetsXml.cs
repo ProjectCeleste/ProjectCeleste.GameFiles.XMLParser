@@ -393,11 +393,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonIgnore]
         [XmlIgnore]
-        public DictionaryContainer<string, NuggetLogicXmlRandomMapRegion> RandomMapRegion { get; }
+        public IDictionaryContainer<string, NuggetLogicXmlRandomMapRegion> RandomMapRegion { get; }
 
         [JsonIgnore]
         [XmlIgnore]
-        public DictionaryContainer<string, NuggetLogicXmlEventNuggetOverride> EventNuggetOverride { get; }
+        public IDictionaryContainer<string, NuggetLogicXmlEventNuggetOverride> EventNuggetOverride { get; }
 
         [JsonIgnore]
         [XmlIgnore]
@@ -410,7 +410,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     }
 
     [XmlRoot(ElementName = "nuggetdata")]
-    public class NuggetDataXml : INuggetData
+    public class NuggetDataXml : INuggetDataXml
     {
         public NuggetDataXml()
         {
@@ -451,7 +451,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             this.ToXmlFile(file);
         }
 
-        public static NuggetDataXml FromXmlFile(string file)
+        public static INuggetDataXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<NuggetDataXml>(file);
         }

@@ -7,7 +7,18 @@ using ProjectCeleste.GameFiles.XMLParser.Model;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Interface
 {
-    public interface IRewardTables : IDictionaryContainer<string, RewardTableXml>
+    public interface IRewardTable
     {
+        string Name { get; }
+        IDictionaryContainer<string, RewardTableXmlRewards> Rewards { get; }
+    }
+
+    public interface IRewardTables : IDictionaryContainer<string, IRewardTable>
+    {
+    }
+
+    public interface IRewardTablesXml : IRewardTables
+    {
+        void SaveToXmlFile(string file);
     }
 }

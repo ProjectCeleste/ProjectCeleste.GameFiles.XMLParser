@@ -147,7 +147,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     }
 
     [XmlRoot(ElementName = "Tech")]
-    public class TechTreeXmlTech
+    public class TechTreeXmlTech : ITechTreeTech
     {
         public TechTreeXmlTech()
         {
@@ -256,7 +256,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     }
 
     [XmlRoot(ElementName = "TechTree")]
-    public class TechTreeXml : DictionaryContainer<string, TechTreeXmlTech>, ITechTree
+    public class TechTreeXml : DictionaryContainer<string, TechTreeXmlTech, ITechTreeTech>, ITechTreeXml
     {
         public TechTreeXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -305,14 +305,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlAttribute(AttributeName = "version")]
         public int Version { get; set; }
 
-        public static TechTreeXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<TechTreeXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static ITechTreeXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<TechTreeXml>(file);
         }
     }
 }

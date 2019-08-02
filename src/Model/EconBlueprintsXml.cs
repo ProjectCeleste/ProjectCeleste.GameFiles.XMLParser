@@ -100,13 +100,28 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "blueprint", Description = "")]
     [XmlRoot(ElementName = "blueprint")]
-    public class EconBlueprintXml
+    public class EconBlueprintXml : IEconBlueprint
     {
         public EconBlueprintXml()
         {
             Event = EventEnum.None;
             Alliance = EAllianceEnum.None;
         }
+
+        [Required]
+        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
+        [XmlElement(ElementName = "tradeable")]
+        public bool Tradeable { get; set; } = true;
+
+        [Required]
+        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
+        [XmlElement(ElementName = "destroyable")]
+        public bool Destroyable { get; set; } = true;
+
+        [Required]
+        [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
+        [XmlElement(ElementName = "sellcostoverride")]
+        public ItemCostXml SellCostOverride { get; set; }
 
         [Key]
         [Required(AllowEmptyStrings = false)]
@@ -154,20 +169,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "sellable")]
         public bool Sellable { get; set; } = true;
 
-        [Required]
-        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
-        [XmlElement(ElementName = "tradeable")]
-        public bool Tradeable { get; set; } = true;
-
-        [Required]
-        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
-        [XmlElement(ElementName = "destroyable")]
-        public bool Destroyable { get; set; } = true;
-
-        [Required]
-        [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
-        [XmlElement(ElementName = "sellcostoverride")]
-        public ItemCostXml SellCostOverride { get; set; }
+        [JsonIgnore]
+        [XmlIgnore]
+        IItemCost IEconBlueprint.SellCostOverride => SellCostOverride;
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -202,11 +206,38 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "event", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "event")]
         public EventEnum Event { get; set; }
+
+        public void SetSellCostOverride(CapitalResourceTypeEnum type, double amount)
+        {
+            SellCostOverride = new ItemCostXml(type, amount);
+        }
+
+        public void SetSellCostOverride(GameCurrencyTypeEnum type, double amount)
+        {
+            SellCostOverride = new ItemCostXml(type, amount);
+        }
+
+        public void RemoveSellCostOverride()
+        {
+            SellCostOverride = null;
+        }
+
+        public void SetSellCostOverride(IItemCost cost)
+        {
+            if (cost == null)
+                RemoveSellCostOverride();
+            else if (cost.CapitalResource?.Quantity > 0)
+                SetSellCostOverride(cost.CapitalResource.Type, cost.CapitalResource.Quantity);
+            else if (cost.GameCurrency?.Quantity > 0)
+                SetSellCostOverride(cost.GameCurrency.Type, cost.GameCurrency.Quantity);
+            else
+                throw new ArgumentException("Invalid Cost ", nameof(cost));
+        }
     }
 
     [JsonObject(Title = "blueprints", Description = "")]
     [XmlRoot(ElementName = "blueprints")]
-    public class EconBlueprintsXml : DictionaryContainer<string, EconBlueprintXml>, IEconBlueprints
+    public class EconBlueprintsXml : DictionaryContainer<string, EconBlueprintXml, IEconBlueprint>, IEconBlueprintsXml
     {
         public EconBlueprintsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -249,14 +280,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static EconBlueprintsXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<EconBlueprintsXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IEconBlueprintsXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<EconBlueprintsXml>(file);
         }
     }
 }

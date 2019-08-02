@@ -20,7 +20,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
     [JsonObject(Title = "lootroll", Description = "")]
     [XmlRoot(ElementName = "lootroll")]
-    public class EconLootRollXml
+    public class EconLootRollXml : IEconLootRoll
     {
         public EconLootRollXml()
         {
@@ -110,7 +110,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "lootrolls", Description = "")]
     [XmlRoot(ElementName = "lootrolls")]
-    public class EconLootRollsXml : DictionaryContainer<string, EconLootRollXml>, IEconLootRolls
+    public class EconLootRollsXml : DictionaryContainer<string, EconLootRollXml, IEconLootRoll>, IEconLootRollsXml
     {
         public EconLootRollsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -152,14 +152,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static EconLootRollsXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<EconLootRollsXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IEconLootRollsXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<EconLootRollsXml>(file);
         }
     }
 }

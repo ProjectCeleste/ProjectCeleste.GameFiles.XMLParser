@@ -6,7 +6,7 @@ using ProjectCeleste.GameFiles.XMLParser.Interface;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Extention
 {
-    public static class CharacterLevelsXmlExt
+    public static class CharacterLevelsExt
     {
         public static int GetLevelMaxXp(this ICharacterLevels characterLevelsXml, int currentLevel)
         {

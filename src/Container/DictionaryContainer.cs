@@ -11,7 +11,7 @@ using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Container
 {
-    public class DictionaryContainer<TKey, TValue, TInterface> : IDictionaryContainerWithEvent<TKey, TInterface>
+    public class DictionaryContainer<TKey, TValue, TInterface> : IDictionaryContainer<TKey, TInterface>
         where TValue : class, TInterface
     {
         [XmlIgnore] [JsonIgnore] private readonly Func<TValue, TKey> _keySelector;
@@ -205,7 +205,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
         }
     }
 
-    public class DictionaryContainer<TKey, TValue> : IDictionaryContainerWithEvent<TKey, TValue>
+    public class DictionaryContainer<TKey, TValue> : IDictionaryContainer<TKey, TValue>
     {
         [XmlIgnore] [JsonIgnore] private readonly Func<TValue, TKey> _keySelector;
         [XmlIgnore] [JsonIgnore] private readonly IDictionary<TKey, TValue> _valuesDic;

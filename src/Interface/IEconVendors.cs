@@ -7,11 +7,7 @@ using ProjectCeleste.GameFiles.XMLParser.Model;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Interface
 {
-    public interface IEconVendorsXml : IEconVendors
-    {
-    }
-
-    public interface IEconVendors : IDictionaryContainerWithEvent<string, IEconVendor>
+    public interface IEconVendors : IDictionaryContainer<string, IEconVendor>
     {
     }
 
@@ -25,5 +21,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
     public interface IEconVendorItemsets
     {
         EconVendorXmlItemset Itemset { get; }
+    }
+
+    public interface IEconVendorsXml : IEconVendors
+    {
+        void SaveToXmlFile(string file);
     }
 }

@@ -1,21 +1,20 @@
 #region Using directives
 
 using ProjectCeleste.GameFiles.XMLParser.Interface;
-using ProjectCeleste.GameFiles.XMLParser.Model;
 
 #endregion
 
 namespace ProjectCeleste.GameFiles.XMLParser.Extention
 {
-    public static class PowerXmlExt
+    public static class PowerExt
     {
-        public static string GetDisplayNameLocalized(this PowerXml item, ILanguages languages,
+        public static string GetDisplayNameLocalized(this IPower item, ILanguages languages,
             string language = "English")
         {
             return languages["stringtablex"][language][item.Displaynameid].Text;
         }
 
-        public static string GetRollOverTextLocalized(this PowerXml item, ILanguages languages,
+        public static string GetRollOverTextLocalized(this IPower item, ILanguages languages,
             string language = "English")
         {
             return languages["stringtablex"][language][item.Rolloverid].Text;

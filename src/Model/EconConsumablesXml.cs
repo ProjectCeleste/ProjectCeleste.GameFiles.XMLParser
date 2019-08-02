@@ -22,13 +22,28 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
     [JsonObject(Title = "consumable", Description = "")]
     [XmlRoot(ElementName = "consumable")]
-    public class EconConsumableXml
+    public class EconConsumableXml : IEconConsumable
     {
         public EconConsumableXml()
         {
             Event = EventEnum.None;
             Type = EconConsumableTypeEnum.Client;
         }
+
+        [Required]
+        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
+        [XmlElement(ElementName = "tradeable")]
+        public bool Tradeable { get; set; } = true;
+
+        [Required]
+        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
+        [XmlElement(ElementName = "destroyable")]
+        public bool Destroyable { get; set; } = true;
+
+        [Required]
+        [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
+        [XmlElement(ElementName = "sellcostoverride")]
+        public ItemCostXml SellCostOverride { get; set; }
 
         [Key]
         [Required(AllowEmptyStrings = false)]
@@ -87,20 +102,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "sellable")]
         public bool Sellable { get; set; } = true;
 
-        [Required]
-        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
-        [XmlElement(ElementName = "tradeable")]
-        public bool Tradeable { get; set; } = true;
-
-        [Required]
-        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
-        [XmlElement(ElementName = "destroyable")]
-        public bool Destroyable { get; set; } = true;
-
-        [Required]
-        [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
-        [XmlElement(ElementName = "sellcostoverride")]
-        public ItemCostXml SellCostOverride { get; set; }
+        [JsonIgnore]
+        [XmlIgnore]
+        IItemCost IEconConsumable.SellCostOverride => SellCostOverride;
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -138,11 +142,39 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "event", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "event")]
         public EventEnum Event { get; set; }
+
+        public void SetSellCostOverride(CapitalResourceTypeEnum type, double amount)
+        {
+            SellCostOverride = new ItemCostXml(type, amount);
+        }
+
+        public void SetSellCostOverride(GameCurrencyTypeEnum type, double amount)
+        {
+            SellCostOverride = new ItemCostXml(type, amount);
+        }
+
+        public void RemoveSellCostOverride()
+        {
+            SellCostOverride = null;
+        }
+
+        public void SetSellCostOverride(IItemCost cost)
+        {
+            if (cost == null)
+                RemoveSellCostOverride();
+            else if (cost.CapitalResource?.Quantity > 0)
+                SetSellCostOverride(cost.CapitalResource.Type, cost.CapitalResource.Quantity);
+            else if (cost.GameCurrency?.Quantity > 0)
+                SetSellCostOverride(cost.GameCurrency.Type, cost.GameCurrency.Quantity);
+            else
+                throw new ArgumentException("Invalid Cost ", nameof(cost));
+        }
     }
 
     [JsonObject(Title = "consumables", Description = "")]
     [XmlRoot(ElementName = "consumables")]
-    public class EconConsumablesXml : DictionaryContainer<string, EconConsumableXml>, IEconConsumables
+    public class EconConsumablesXml : DictionaryContainer<string, EconConsumableXml, IEconConsumable>,
+        IEconConsumablesXml
     {
         public EconConsumablesXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -184,14 +216,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static EconConsumablesXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<EconConsumablesXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IEconConsumablesXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<EconConsumablesXml>(file);
         }
     }
 }

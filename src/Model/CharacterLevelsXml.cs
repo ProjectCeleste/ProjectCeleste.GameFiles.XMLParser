@@ -29,9 +29,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public CharacterLevelXmlGameCurrencyEffect(
             [JsonProperty(PropertyName = "empirepoints", Required = Required.Always)] int empirePoints)
         {
-            EmpirePoints = empirePoints < 0
-                ? throw new ArgumentOutOfRangeException(nameof(empirePoints), empirePoints, null)
-                : empirePoints;
+            SetEmpirePoints(empirePoints);
         }
 
         [Required]
@@ -60,9 +58,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public CharacterLevelXmlSkillPointsEffect(
             [JsonProperty(PropertyName = "skillpoints", Required = Required.Always)] int skillPoints)
         {
-            SkillPoints = skillPoints < 0
-                ? throw new ArgumentOutOfRangeException(nameof(skillPoints), skillPoints, null)
-                : skillPoints;
+            SetSkillPoints(skillPoints);
         }
 
         [Required]
@@ -91,7 +87,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public CharacterLevelXmlAgeUpEffect(
             [JsonProperty(PropertyName = "enableage", Required = Required.Always)] int enableAge)
         {
-            EnableAge = enableAge;
+            SetEnableAge(enableAge);
         }
 
         [Required]
@@ -118,7 +114,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public CharacterLevelXmlUnlockRegionEffect(
             [JsonProperty(PropertyName = "id", Required = Required.Always)] int id)
         {
-            Id = id;
+            SetId(id);
         }
 
         [Required]
@@ -159,12 +155,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             [JsonProperty(PropertyName = "unlockregioneffect", DefaultValueHandling = DefaultValueHandling.Ignore)]
             HashSet<CharacterLevelXmlUnlockRegionEffect> unlockRegionEffect)
         {
-            Level = level < 0 || level > 99 ? throw new ArgumentOutOfRangeException(nameof(level), level, null) : level;
-            Xp = xp < 0 || xp > 99 ? throw new ArgumentOutOfRangeException(nameof(xp), xp, null) : xp;
-            _gameCurrencyEffect = gameCurrencyEffect;
-            _skillPointsEffect = skillPointsEffect;
+            SetLevel(level);
+            SetXp(xp);
+            GameCurrencyEffect = gameCurrencyEffect;
+            SkillPointsEffect = skillPointsEffect;
             AgeUpEffect = ageUpEffect;
-            _unlockRegionEffect = unlockRegionEffect;
+            UnlockRegionEffect = unlockRegionEffect;
         }
 
         [Required]
@@ -214,11 +210,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [XmlIgnore]
         [JsonIgnore]
-        ICharacterLevelGameCurrencyEffect ICharacterLevel.GameCurrencyEffect => _gameCurrencyEffect;
+        ICharacterLevelGameCurrencyEffect ICharacterLevel.GameCurrencyEffect => GameCurrencyEffect;
 
         [XmlIgnore]
         [JsonIgnore]
-        ICharacterLevelSkillPointsEffect ICharacterLevel.SkillPointsEffect => _skillPointsEffect;
+        ICharacterLevelSkillPointsEffect ICharacterLevel.SkillPointsEffect => SkillPointsEffect;
 
         [XmlIgnore]
         [JsonIgnore]
@@ -226,12 +222,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [XmlIgnore]
         [JsonIgnore]
-        IEnumerable<ICharacterLevelUnlockRegionEffect> ICharacterLevel.UnlockRegionEffect => _unlockRegionEffect;
-
-        //public void SetLevel(int level)
-        //{
-        //    Level = level < 0 || level > 99 ? throw new ArgumentOutOfRangeException(nameof(level), level, null) : level;
-        //}
+        IEnumerable<ICharacterLevelUnlockRegionEffect> ICharacterLevel.UnlockRegionEffect => UnlockRegionEffect;
 
         public void SetXp(int xp)
         {
@@ -240,27 +231,27 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void SetGameCurrencyEffect(int empirePoints)
         {
-            _gameCurrencyEffect = new CharacterLevelXmlGameCurrencyEffect(empirePoints);
+            GameCurrencyEffect = empirePoints > 0 ? new CharacterLevelXmlGameCurrencyEffect(empirePoints) : null;
         }
 
         public void RemoveGameCurrencyEffect()
         {
-            _gameCurrencyEffect = null;
+            GameCurrencyEffect = null;
         }
 
         public void SetSkillPointsEffect(int skillPoints)
         {
-            _skillPointsEffect = new CharacterLevelXmlSkillPointsEffect(skillPoints);
+            SkillPointsEffect = skillPoints > 0 ? new CharacterLevelXmlSkillPointsEffect(skillPoints) : null;
         }
 
         public void RemoveSkillPointsEffect()
         {
-            _skillPointsEffect = null;
+            SkillPointsEffect = null;
         }
 
         public void SetAgeUpEffect(int age)
         {
-            AgeUpEffect = new CharacterLevelXmlAgeUpEffect(age);
+            AgeUpEffect = age > 0 ? new CharacterLevelXmlAgeUpEffect(age) : null;
         }
 
         public void RemoveAgeUpEffect()
@@ -270,19 +261,24 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void AddUnlockRegionEffect(int regionId)
         {
-            if (_unlockRegionEffect == null)
-                _unlockRegionEffect = new HashSet<CharacterLevelXmlUnlockRegionEffect>();
-            _unlockRegionEffect.Add(new CharacterLevelXmlUnlockRegionEffect(regionId));
+            if (UnlockRegionEffect == null)
+                UnlockRegionEffect = new HashSet<CharacterLevelXmlUnlockRegionEffect>();
+            UnlockRegionEffect.Add(new CharacterLevelXmlUnlockRegionEffect(regionId));
         }
 
         public void RemoveUnlockRegionEffect(int regionId)
         {
-            _unlockRegionEffect?.RemoveWhere(key => key.Id == regionId);
+            UnlockRegionEffect?.RemoveWhere(key => key.Id == regionId);
         }
 
         public void RemoveAllUnlockRegionEffect()
         {
-            _unlockRegionEffect = null;
+            UnlockRegionEffect = null;
+        }
+
+        public void SetLevel(int level)
+        {
+            Level = level < 0 || level > 99 ? throw new ArgumentOutOfRangeException(nameof(level), level, null) : level;
         }
     }
 
@@ -300,9 +296,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             [JsonProperty(PropertyName = "level", Required = Required.Always)]
             IEnumerable<CharacterLevelXml> levels) : base(levels, key => key.Level)
         {
-            MaxLevel = maxLevel < 0 || maxLevel > 99
-                ? throw new ArgumentOutOfRangeException(nameof(maxLevel), maxLevel, null)
-                : maxLevel;
+            SetMaxLevel(maxLevel);
         }
 
         [Required]

@@ -19,7 +19,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
     [JsonObject(Title = "protounit", Description = "")]
     [XmlRoot(ElementName = "protounit")]
-    public class ServerProtoDataXmlProtoUnit
+    public class ServerProtoDataXmlProtoUnit : IServerProtoUnit
     {
         public ServerProtoDataXmlProtoUnit()
         {
@@ -79,7 +79,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "protodata", Description = "")]
     [XmlRoot(ElementName = "protodata")]
-    public class ServerProtoDataXml : DictionaryContainer<string, ServerProtoDataXmlProtoUnit>, IServerProtoData
+    public class ServerProtoDataXml : DictionaryContainer<string, ServerProtoDataXmlProtoUnit, IServerProtoUnit>,
+        IServerProtoData
     {
         public ServerProtoDataXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {

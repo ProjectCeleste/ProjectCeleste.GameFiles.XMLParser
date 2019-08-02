@@ -41,7 +41,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [JsonObject(Title = "modifiertypedata", Description = "")]
     [XmlRoot(ElementName = "modifiertypedata")]
     public class CharacterModifierXmlModifierTypeData : DictionaryContainer<CharacterModifierTypeEnum,
-        CharacterModifierXmlModifierType>
+        CharacterModifierXmlModifierType>, ICharacterModifierTypeData
     {
         public CharacterModifierXmlModifierTypeData() : base(key => key.Type)
         {
@@ -59,7 +59,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [Required]
         [JsonProperty(PropertyName = "modifiertype", Required = Required.Always)]
         [XmlElement(ElementName = "modifiertype")]
-        public CharacterModifierXmlModifierType[] Modifier
+        public CharacterModifierXmlModifierType[] ModifierType
         {
             get => Gets().ToArray();
             set
@@ -225,7 +225,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "modifiers", Description = "")]
     [XmlRoot(ElementName = "modifiers")]
-    public class CharacterModifiersModifiersXml : DictionaryContainer<string, CharacterModifierXml>
+    public class CharacterModifiersModifiersXml : DictionaryContainer<string, CharacterModifierXml>, ICharacterModifiers
     {
         public CharacterModifiersModifiersXml() : base(key => key.Id, StringComparer.OrdinalIgnoreCase)
         {
@@ -272,7 +272,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "charactermodifiers", Description = "")]
     [XmlRoot(ElementName = "charactermodifiers")]
-    public class CharacterModifiersXml : ICharacterModifiers
+    public class CharacterModifiersXml : ICharacterModifiersDataXml
     {
         public CharacterModifiersXml()
         {
@@ -299,7 +299,15 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "modifiers")]
         public CharacterModifiersModifiersXml Modifiers { get; set; }
 
-        public static CharacterModifiersXml FromXmlFile(string file)
+        [XmlIgnore]
+        [JsonIgnore]
+        ICharacterModifiers ICharacterModifiersData.Modifiers => Modifiers;
+
+        [XmlIgnore]
+        [JsonIgnore]
+        ICharacterModifierTypeData ICharacterModifiersData.ModifierTypeData => ModifierTypeData;
+
+        public static ICharacterModifiersDataXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<CharacterModifiersXml>(file);
         }

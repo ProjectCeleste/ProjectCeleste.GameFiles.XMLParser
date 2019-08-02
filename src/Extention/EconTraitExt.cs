@@ -12,15 +12,15 @@ using ProjectCeleste.GameFiles.XMLParser.Model;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Extention
 {
-    public static class EconTraitXmlExt
+    public static class EconTraitExt
     {
-        public static string GetDisplayNameLocalized(this EconTraitXml item, ILanguages languages,
+        public static string GetDisplayNameLocalized(this IEconTrait item, ILanguages languages,
             string language = "English")
         {
             return languages["stringtablex"][language][item.DisplayNameId].Text;
         }
 
-        public static string GetRollOverTextLocalized(this EconTraitXml item, ILanguages languages,
+        public static string GetRollOverTextLocalized(this IEconTrait item, ILanguages languages,
             string language = "English")
         {
             return languages["stringtablex"][language][item.RollOverTextId].Text;
@@ -273,7 +273,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             }
         }
 
-        public static string GetStatsLocalized(this EconTraitXml item, ILanguages languages, int lvl,
+        public static string GetStatsLocalized(this IEconTrait item, ILanguages languages, int lvl,
             int seed = 0,
             string language = "English")
         {

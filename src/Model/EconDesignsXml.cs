@@ -329,13 +329,28 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "econdesign", Description = "")]
     [XmlRoot(ElementName = "econdesign")]
-    public class EconDesignXml
+    public class EconDesignXml : IEconDesign
     {
         public EconDesignXml()
         {
             Alliance = EAllianceEnum.None;
             Event = EventEnum.None;
         }
+
+        [Required]
+        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
+        [XmlElement(ElementName = "tradeable")]
+        public bool Tradeable { get; set; } = true;
+
+        [Required]
+        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
+        [XmlElement(ElementName = "destroyable")]
+        public bool Destroyable { get; set; } = true;
+
+        [Required]
+        [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
+        [XmlElement(ElementName = "sellcostoverride")]
+        public ItemCostXml SellCostOverride { get; set; }
 
         [Key]
         [Required(AllowEmptyStrings = false)]
@@ -383,20 +398,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "sellable")]
         public bool Sellable { get; set; } = true;
 
-        [Required]
-        [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
-        [XmlElement(ElementName = "tradeable")]
-        public bool Tradeable { get; set; } = true;
-
-        [Required]
-        [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
-        [XmlElement(ElementName = "destroyable")]
-        public bool Destroyable { get; set; } = true;
-
-        [Required]
-        [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
-        [XmlElement(ElementName = "sellcostoverride")]
-        public ItemCostXml SellCostOverride { get; set; }
+        [JsonIgnore]
+        [XmlIgnore]
+        IItemCost IEconDesign.SellCostOverride => SellCostOverride;
 
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -474,11 +478,38 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "alliance", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "alliance")]
         public EAllianceEnum Alliance { get; set; }
+
+        public void SetSellCostOverride(CapitalResourceTypeEnum type, double amount)
+        {
+            SellCostOverride = new ItemCostXml(type, amount);
+        }
+
+        public void SetSellCostOverride(GameCurrencyTypeEnum type, double amount)
+        {
+            SellCostOverride = new ItemCostXml(type, amount);
+        }
+
+        public void RemoveSellCostOverride()
+        {
+            SellCostOverride = null;
+        }
+
+        public void SetSellCostOverride(IItemCost cost)
+        {
+            if (cost == null)
+                RemoveSellCostOverride();
+            else if (cost.CapitalResource?.Quantity > 0)
+                SetSellCostOverride(cost.CapitalResource.Type, cost.CapitalResource.Quantity);
+            else if (cost.GameCurrency?.Quantity > 0)
+                SetSellCostOverride(cost.GameCurrency.Type, cost.GameCurrency.Quantity);
+            else
+                throw new ArgumentException("Invalid Cost ", nameof(cost));
+        }
     }
 
     [JsonObject(Title = "econdesigns", Description = "")]
     [XmlRoot(ElementName = "econdesigns")]
-    public class EconDesignsXml : DictionaryContainer<string, EconDesignXml>, IEconDesigns
+    public class EconDesignsXml : DictionaryContainer<string, EconDesignXml, IEconDesign>, IEconDesignsXml
     {
         public EconDesignsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -521,14 +552,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static EconDesignsXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<EconDesignsXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IEconDesignsXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<EconDesignsXml>(file);
         }
     }
 }

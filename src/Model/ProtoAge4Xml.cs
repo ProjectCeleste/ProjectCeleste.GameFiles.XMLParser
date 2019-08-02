@@ -1310,7 +1310,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Version = version >= 0 ? version : throw new ArgumentOutOfRangeException(nameof(version), version, null);
         }
 
-        public static ProtoAge4Xml FromXmlFile(string file)
+        public static IProtoAge4Xml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<ProtoAge4Xml>(file);
         }

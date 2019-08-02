@@ -41,7 +41,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "quest", Description = "")]
     [XmlRoot(ElementName = "quest")]
-    public class EconQuestXml
+    public class EconQuestXml : IEconQuest
     {
         public EconQuestXml()
         {
@@ -162,7 +162,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "quests", Description = "")]
     [XmlRoot(ElementName = "quests")]
-    public class EconQuestsXml : DictionaryContainer<string, EconQuestXml>, IEconQuests
+    public class EconQuestsXml : DictionaryContainer<string, EconQuestXml, IEconQuest>, IEconQuestsXml
     {
         public EconQuestsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -170,8 +170,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonConstructor]
         public EconQuestsXml(
-            [JsonProperty(PropertyName = "quest", Required = Required.Always)] IEnumerable<EconQuestXml> materials) :
-            base(materials, key => key.Name, StringComparer.OrdinalIgnoreCase)
+            [JsonProperty(PropertyName = "quest", Required = Required.Always)] IEnumerable<EconQuestXml> quests) :
+            base(quests, key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
         }
 
@@ -204,14 +204,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static EconQuestsXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<EconQuestsXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IEconQuestsXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<EconQuestsXml>(file);
         }
     }
 }

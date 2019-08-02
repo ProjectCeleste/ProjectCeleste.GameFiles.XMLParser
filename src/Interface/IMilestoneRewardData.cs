@@ -20,4 +20,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
     public interface IMilestoneRewardDataTiers : IDictionaryContainer<string, MilestoneRewardDataXmlTier>
     {
     }
+
+    public interface IMilestoneRewardDataXml : IMilestoneRewardData
+    {
+        void SaveToXmlFile(string file);
+    }
 }

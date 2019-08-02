@@ -4,29 +4,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
-using ProjectCeleste.GameFiles.XMLParser.Model;
 
 #endregion
 
 namespace ProjectCeleste.GameFiles.XMLParser.Extention
 {
-    public static class EconDesignXmlExt
+    public static class EconDesignExt
     {
-        public static string GetDisplayNameLocalized(this EconDesignXml item, ILanguages languages,
+        public static string GetDisplayNameLocalized(this IEconDesign item, ILanguages languages,
             string language = "English")
         {
             return languages["econstrings"][language][item.DisplayNameId].Text;
         }
 
-        public static string GetRollOverTextLocalized(this EconDesignXml item, ILanguages languages,
+        public static string GetRollOverTextLocalized(this IEconDesign item, ILanguages languages,
             string language = "English")
         {
             return languages["stringtablex"][language][item.RollOverTextId].Text;
         }
 
-        public static void Verify(this EconDesignsXml item, EconMaterialsXml econMaterials,
-            EconConsumablesXml econConsumables, EconTraitsXml econTraits, EconAdvisorsXml econAdvisors,
-            EconBlueprintsXml econBlueprints)
+        public static void Verify(this IEconDesigns item, IEconMaterials econMaterials,
+            IEconConsumables econConsumables, IEconTraits econTraits, IEconAdvisors econAdvisors,
+            IEconBlueprints econBlueprints)
         {
             var list = new List<Exception>();
             foreach (var design in item.Gets())

@@ -62,7 +62,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "school", Description = "")]
     [XmlRoot(ElementName = "school")]
-    public class CraftSchoolXml
+    public class CraftSchoolXml : ICraftSchool
     {
         [Key]
         [Required(AllowEmptyStrings = false)]
@@ -115,7 +115,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public CraftschoolAllowedCapitalsXml AllowedCapitals { get; set; }
     }
 
-    [JsonObject(Title = "trait", Description = "")]
+    [JsonObject(Title = "allowedcapitals", Description = "")]
     [XmlRoot(ElementName = "allowedcapitals")]
     public class CraftschoolAllowedCapitalsXml
     {
@@ -127,7 +127,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "craftschools", Description = "")]
     [XmlRoot(ElementName = "craftschools")]
-    public class CraftSchoolsXml : DictionaryContainer<CraftSchoolEnum, CraftSchoolXml>, ICraftSchools
+    public class CraftSchoolsXml : DictionaryContainer<CraftSchoolEnum, CraftSchoolXml, ICraftSchool>, ICraftSchoolsXml
     {
         public CraftSchoolsXml() : base(key => key.Tag)
         {
@@ -169,14 +169,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static CraftSchoolsXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<CraftSchoolsXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static ICraftSchoolsXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<CraftSchoolsXml>(file);
         }
     }
 }

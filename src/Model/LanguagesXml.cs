@@ -96,7 +96,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public LanguageXml(string name) : base(key => key.LocId)
         {
-            Name = !string.IsNullOrWhiteSpace(name) ? name : throw new ArgumentNullException(nameof(name));
+            SetName(name);
         }
 
         [JsonConstructor]

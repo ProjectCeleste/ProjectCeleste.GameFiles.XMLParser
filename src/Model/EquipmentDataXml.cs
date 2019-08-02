@@ -20,7 +20,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
     [JsonObject(Title = "equipment", Description = "")]
     [XmlRoot(ElementName = "equipment")]
-    public class EquipmentDataXmlEquipment
+    public class EquipmentDataXmlEquipment : IEquipment
     {
         [Key]
         [Required]
@@ -200,7 +200,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "equipmentdata", Description = "")]
     [XmlRoot(ElementName = "equipmentdata")]
-    public class EquipmentDataXml : DictionaryContainer<int, EquipmentDataXmlEquipment>, IEquipmentData
+    public class EquipmentDataXml : DictionaryContainer<int, EquipmentDataXmlEquipment, IEquipment>, IEquipmentDataXml
     {
         public EquipmentDataXml() : base(key => key.Id)
         {
@@ -242,14 +242,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static EquipmentDataXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<EquipmentDataXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IEquipmentDataXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<EquipmentDataXml>(file);
         }
     }
 }

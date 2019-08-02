@@ -9,7 +9,7 @@ using ProjectCeleste.GameFiles.XMLParser.Interface;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Extention
 {
-    public static class LanguagesXmlExt
+    public static class LanguagesExt
     {
         public static string GetAgeLocalizedString(ILanguages languages, [Range(0, 3)] int age,
             string language = "English")

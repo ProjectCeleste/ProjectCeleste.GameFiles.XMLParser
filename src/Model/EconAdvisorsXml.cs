@@ -45,8 +45,24 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "advisor", Description = "")]
     [XmlRoot(ElementName = "advisor")]
-    public class EconAdvisorXml
+    public class EconAdvisorXml : IEconAdvisor
     {
+        [Required]
+        [Range(0, int.MaxValue)]
+        [JsonProperty(PropertyName = "displaydescriptionid", Required = Required.Always)]
+        [XmlElement(ElementName = "displaydescriptionid")]
+        public int DisplayDescriptionId { get; set; }
+
+        [DefaultValue(0)]
+        [JsonProperty(PropertyName = "shortdescriptionid", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "shortdescriptionid")]
+        public int ShortDescriptionId { get; set; }
+
+        [Required]
+        [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
+        [XmlElement(ElementName = "sellcostoverride")]
+        public ItemCostXml SellCostOverride { get; set; }
+
         [Key]
         [Required]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
@@ -93,21 +109,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "displaynameid")]
         public int DisplayNameId { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "displaydescriptionid", Required = Required.Always)]
-        [XmlElement(ElementName = "displaydescriptionid")]
-        public int DisplayDescriptionId { get; set; }
-
-        [DefaultValue(0)]
-        [JsonProperty(PropertyName = "shortdescriptionid", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [XmlElement(ElementName = "shortdescriptionid")]
-        public int ShortDescriptionId { get; set; }
-
-        [Required]
-        [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
-        [XmlElement(ElementName = "sellcostoverride")]
-        public ItemCostXml SellCostOverride { get; set; }
+        [JsonIgnore]
+        [XmlIgnore]
+        IItemCost IEconAdvisor.SellCostOverride => SellCostOverride;
 
         [Required]
         [Range(0, 99)]
@@ -169,11 +173,38 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "alliance", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "alliance")]
         public EAllianceEnum Alliance { get; set; } = EAllianceEnum.None;
+
+        public void SetSellCostOverride(CapitalResourceTypeEnum type, double amount)
+        {
+            SellCostOverride = new ItemCostXml(type, amount);
+        }
+
+        public void SetSellCostOverride(GameCurrencyTypeEnum type, double amount)
+        {
+            SellCostOverride = new ItemCostXml(type, amount);
+        }
+
+        public void RemoveSellCostOverride()
+        {
+            SellCostOverride = null;
+        }
+
+        public void SetSellCostOverride(IItemCost cost)
+        {
+            if (cost == null)
+                RemoveSellCostOverride();
+            else if (cost.CapitalResource?.Quantity > 0)
+                SetSellCostOverride(cost.CapitalResource.Type, cost.CapitalResource.Quantity);
+            else if (cost.GameCurrency?.Quantity > 0)
+                SetSellCostOverride(cost.GameCurrency.Type, cost.GameCurrency.Quantity);
+            else
+                throw new ArgumentException("Invalid Cost ", nameof(cost));
+        }
     }
 
     [JsonObject(Title = "advisors", Description = "")]
     [XmlRoot(ElementName = "advisors")]
-    public class EconAdvisorsXml : DictionaryContainer<string, EconAdvisorXml>, IEconAdvisors
+    public class EconAdvisorsXml : DictionaryContainer<string, EconAdvisorXml, IEconAdvisor>, IEconAdvisorsXml
     {
         public EconAdvisorsXml() : base(key => key.Name, StringComparer.OrdinalIgnoreCase)
         {
@@ -216,14 +247,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        public static EconAdvisorsXml FromXmlFile(string file)
-        {
-            return XmlUtils.FromXmlFile<EconAdvisorsXml>(file);
-        }
-
         public void SaveToXmlFile(string file)
         {
             this.ToXmlFile(file);
+        }
+
+        public static IEconAdvisorsXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<EconAdvisorsXml>(file);
         }
     }
 }

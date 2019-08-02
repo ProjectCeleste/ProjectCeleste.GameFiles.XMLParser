@@ -72,7 +72,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             this.ToXmlFile(file);
         }
 
-        public static ProtoUnitOverridesXml FromXmlFile(string file)
+        public static IProtoUnitOverridesXml FromXmlFile(string file)
         {
             return XmlUtils.FromXmlFile<ProtoUnitOverridesXml>(file);
         }
