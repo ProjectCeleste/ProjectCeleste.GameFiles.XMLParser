@@ -86,6 +86,19 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model.Common
             GameCurrency = null;
         }
 
+        public ItemCostXml(IItemCost cost)
+        {
+            CapitalResource = cost?.CapitalResource?.Quantity > 0
+                ? new ItemCostCapitalResourceXml(cost.CapitalResource.Type, cost.CapitalResource.Quantity)
+                : null;
+            GameCurrency = cost?.GameCurrency?.Quantity > 0
+                ? new ItemCostGameCurrencyXml(cost.GameCurrency.Type, cost.GameCurrency.Quantity)
+                : null;
+
+            if (CapitalResource != null && GameCurrency != null)
+                throw new ArgumentOutOfRangeException();
+        }
+
         public ItemCostXml(CapitalResourceTypeEnum capitalResource, double quantity)
         {
             CapitalResource = new ItemCostCapitalResourceXml(capitalResource, quantity);
