@@ -119,99 +119,63 @@ namespace ProjectCeleste.GameFiles.XMLParser.Helpers
             return new ItemCostXml(CapitalResourceTypeEnum.cCapResCoin, result);
         }
 
-        public static ItemCostXml GetSellCostOverride(object econItem)
+        public static void FixSellCostOverride(object econItem)
         {
-            InventoryItemTypeEnum inventoryItemType;
-            int itemLvl;
-            RarityEnum itemRarity;
             switch (econItem)
             {
                 case EconAdvisorXml item:
-                    inventoryItemType = InventoryItemTypeEnum.Advisor;
-                    itemLvl = item.ItemLevel;
-                    itemRarity = item.Rarity;
+                    if (item.SellCostOverride == null ||
+                        !(item.SellCostOverride.CapitalResource?.Quantity > 0 ||
+                          item.SellCostOverride.GameCurrency?.Quantity > 0))
+                        if (item.Sellable)
+                            item.SetSellCostOverride(GetSellCostOverride(InventoryItemTypeEnum.Advisor, item.ItemLevel,
+                                item.Rarity));
+                        else
+                            item.SetSellCostOverride(CapitalResourceTypeEnum.cCapResCoin, 0);
                     break;
                 case EconBlueprintXml item:
-                    inventoryItemType = InventoryItemTypeEnum.Blueprint;
-                    itemLvl = item.ItemLevel;
-                    itemRarity = (RarityEnum) item.Rarity;
+                    if (item.SellCostOverride == null ||
+                        !(item.SellCostOverride.CapitalResource?.Quantity > 0 ||
+                          item.SellCostOverride.GameCurrency?.Quantity > 0))
+                        if (item.Sellable)
+                            item.SetSellCostOverride(GetSellCostOverride(InventoryItemTypeEnum.Blueprint,
+                                item.ItemLevel, (RarityEnum) item.Rarity));
+                        else
+                            item.SetSellCostOverride(CapitalResourceTypeEnum.cCapResCoin, 0);
                     break;
                 case EconConsumableXml item:
-                    inventoryItemType = InventoryItemTypeEnum.Consumable;
-                    itemLvl = item.ItemLevel;
-                    itemRarity = (RarityEnum) item.Rarity;
+                    if (item.SellCostOverride == null ||
+                        !(item.SellCostOverride.CapitalResource?.Quantity > 0 ||
+                          item.SellCostOverride.GameCurrency?.Quantity > 0))
+                        if (item.Sellable)
+                            item.SetSellCostOverride(GetSellCostOverride(InventoryItemTypeEnum.Consumable,
+                                item.ItemLevel, (RarityEnum) item.Rarity));
+                        else
+                            item.SetSellCostOverride(CapitalResourceTypeEnum.cCapResCoin, 0);
                     break;
                 case EconMaterialXml item:
-                    inventoryItemType = InventoryItemTypeEnum.Material;
-                    itemLvl = item.ItemLevel;
-                    itemRarity = (RarityEnum) item.Rarity;
+                    if (item.SellCostOverride == null ||
+                        !(item.SellCostOverride.CapitalResource?.Quantity > 0 ||
+                          item.SellCostOverride.GameCurrency?.Quantity > 0))
+                        if (item.Sellable)
+                            item.SetSellCostOverride(GetSellCostOverride(InventoryItemTypeEnum.Material, item.ItemLevel,
+                                (RarityEnum) item.Rarity));
+                        else
+                            item.SetSellCostOverride(CapitalResourceTypeEnum.cCapResCoin, 0);
                     break;
                 case EconDesignXml item:
-                    inventoryItemType = InventoryItemTypeEnum.Design;
-                    itemLvl = item.ItemLevel;
-                    itemRarity = (RarityEnum) item.Rarity;
+                    if (item.SellCostOverride == null ||
+                        !(item.SellCostOverride.CapitalResource?.Quantity > 0 ||
+                          item.SellCostOverride.GameCurrency?.Quantity > 0))
+                        if (item.Sellable)
+                            item.SetSellCostOverride(GetSellCostOverride(InventoryItemTypeEnum.Design, item.ItemLevel,
+                                (RarityEnum) item.Rarity));
+                        else
+                            item.SetSellCostOverride(CapitalResourceTypeEnum.cCapResCoin, 0);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(econItem), econItem, null);
             }
-
-            return GetSellCostOverride(inventoryItemType, itemLvl, itemRarity);
-        }
-
-        public static void FixSellCostOverride(object econItem, ref ItemCostXml sellCostOverride)
-        {
-            InventoryItemTypeEnum inventoryItemType;
-            int itemLvl;
-            bool isSellable;
-            RarityEnum itemRarity;
-            switch (econItem)
-            {
-                case EconAdvisorXml item:
-                    inventoryItemType = InventoryItemTypeEnum.Advisor;
-                    itemLvl = item.ItemLevel;
-                    isSellable = item.Sellable;
-                    itemRarity = item.Rarity;
-                    break;
-                case EconBlueprintXml item:
-                    inventoryItemType = InventoryItemTypeEnum.Blueprint;
-                    itemLvl = item.ItemLevel;
-                    isSellable = item.Sellable;
-                    itemRarity = (RarityEnum) item.Rarity;
-                    break;
-                case EconConsumableXml item:
-                    inventoryItemType = InventoryItemTypeEnum.Consumable;
-                    itemLvl = item.ItemLevel;
-                    isSellable = item.Sellable;
-                    itemRarity = (RarityEnum) item.Rarity;
-                    break;
-                case EconMaterialXml item:
-                    inventoryItemType = InventoryItemTypeEnum.Material;
-                    itemLvl = item.ItemLevel;
-                    isSellable = item.Sellable;
-                    itemRarity = (RarityEnum) item.Rarity;
-                    break;
-                case EconDesignXml item:
-                    inventoryItemType = InventoryItemTypeEnum.Design;
-                    itemLvl = item.ItemLevel;
-                    isSellable = item.Sellable;
-                    itemRarity = (RarityEnum) item.Rarity;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(econItem), econItem, null);
-            }
-
-            ItemCostXml itemCost;
-            if ((sellCostOverride == null || sellCostOverride.CapitalResource == null &&
-                 sellCostOverride.GameCurrency == null) && isSellable)
-                itemCost = GetSellCostOverride(inventoryItemType, itemLvl, itemRarity);
-            else
-                itemCost = sellCostOverride;
-
-            sellCostOverride = itemCost != null &&
-                               (itemCost.CapitalResource?.Quantity > 0 ||
-                                itemCost.GameCurrency?.Quantity > 0)
-                ? itemCost
-                : new ItemCostXml(CapitalResourceTypeEnum.cCapResCoin, 0);
         }
     }
 }
