@@ -118,7 +118,7 @@ install:
       $VersionManifestPath = Join-Path -Path $ENV:APPVEYOR_BUILD_FOLDER -ChildPath 'VersionManifest.md'
       $ManifestContent = Get-Content -Path $VersionManifestPath -Raw
       # Set Version number
-      $env:Build_Version = "$version.$env:APPVEYOR_BUILD_NUMBER"
+      $env:Build_Version = "$ManifestContent.$env:APPVEYOR_BUILD_NUMBER"
       # update AppVeyor build
       Update-AppveyorBuild -Version $env:Build_Version
     }
