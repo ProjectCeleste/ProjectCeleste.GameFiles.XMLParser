@@ -81,9 +81,9 @@ environment:
     secure: jGj6ymLyuRVFC2DxQFlS8UmlTZbcCjjVVPFFxT4Awbs=
 
 # build cache to preserve files/folders between builds
-#cache:
-#  - packages -> **\packages.config  # preserve packages directory in the root of build folder but will reset it if packages.config is modified
-#  - '%LocalAppData%\NuGet\Cache'
+cache:
+  - packages -> **\ProjectCeleste.GameFiles.XMLParser.csproj  # preserve packages directory in the root of build folder but will reset it if ProjectCeleste.GameFiles.XMLParser.csproj is modified
+  - '%LocalAppData%\NuGet\Cache'
 
 # scripts that run after cloning repository
 install:
