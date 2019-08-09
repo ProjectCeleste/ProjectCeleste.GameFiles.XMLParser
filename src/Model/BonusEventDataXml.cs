@@ -20,7 +20,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
     [JsonObject(Title = "weight", Description = "")]
     [XmlRoot(ElementName = "weight")]
-    public class BonusEventDataXmlWeight
+    public class BonusEventDataXmlWeight : IWeight
     {
         [Key]
         [Required(AllowEmptyStrings = false)]
@@ -47,12 +47,42 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "categoryweights", Description = "")]
     [XmlRoot(ElementName = "categoryweights")]
-    public class BonusEventDataXmlCategoryWeights
+    public class BonusEventDataXmlCategoryWeights : DictionaryContainer<string, BonusEventDataXmlWeight, IWeight>,
+        ICategoryWeights
     {
+        public BonusEventDataXmlCategoryWeights() : base(key => key.Category, StringComparer.OrdinalIgnoreCase)
+        {
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
         [JsonProperty(PropertyName = "weight", Required = Required.Always)]
         [XmlElement(ElementName = "weight")]
-        public List<BonusEventDataXmlWeight> Weight { get; set; }
+        public BonusEventDataXmlWeight[] Weight
+        {
+            get => Gets().ToArray();
+            set
+            {
+                Clear();
+                if (value == null)
+                    return;
+
+                var excs = new List<Exception>();
+                foreach (var item in value)
+                    try
+                    {
+                        if (!Add(item))
+                            throw new Exception("Add fail");
+                    }
+                    catch (Exception e)
+                    {
+                        excs.Add(new Exception($"Item '{item.Category}'", e));
+                    }
+                if (excs.Count > 0)
+                    throw new AggregateException(excs);
+            }
+        }
     }
 
     [JsonObject(Title = "announcementinfo", Description = "")]
@@ -85,7 +115,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "globalbonusevent", Description = "")]
     [XmlRoot(ElementName = "globalbonusevent")]
-    public class BonusEventDataXmlGlobalBonusEvent
+    public class BonusEventDataXmlGlobalBonusEvent : IGlobalBonusEvent
     {
         [Key]
         [Required]
@@ -112,7 +142,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "bonusevents", Description = "")]
     [XmlRoot(ElementName = "bonusevents")]
-    public class BonusEventDataXmlBonusEvents : DictionaryContainer<EventEnum, BonusEventDataXmlGlobalBonusEvent>
+    public class BonusEventDataXmlBonusEvents :
+        DictionaryContainer<EventEnum, BonusEventDataXmlGlobalBonusEvent, IGlobalBonusEvent>, IBonusEvents
     {
         public BonusEventDataXmlBonusEvents() : base(key => key.Id)
         {
@@ -159,6 +190,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "bonusevents")]
         public BonusEventDataXmlBonusEvents BonusEvents { get; set; }
 
+        [JsonIgnore]
+        [XmlIgnore]
+        IBonusEvents IBonusEventData.BonusEvents => BonusEvents;
+
+        [JsonIgnore]
+        [XmlIgnore]
+        ICategoryWeights IBonusEventData.CategoryWeights => CategoryWeights;
 
         public void SaveToXmlFile(string file)
         {
