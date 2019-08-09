@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using ProjectCeleste.GameFiles.XMLParser.Container;
 using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
@@ -231,21 +233,21 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "override")]
     public class NuggetLogicXmlEventNuggetOverrideOverride
     {
-        [Required]
-        [JsonProperty(PropertyName = "weight", Required = Required.Always)]
-        [XmlAttribute(AttributeName = "weight")]
-        public int Weight { get; set; }
-
         [Key]
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlText]
         public string Id { get; set; }
 
-        [Required]
-        [JsonProperty(PropertyName = "isBoss", Required = Required.Always)]
+        [DefaultValue(false)]
+        [JsonProperty(PropertyName = "isBoss", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "isBoss")]
         public bool IsBoss { get; set; }
+
+        [Required]
+        [JsonProperty(PropertyName = "weight", Required = Required.Always)]
+        [XmlAttribute(AttributeName = "weight")]
+        public int Weight { get; set; }
     }
 
     [XmlRoot(ElementName = "eventnuggetoverride")]
@@ -264,11 +266,19 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlIgnore]
         public string Key => $"{Event}-{Rewardloottable}";
 
+        [JsonProperty(PropertyName = "event", Required = Required.Always)]
         [XmlAttribute(AttributeName = "event")]
         public EventEnum Event { get; set; }
 
+        [JsonProperty(PropertyName = "rewardloottable", Required = Required.Always)]
         [XmlAttribute(AttributeName = "rewardloottable")]
         public LootTableEnum Rewardloottable { get; set; }
+
+        [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty(PropertyName = "type", Required = Required.Always)]
+        [XmlAttribute(AttributeName = "type")]
+        public EventOverrideTypeEnum OverrideType { get; set; }
 
         [JsonIgnore]
         [XmlIgnore]
@@ -302,6 +312,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                     throw new AggregateException(excs);
             }
         }
+    }
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum EventOverrideTypeEnum
+    {
+        [XmlEnum("Add")] [EnumMember(Value = "Add")] Add = 1,
+        [XmlEnum("Replace")] [EnumMember(Value = "Replace")] Replace = 0
     }
 
     [XmlRoot(ElementName = "nuggetlogic")]
