@@ -97,7 +97,7 @@ install:
       $env:Build_Version = "$($env:APPVEYOR_REPO_TAG_NAME.Replace('v', ''))"
       # Update VersionManifest
       $VersionManifestPath = Join-Path -Path $ENV:APPVEYOR_BUILD_FOLDER -ChildPath 'VersionManifest.md'
-      Set-Content -Path $VersionManifestPath -Value $env:Build_Version
+      Set-Content -NoNewline -Path $VersionManifestPath -Value $env:Build_Version
       # Update AppVeyor build
       Update-AppveyorBuild -Version $env:Build_Version
       # Update AppVeyor BuildNumber
