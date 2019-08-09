@@ -151,6 +151,10 @@ configuration:
   - Release
 
 build:
+  parallel: true
+  publish_nuget: true
+  publish_nuget_symbols: true
+  use_snupkg_format: true
   # MSBuild verbosity level
   verbosity: minimal
 
@@ -192,7 +196,7 @@ artifacts:
   - path: 'src\bin\Release\netstandard2.0'
     name: ProjectCeleste.GameFiles.XMLParser.NetStandard2.0
     type: zip
-  - path: 'src\bin\Release\ProjectCeleste.GameFiles.XMLParser.%Build_Version%.nupkg'
+  - path: 'src\bin\Release\ProjectCeleste.GameFiles.XMLParser.%Build_Version%.*nupkg'
     name: NuGet
     
 #---------------------------------#
