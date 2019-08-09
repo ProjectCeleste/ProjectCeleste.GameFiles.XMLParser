@@ -16,6 +16,10 @@ using ProjectCeleste.GameFiles.XMLParser.Interface;
 
 #endregion
 
+//TODO ORDER
+//TODO JsonConstructor
+//TODO JsonProperty
+//TODO C# Attribute
 namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
     [XmlRoot(ElementName = "Cost")]
