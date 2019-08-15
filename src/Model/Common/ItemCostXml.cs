@@ -88,12 +88,15 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model.Common
 
         public ItemCostXml(IItemCost cost)
         {
-            CapitalResource = cost?.CapitalResource?.Quantity > 0
+            CapitalResource = cost?.CapitalResource?.Quantity >= 0
                 ? new ItemCostCapitalResourceXml(cost.CapitalResource.Type, cost.CapitalResource.Quantity)
                 : null;
-            GameCurrency = cost?.GameCurrency?.Quantity > 0
+            GameCurrency = cost?.GameCurrency?.Quantity >= 0
                 ? new ItemCostGameCurrencyXml(cost.GameCurrency.Type, cost.GameCurrency.Quantity)
                 : null;
+
+            if (CapitalResource == null && GameCurrency == null)
+                throw new ArgumentOutOfRangeException();
 
             if (CapitalResource != null && GameCurrency != null)
                 throw new ArgumentOutOfRangeException();
