@@ -193,9 +193,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         {
             if (cost == null)
                 RemoveSellCostOverride();
-            else if (cost.CapitalResource?.Quantity > 0)
+            else if (cost.CapitalResource?.Quantity >= 0)
                 SetSellCostOverride(cost.CapitalResource.Type, cost.CapitalResource.Quantity);
-            else if (cost.GameCurrency?.Quantity > 0)
+            else if (cost.GameCurrency?.Quantity >= 0)
                 SetSellCostOverride(cost.GameCurrency.Type, cost.GameCurrency.Quantity);
             else
                 throw new ArgumentException("Invalid Cost ", nameof(cost));
