@@ -164,11 +164,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
                 throw new KeyNotFoundException($"KeyNotFoundException '{keyResult}'");
 
             if (ReferenceEquals(value, item) || Equals(value, item))
-                return true;
+                return false;
 
             if (string.Equals(JsonConvert.SerializeObject(value, Formatting.None),
                 JsonConvert.SerializeObject(item, Formatting.None), StringComparison.OrdinalIgnoreCase))
-                return true;
+                return false;
 
             _valuesDic[keyResult] = value;
 
@@ -287,9 +287,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
             if (ReferenceEquals(value, item) || Equals(value, item))
                 return false;
 
-            //if (string.Equals(JsonConvert.SerializeObject(value, Formatting.None),
-            //    JsonConvert.SerializeObject(item, Formatting.None), StringComparison.OrdinalIgnoreCase))
-            //    return false;
+            if (string.Equals(JsonConvert.SerializeObject(value, Formatting.None),
+                JsonConvert.SerializeObject(item, Formatting.None), StringComparison.OrdinalIgnoreCase))
+                return false;
 
             _valuesDic[keyResult] = value;
 
