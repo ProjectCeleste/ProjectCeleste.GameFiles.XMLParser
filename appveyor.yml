@@ -184,14 +184,8 @@ test: off
 #---------------------------------#
 
 artifacts:
-  - path: 'src\bin\Release\net47'
-    name: ProjectCeleste.GameFiles.XMLParser.Net47
-    type: zip
-  - path: 'src\bin\Release\netcoreapp2.0'
-    name: ProjectCeleste.GameFiles.XMLParser.NetCore2.0
-    type: zip
-  - path: 'src\bin\Release\netstandard2.0'
-    name: ProjectCeleste.GameFiles.XMLParser.NetStandard2.0
+  - path: 'src\bin\Release'
+    name: ProjectCeleste.GameFiles.XMLParser
     type: zip
   - path: 'src\bin\Release\ProjectCeleste.GameFiles.XMLParser.%Build_Version%.*nupkg'
     name: NuGet
@@ -210,7 +204,7 @@ deploy:
     description: '[View CHANGELOG.md](https://github.com/ProjectCeleste/ProjectCeleste.GameFiles.XMLParser/blob/master/CHANGELOG.md)'
     release: ProjectCeleste.GameFiles.XMLParser v$(Build_Version)
     auth_token: $(access_token)
-    artifact: ProjectCeleste.GameFiles.XMLParser.NetCore2.0, ProjectCeleste.GameFiles.XMLParser.NetStandard2.0, ProjectCeleste.GameFiles.XMLParser.Net47, NuGet
+    artifact: ProjectCeleste.GameFiles.XMLParser, NuGet
     draft: false
     prerelease: false
     force_update: true
