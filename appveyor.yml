@@ -204,7 +204,7 @@ deploy:
     description: '[View CHANGELOG.md](https://github.com/ProjectCeleste/ProjectCeleste.GameFiles.XMLParser/blob/master/CHANGELOG.md)'
     release: ProjectCeleste.GameFiles.XMLParser v$(Build_Version)
     auth_token: $(access_token)
-    artifact: ProjectCeleste.GameFiles.XMLParser, NuGet
+    artifact: ProjectCeleste.GameFiles.XMLParser
     draft: false
     prerelease: false
     force_update: true
