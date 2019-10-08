@@ -44,6 +44,9 @@ Age of Empires Online © Microsoft Corporation. Celeste Fan Project was created 
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <DefineConstants>TRACE;NET47</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.6.0" />
   </ItemGroup>
