@@ -48,7 +48,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             [JsonProperty(PropertyName = "FlagIcon", DefaultValueHandling = DefaultValueHandling.Ignore)]
             string flagIcon,
             [JsonProperty(PropertyName = "PlayList", DefaultValueHandling = DefaultValueHandling.Ignore)]
-            string playList)
+            string playList,
+            [JsonProperty(PropertyName = "Event", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            EventEnum @event)
         {
             Id = id;
             Hidden = isHidden;
@@ -68,6 +70,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             AvatarShield = !string.IsNullOrWhiteSpace(avatarShield) ? avatarShield : null;
             FlagIcon = !string.IsNullOrWhiteSpace(flagIcon) ? flagIcon : null;
             PlayList = !string.IsNullOrWhiteSpace(playList) ? playList : null;
+			Event = @event;
         }
 
         [JsonIgnore]
@@ -161,6 +164,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "PlayList", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "PlayList")]
         public string PlayList { get; set; }
+
+        [DefaultValue(EventEnum.None)]
+        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonProperty(PropertyName = "Event", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "Event")]
+        public EventEnum Event { get; set; } = EventEnum.None;
 
         public static RegionXml FromXmlFile(string file)
         {
