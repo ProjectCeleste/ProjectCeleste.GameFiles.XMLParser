@@ -284,7 +284,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public CivilizationXmlWelcomedialogs Welcomedialogs { get; set; }
 
         [XmlElement(ElementName = "firstquestid")]
-        public string Firstquestid { get; set; }
+        public int Firstquestid { get; set; }
     }
 
     [XmlRoot(ElementName = "unitregen")]
