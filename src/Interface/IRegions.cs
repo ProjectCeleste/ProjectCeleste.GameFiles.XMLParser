@@ -26,6 +26,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
         string MapPage { get; }
         string Name { get; }
         string PlayList { get; }
+        EventEnum Event { get; }
     }
 
     public interface IRegions : IDictionaryContainer<int, IRegion>
