@@ -19,9 +19,9 @@ Age of Empires Online © Microsoft Corporation. Celeste Fan Project was created 
     <Authors>ProjectCeleste</Authors>
     <Company />
     <Product>ProjectCeleste.GameFiles.XMLParser</Product>
-    <Version>2.5.1</Version>
-    <AssemblyVersion>2.5.1</AssemblyVersion>
-    <FileVersion>2.5.1</FileVersion>
+    <Version>2.5.2</Version>
+    <AssemblyVersion>2.5.2</AssemblyVersion>
+    <FileVersion>2.5.2</FileVersion>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
