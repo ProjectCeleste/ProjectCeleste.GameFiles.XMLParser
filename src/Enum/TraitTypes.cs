@@ -55,6 +55,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("VanityHelm")] [EnumMember(Value = "VanityHelm")] VanityHelm = 201,
         [XmlEnum("VanityShield")] [EnumMember(Value = "VanityShield")] VanityShield = 202,
 
+        [XmlEnum("Banner")] [EnumMember(Value = "Banner")] Banner = 777,
+		
         [XmlEnum("Test")] [EnumMember(Value = "Test")] Test = 999
     }
 }
