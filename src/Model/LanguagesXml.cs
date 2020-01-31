@@ -265,7 +265,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                 return languageXml;
 
             languageXml.Id = filename.Replace("fr-fr-", "")
-                .Replace("de-de-", "").Replace("es-es-", "").Replace("it-it-", "").Replace("zh-cht-", "");
+                .Replace("de-de-", "").Replace("es-es-", "").Replace("it-it-", "").Replace("zh-cht-", "").Replace("pt-br-", "");
 
             if (filename.Contains("fr-fr"))
                 languageXml.Gets().First().Name = "French";
@@ -277,6 +277,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                 languageXml.Gets().First().Name = "Italian";
             else if (filename.Contains("zh-cht"))
                 languageXml.Gets().First().Name = "Chinese";
+            else if (filename.Contains("pt-br-"))
+                languageXml.Gets().First().Name = "Portuguese";
             else
                 languageXml.Gets().First().Name = "English";
 
@@ -330,7 +332,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public static ILanguagesXml LanguagesFromXmlFiles(string languagesFolder)
         {
-            var prefixLang = new[] {"", "de-DE", "fr-FR", "es-ES", "it-IT", "zh-CHT"};
+            var prefixLang = new[] {"", "de-DE", "fr-FR", "es-ES", "it-IT", "zh-CHT", "pt-BR" };
 
             var listFile = new[]
             {
