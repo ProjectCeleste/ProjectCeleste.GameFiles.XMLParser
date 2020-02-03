@@ -116,6 +116,8 @@ nuget:
 # environment variables
 environment:
   APPVEYOR_IGNORE_COMMIT_FILTERING_ON_TAG: true
+  WEBHOOK_URL:
+    secure: /CbpdEUrM8BKgl32Anwi+Mx3FcbTymOrcrW8oIDoyOQwL6Nv7jmaAk6H1jvfiYj7hrJZOOOfHOXN55viX3KU+woHrkMHSBFAY+4fx/JBjkFfIvPlLy7S9w/vcVHLwiiTekriXels25aPzzLMTapnVMlx/uSxxSTGMflqfZbwvzQ=
   access_token:
     secure: FCfA6NOUpYu23Acwkb5xfB0fI9iOtw7t7maO76F/0Qu0XTMAXnjLa33b8LUTahEY
   github_email:
@@ -229,10 +231,10 @@ artifacts:
   - path: 'src\bin\$(CONFIGURATION)'
     name: ProjectCeleste.GameFiles.XMLParser
     type: zip
-  - path: 'src\bin\Release\ProjectCeleste.GameFiles.XMLParser.*.*nupkg'
+  - path: 'src\bin\Release\*.nupkg'
     name: NuGet_Package
-  - path: 'src\bin\Release\ProjectCeleste.GameFiles.XMLParser.*.nupkg'
-    name: GitHub_Package
+  - path: 'src\bin\Release\*.snupkg'
+    name: NuGet_Symbols
     
 #---------------------------------#
 #     deployment configuration    #
@@ -262,7 +264,7 @@ deploy:
       secure: JurVq4I9wOP95B7ZAerkZlt/+f5MOQahoOCk9ScEA4bF6PIWe6iwEIMjhyUnnWgX
     skip_symbols: false
     symbol_server:           # remove to push symbols to SymbolSource.org
-    artifact: NuGet_Package
+    artifact: NuGet_Package, NuGet_Symbols
     on:
       Celeste_IsDeploy: true
 
@@ -312,9 +314,13 @@ on_success:
         git tag -f "$env:APPVEYOR_REPO_TAG_NAME"
         git push --tags --force
     }
+    Invoke-RestMethod https://raw.githubusercontent.com/DiscordHooks/appveyor-discord-webhook/master/send.ps1 -o send.ps1
+    ./send.ps1 success $env:WEBHOOK_URL
 
 # on build failure
 on_failure:
-
+  - ps: Invoke-RestMethod https://raw.githubusercontent.com/DiscordHooks/appveyor-discord-webhook/master/send.ps1 -o send.ps1
+  - ps: ./send.ps1 failure $env:WEBHOOK_URL
+  
 # after build failure or success
 on_finish:
