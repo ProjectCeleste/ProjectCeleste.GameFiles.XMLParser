@@ -196,7 +196,7 @@ configuration:
   - Release
 
 build:
-  parallel: true
+  #parallel: true
   # MSBuild verbosity level
   verbosity: minimal
 
