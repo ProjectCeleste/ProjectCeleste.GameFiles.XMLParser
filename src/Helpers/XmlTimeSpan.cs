@@ -20,7 +20,19 @@ namespace ProjectCeleste.GameFiles.XMLParser.Helpers
 
         void IXmlSerializable.ReadXml(XmlReader reader)
         {
-            var value = reader.ReadContentAsString();
+            string value;
+            switch (reader.NodeType)
+            {
+                case XmlNodeType.Attribute:
+                case XmlNodeType.Element:
+                    value = reader.ReadElementContentAsString();
+                    break;
+                case XmlNodeType.Text:
+                    value = reader.ReadContentAsString();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
             _value = string.IsNullOrWhiteSpace(value) ? TimeSpan.Zero : TimeSpan.Parse(value);
         }
 
