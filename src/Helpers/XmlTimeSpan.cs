@@ -20,7 +20,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Helpers
 
         void IXmlSerializable.ReadXml(XmlReader reader)
         {
-            _value = TimeSpan.Parse(reader.ReadContentAsString());
+            var value = reader.ReadContentAsString();
+            _value = string.IsNullOrWhiteSpace(value) ? TimeSpan.Zero : TimeSpan.Parse(value);
         }
 
         void IXmlSerializable.WriteXml(XmlWriter writer)
@@ -40,10 +41,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Helpers
 
         public override bool Equals(object obj)
         {
-            if (obj is null) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((XmlTimeSpan)obj);
+            return obj is XmlTimeSpan span && Equals(_value, span._value);
         }
 
         public override int GetHashCode()
