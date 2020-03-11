@@ -4,12 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
+using ProjectCeleste.GameFiles.XMLParser.Interface;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
     [JsonObject(Title = "reward", Description = "")]
     [XmlRoot(ElementName = "reward")]
-    public class Reward
+    public class ContestDataXmlReward
     {
         [Key]
         [Required]
@@ -27,7 +28,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "scaledreward", Description = "")]
     [XmlRoot(ElementName = "scaledreward")]
-    public class ScaledReward
+    public class ContestDataXmlScaledReward
     {
         [Key]
         [Required]
@@ -45,7 +46,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "contest", Description = "")]
     [XmlRoot(ElementName = "contest")]
-    public class Contest
+    public class ContestDataXmlContest
     {
         [Key]
         [Required]
@@ -79,14 +80,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "rewards", Required = Required.Always)]
         [XmlArray("rewards")]
         [XmlArrayItem("reward")]
-        public List<Reward> Rewards { get; set; }
+        public List<ContestDataXmlReward> Rewards { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "scaledrewards", Required = Required.Always)]
         [XmlArray("scaledrewards")]
         [XmlArrayItem("scaledreward")]
-        public List<ScaledReward> ScaledRewards { get; set; }
+        public List<ContestDataXmlScaledReward> ScaledRewards { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]
@@ -98,7 +99,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "contestdata", Description = "")]
     [XmlRoot(ElementName = "contestdata")]
-    public class ContestData
+    public class ContestDataXml : IContestDataXml
     {
         [Required]
         [JsonProperty(PropertyName = "participationbonustime", Required = Required.Always)]
@@ -109,6 +110,16 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "contests", Required = Required.Always)]
         [XmlArray("contests")]
         [XmlArrayItem("contest")]
-        public List<Contest> Contests { get; set; }
+        public List<ContestDataXmlContest> Contests { get; set; }
+
+        public void SaveToXmlFile(string file)
+        {
+            this.ToXmlFile(file);
+        }
+
+        public static IContestDataXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<ContestDataXml>(file);
+        }
     }
 }

@@ -133,7 +133,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
     [JsonObject(Title = "alliancedata", Description = "")]
     [XmlRoot(ElementName = "alliancedata")]
-    public class AllianceDataXml
+    public class AllianceDataXml : IAllianceDataXml
     {
         [Required]
         [Range(0, 99)]
@@ -152,5 +152,15 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlArray("alliances")]
         [XmlArrayItem("alliance")]
         public List<AllianceDataXmlAlliance> Alliances { get; set; }
+
+        public void SaveToXmlFile(string file)
+        {
+            this.ToXmlFile(file);
+        }
+
+        public static IAllianceDataXml FromXmlFile(string file)
+        {
+            return XmlUtils.FromXmlFile<AllianceDataXml>(file);
+        }
     }
 }
