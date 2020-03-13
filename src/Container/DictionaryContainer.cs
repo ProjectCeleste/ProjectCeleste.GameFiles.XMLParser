@@ -1,13 +1,10 @@
-﻿#region Using directives
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
-
-#endregion
 
 namespace ProjectCeleste.GameFiles.XMLParser.Container
 {
@@ -57,7 +54,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
 
         [XmlIgnore]
         [JsonIgnore]
-        public TValue this[TKey key] => _valuesDic.TryGetValue(key, out TValue value)
+        public TValue this[TKey key] => _valuesDic.TryGetValue(key, out var value)
             ? value
             : throw new KeyNotFoundException($"KeyNotFoundException '{key}'");
 
@@ -72,7 +69,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
 
         public bool Remove(TKey key)
         {
-            if (!_valuesDic.TryGetValue(key, out TValue value))
+            if (!_valuesDic.TryGetValue(key, out var value))
                 return false;
 
             if (!_valuesDic.Remove(key))
@@ -100,6 +97,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
                 throw new NotSupportedException($"Value is not of type '{typeof(TValue)}'");
 
             return Add(item);
+        }
+
+        void IDictionaryContainer<TKey, TInterface>.Add(IEnumerable<TInterface> value)
+        {
+            Add(value.Cast<TValue>());
         }
 
         bool IDictionaryContainer<TKey, TInterface>.Update(TInterface value)
@@ -136,7 +138,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
 
         bool IReadOnlyContainer<TKey, TInterface>.TryGet(TKey key, out TInterface value)
         {
-            if (!TryGet(key, out TValue item))
+            if (!TryGet(key, out var item))
             {
                 value = default(TValue);
                 return false;
@@ -149,18 +151,46 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
         {
             var key = _keySelector(value);
 
-            _valuesDic.Add(key, value);
+            try
+            {
+                _valuesDic.Add(key, value);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
 
             OnAdd?.Invoke(this, value);
 
             return true;
         }
 
+        public void Add(IEnumerable<TValue> values)
+        {
+            if (values == null)
+                return;
+
+            var excs = new List<Exception>();
+            foreach (var value in values)
+                try
+                {
+                    if (!Add(value))
+                        throw new Exception($"Add item '{_keySelector(value)}' failed");
+                }
+                catch (Exception e)
+                {
+                    excs.Add(e);
+                }
+
+            if (excs.Count > 0)
+                throw new AggregateException(excs);
+        }
+
         public bool Update(TValue value)
         {
             var keyResult = _keySelector(value);
 
-            if (!_valuesDic.TryGetValue(keyResult, out TValue item))
+            if (!_valuesDic.TryGetValue(keyResult, out var item))
                 throw new KeyNotFoundException($"KeyNotFoundException '{keyResult}'");
 
             if (ReferenceEquals(value, item) || Equals(value, item))
@@ -179,9 +209,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
 
         public TValue Get(TKey key)
         {
-            return _valuesDic.TryGetValue(key, out TValue value)
+            return _valuesDic.TryGetValue(key, out var value)
                 ? value
-                : default(TValue);
+                : default;
         }
 
         public TValue Get(Func<TValue, bool> critera)
@@ -257,16 +287,44 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
         {
             var key = _keySelector(value);
 
-            _valuesDic.Add(key, value);
+            try
+            {
+                _valuesDic.Add(key, value);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
 
             OnAdd?.Invoke(this, value);
 
             return true;
         }
 
+        public void Add(IEnumerable<TValue> values)
+        {
+            if (values == null)
+                return;
+
+            var excs = new List<Exception>();
+            foreach (var value in values)
+                try
+                {
+                    if (!Add(value))
+                        throw new Exception($"Add item '{_keySelector(value)}' failed");
+                }
+                catch (Exception e)
+                {
+                    excs.Add(e);
+                }
+
+            if (excs.Count > 0)
+                throw new AggregateException(excs);
+        }
+
         public bool Remove(TKey key)
         {
-            if (!_valuesDic.TryGetValue(key, out TValue value))
+            if (!_valuesDic.TryGetValue(key, out var value))
                 return false;
 
             if (!_valuesDic.Remove(key))
@@ -281,8 +339,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
         {
             var keyResult = _keySelector(value);
 
-            if (!_valuesDic.TryGetValue(keyResult, out TValue item))
-                throw new KeyNotFoundException($"KeyNotFoundException '{keyResult}'");
+            if (!_valuesDic.TryGetValue(keyResult, out var item))
+                throw new KeyNotFoundException($"Key '{keyResult}' not found");
 
             if (ReferenceEquals(value, item) || Equals(value, item))
                 return false;
@@ -300,9 +358,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
 
         [XmlIgnore]
         [JsonIgnore]
-        public TValue this[TKey key] => _valuesDic.TryGetValue(key, out TValue value)
+        public TValue this[TKey key] => _valuesDic.TryGetValue(key, out var value)
             ? value
-            : throw new KeyNotFoundException($"KeyNotFoundException '{key}'");
+            : throw new KeyNotFoundException($"Key '{key}' not found");
 
         [XmlIgnore]
         [JsonIgnore]
@@ -310,14 +368,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
 
         public TValue Get(TKey key)
         {
-            return _valuesDic.TryGetValue(key, out TValue value)
+            return _valuesDic.TryGetValue(key, out var value)
                 ? value
-                : default(TValue);
+                : default;
         }
 
-        public TValue Get(Func<TValue, bool> critera)
+        public TValue Get(Func<TValue, bool> criteria)
         {
-            return Gets().FirstOrDefault(critera);
+            return Gets().FirstOrDefault(criteria);
         }
 
         public bool TryGet(TKey key, out TValue value)
@@ -325,14 +383,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
             return _valuesDic.TryGetValue(key, out value);
         }
 
-        public IEnumerable<TValue> Gets(Func<TValue, bool> critera)
+        public IEnumerable<TValue> Gets(Func<TValue, bool> criteria)
         {
-            return Gets().Where(critera);
+            return Gets().Where(criteria);
         }
 
         public IEnumerable<TValue> Gets()
         {
-            return _valuesDic.ToArray().Select(p => p.Value);
+            return _valuesDic.Select(p => p.Value);
         }
 
         public void Clear()

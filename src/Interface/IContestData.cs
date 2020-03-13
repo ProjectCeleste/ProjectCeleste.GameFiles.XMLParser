@@ -1,12 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
 using ProjectCeleste.GameFiles.XMLParser.Model;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Interface
 {
-    public interface IContestData
+    public interface IAllianceContestReward
     {
-        List<ContestDataXmlContest> Contests { get; }
+        int BaseEp { get; set; }
+        int Placement { get; set; }
+    }
+
+    public interface IAllianceContestScaledReward
+    {
+        int Ep { get; set; }
+        int PercentileAsIndex { get; set; }
+    }
+
+    public interface IContestData : IReadOnlyContainer<string, ContestDataXmlContest>
+    {
         TimeSpan ParticipationBonusTime { get; }
     }
 

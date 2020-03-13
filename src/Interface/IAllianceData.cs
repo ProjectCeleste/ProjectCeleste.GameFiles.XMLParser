@@ -1,13 +1,50 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
+using ProjectCeleste.GameFiles.XMLParser.Enum;
 
-namespace ProjectCeleste.GameFiles.XMLParser.Model
+namespace ProjectCeleste.GameFiles.XMLParser.Interface
 {
-    public interface IAllianceData
+    public interface IAlliancePassive
     {
-        List<AllianceDataXmlAlliance> Alliances { get; }
-        int MinCharacterLevel { get; }
-        AllianceDataXmlRankData RankData { get; }
+        int Level { get; }
+        TechStatusEnum PersistentCityTechStatus { get; }
+        string Tech { get; }
+        TechStatusEnum TechStatus { get; }
     }
+
+    public interface IAllianceRank
+    {
+        int PercentileIndex { get; }
+        string TitleId { get; }
+        string IconPath { get; }
+        IReadOnlyContainer<string, IAlliancePassive> Passives { get; }
+    }
+
+    public interface IAlliance
+    {
+        EAllianceEnum AllianceType { get; }
+        string ChatChannelInternalName { get; }
+        int DescriptionId { get; }
+        int DisplayNameId { get; }
+        int HomeRegionId { get; }
+        int LeaderNameId { get; }
+        IReadOnlyContainer<int, IAllianceRank> Ranks { get; }
+    }
+
+    public interface IAllianceDataRank
+    {
+        TimeSpan CalculationInterval { get; }
+        TimeSpan ExpiryTime { get; }
+        int MinApContribution { get; }
+    }
+
+    public interface IAllianceData : IReadOnlyContainer<EAllianceEnum, IAlliance>
+    {
+        int MinCharacterLevel { get; }
+
+        IAllianceDataRank RankData { get; }
+    }
+
     public interface IAllianceDataXml : IAllianceData
     {
         void SaveToXmlFile(string file);

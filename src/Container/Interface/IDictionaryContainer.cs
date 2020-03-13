@@ -1,19 +1,18 @@
-﻿#region Using directives
-
+﻿
 using System;
-
-#endregion
+using System.Collections.Generic;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Container.Interface
 {
-    public interface IDictionaryContainer<in T1, T2> : IReadOnlyContainer<T1, T2>
+    public interface IDictionaryContainer<in TKey, TValue> : IReadOnlyContainer<TKey, TValue>
     {
-        bool Add(T2 value);
+        bool Add(TValue value);
+        void Add(IEnumerable<TValue> values);
         void Clear();
-        bool Remove(T1 key);
-        bool Update(T2 value);
-        event EventHandler<T2> OnAdd;
-        event EventHandler<T2> OnRemoved;
-        event EventHandler<T2> OnUpdated;
+        bool Remove(TKey key);
+        bool Update(TValue value);
+        event EventHandler<TValue> OnAdd;
+        event EventHandler<TValue> OnRemoved;
+        event EventHandler<TValue> OnUpdated;
     }
 }
