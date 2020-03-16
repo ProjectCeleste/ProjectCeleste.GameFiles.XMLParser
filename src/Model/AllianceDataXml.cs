@@ -67,7 +67,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     {
         public AllianceXmlRank()
         {
-            Passives = new DictionaryContainer<string, IAlliancePassive>(key => key.Tech,
+            Passives = new DictionaryContainer<string, AllianceXmlPassive>(key => key.Tech,
                 StringComparer.OrdinalIgnoreCase);
         }
 
@@ -85,7 +85,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             PercentileIndex = percentileIndex;
             TitleId = titleId;
             IconPath = iconPath;
-            Passives = new DictionaryContainer<string, IAlliancePassive>(passives, key => key.Tech,
+            Passives = new DictionaryContainer<string, AllianceXmlPassive>(passives, key => key.Tech,
                 StringComparer.OrdinalIgnoreCase);
         }
 
@@ -107,7 +107,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlAttribute(AttributeName = "iconpath")]
         public string IconPath { get; set; }
 
-        [JsonIgnore] [XmlIgnore] public IDictionaryContainer<string, IAlliancePassive> Passives { get; }
+        [JsonIgnore] [XmlIgnore] public IDictionaryContainer<string, AllianceXmlPassive> Passives { get; }
 
         [JsonIgnore] [XmlIgnore] IReadOnlyContainer<string, IAlliancePassive> IAllianceRank.Passives => Passives;
 
@@ -117,7 +117,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "passives", Required = Required.Always)]
         [XmlArray("passives")]
         [XmlArrayItem("passive", typeof(AllianceXmlPassive))]
-        public IAlliancePassive[] PassivesXmlArray
+        public AllianceXmlPassive[] PassivesXmlArray
         {
             get => Passives.Gets().ToArray();
             set
@@ -134,7 +134,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     {
         public AllianceXml()
         {
-            Ranks = new DictionaryContainer<int, IAllianceRank>(key => key.PercentileIndex);
+            Ranks = new DictionaryContainer<int, AllianceXmlRank>(key => key.PercentileIndex);
         }
 
         [JsonConstructor]
@@ -152,7 +152,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             [Range(0, int.MaxValue)] [JsonProperty(PropertyName = "leadernameid", Required = Required.Always)]
             int leaderNameId,
             [JsonProperty(PropertyName = "ranks", Required = Required.Always)]
-            IEnumerable<IAllianceRank> ranks)
+            IEnumerable<AllianceXmlRank> ranks)
         {
             AllianceType = allianceType;
             ChatChannelInternalName = chatChannelInternalName;
@@ -160,7 +160,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             DescriptionId = descriptionId;
             HomeRegionId = homeRegionId;
             LeaderNameId = leaderNameId;
-            Ranks = new DictionaryContainer<int, IAllianceRank>(ranks, key => key.PercentileIndex);
+            Ranks = new DictionaryContainer<int, AllianceXmlRank>(ranks, key => key.PercentileIndex);
         }
 
         [Key]
@@ -198,7 +198,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "leadernameid")]
         public int LeaderNameId { get; set; }
 
-        [JsonIgnore] [XmlIgnore] public IDictionaryContainer<int, IAllianceRank> Ranks { get; }
+        [JsonIgnore] [XmlIgnore] public IDictionaryContainer<int, AllianceXmlRank> Ranks { get; }
 
         [JsonIgnore] [XmlIgnore] IReadOnlyContainer<int, IAllianceRank> IAlliance.Ranks => Ranks;
 
@@ -208,7 +208,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "ranks", Required = Required.Always)]
         [XmlArray("ranks")]
         [XmlArrayItem("rank", typeof(AllianceXmlRank))]
-        public IAllianceRank[] RanksXmlArray
+        public AllianceXmlRank[] RanksXmlArray
         {
             get => Ranks.Gets().ToArray();
             set
@@ -300,9 +300,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "alliances", Required = Required.Always)]
         [XmlArray("alliances")]
         [XmlArrayItem("alliance", typeof(AllianceXml))]
-        public IAlliance[] AlliancesXmlArray
+        public AllianceXml[] AlliancesXmlArray
         {
-            get => Gets().ToArray();
+            get => Gets().Cast<AllianceXml>().ToArray();
             set
             {
                 Clear();
