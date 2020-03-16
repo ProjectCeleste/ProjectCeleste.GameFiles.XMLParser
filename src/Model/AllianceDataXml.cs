@@ -288,7 +288,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [Required]
         [JsonProperty(PropertyName = "rankdata", Required = Required.Always)]
         [XmlElement("rankdata", typeof(AllianceDataXmlRank))]
-        public IAllianceDataRank RankData { get; set; }
+        public AllianceDataXmlRank RankData { get; set; }
+
+        [JsonIgnore]
+        [XmlIgnore]
+        IAllianceDataRank IAllianceData.RankData => RankData;
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
