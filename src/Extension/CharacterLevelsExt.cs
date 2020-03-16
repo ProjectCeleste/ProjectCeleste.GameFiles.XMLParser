@@ -1,10 +1,7 @@
-﻿#region Using directives
-
+﻿
 using ProjectCeleste.GameFiles.XMLParser.Interface;
 
-#endregion
-
-namespace ProjectCeleste.GameFiles.XMLParser.Extention
+namespace ProjectCeleste.GameFiles.XMLParser.Extension
 {
     public static class CharacterLevelsExt
     {

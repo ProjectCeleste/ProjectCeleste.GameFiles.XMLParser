@@ -1,13 +1,9 @@
-﻿#region Using directives
-
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
 
-#endregion
-
-namespace ProjectCeleste.GameFiles.XMLParser.Extention
+namespace ProjectCeleste.GameFiles.XMLParser.Extension
 {
     public static class LanguagesExt
     {
@@ -115,7 +111,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
         public static string ToLocalizedString(this RarityEnum rarity, ILanguages languages,
             string language = "English")
         {
-            return ToLocalizedString((CRarityEnum) rarity, languages, language);
+            return ToLocalizedString((CRarityEnum)rarity, languages, language);
         }
 
         public static string ToLocalizedString(this CRarityEnum rarity, ILanguages languages,

@@ -1,5 +1,4 @@
-﻿#region Using directives
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,34 +6,32 @@ using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
 using ProjectCeleste.GameFiles.XMLParser.Model;
 
-#endregion
-
-namespace ProjectCeleste.GameFiles.XMLParser.Extention
+namespace ProjectCeleste.GameFiles.XMLParser.Extension
 {
     public static class AiCharacterExt
     {
-        public static bool AddOrUpdate(this AiCharacterXmlTechs techs, string techId, TechStatusEnum techStatut)
+        public static bool AddOrUpdate(this IList<AiCharacterXmlTech> techs, string techId, TechStatusEnum techStatus)
         {
             if (string.IsNullOrWhiteSpace(techId))
                 throw new ArgumentNullException(nameof(techId));
 
-            if (techStatut == TechStatusEnum.Invalid)
-                throw new ArgumentNullException(nameof(techStatut));
+            if (techStatus == TechStatusEnum.Invalid)
+                throw new ArgumentNullException(nameof(techStatus));
 
             var tech = techs.Get(techId);
             if (tech != null)
             {
-                tech.Status = techStatut;
-                tech.PersistentCityStatus = techStatut;
+                tech.Status = techStatus;
+                tech.PersistentCityStatus = techStatus;
 
                 return true;
             }
 
-            var newTech = new AiCharacterXmlTechsTech
+            var newTech = new AiCharacterXmlTech
             {
                 TechId = techId,
-                Status = techStatut,
-                PersistentCityStatus = techStatut
+                Status = techStatus,
+                PersistentCityStatus = techStatus
             };
 
             techs.Add(newTech);
@@ -61,13 +58,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
             if (level < 1)
                 level = 1;
 
-            var regions = new HashSet<int> {0};
+            var regions = new HashSet<int> { 0 };
 
             foreach (var lvl in characterLevels.Gets(key => key.Level <= level)
                 .OrderBy(key => key.Level))
             {
                 if (lvl.AgeUpEffect?.EnableAge > myCharacter.CurrentAge)
-                    myCharacter.CurrentAge = (byte) lvl.AgeUpEffect.EnableAge;
+                    myCharacter.CurrentAge = (byte)lvl.AgeUpEffect.EnableAge;
 
                 if (lvl.SkillPointsEffect?.SkillPoints > 0)
                     myCharacter.SkillPoints += lvl.SkillPointsEffect.SkillPoints;

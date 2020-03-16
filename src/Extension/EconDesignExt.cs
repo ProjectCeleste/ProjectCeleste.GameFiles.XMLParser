@@ -1,13 +1,9 @@
-#region Using directives
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
 
-#endregion
-
-namespace ProjectCeleste.GameFiles.XMLParser.Extention
+namespace ProjectCeleste.GameFiles.XMLParser.Extension
 {
     public static class EconDesignExt
     {
@@ -70,8 +66,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extention
 
                 if (design.Input?.Material != null)
                     list.AddRange(from material in design.Input.Material.Gets()
-                        where econMaterials.Get(material.Id) == null
-                        select new Exception($"Design: {design.Name}, Input Material {material.Id} don't exist."));
+                                  where econMaterials.Get(material.Id) == null
+                                  select new Exception($"Design: {design.Name}, Input Material {material.Id} don't exist."));
             }
 
             if (list.Count > 0)
