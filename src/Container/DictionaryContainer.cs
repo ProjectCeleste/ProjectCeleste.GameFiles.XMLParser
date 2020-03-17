@@ -104,13 +104,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container
             Add(value.Cast<TValue>());
         }
 
-        //bool IDictionaryContainer<TKey, TInterface>.Update(TInterface value)
-        //{
-        //    if (!(value is TValue value2))
-        //        throw new NotSupportedException($"Value is not of type '{typeof(TValue)}'");
+        bool IDictionaryContainer<TKey, TInterface>.Update(TInterface value)
+        {
+            if (!(value is TValue value2))
+                throw new NotSupportedException($"Value is not of type '{typeof(TValue)}'");
 
-        //    return Update(value2);
-        //}
+            return Update(value2);
+        }
 
         [XmlIgnore]
         [JsonIgnore]
