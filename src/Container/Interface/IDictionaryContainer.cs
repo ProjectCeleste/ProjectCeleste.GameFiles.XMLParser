@@ -11,7 +11,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Container.Interface
         void Add([NotNull] [ItemNotNull] IEnumerable<TValue> values);
         void Clear();
         bool Remove([NotNull] TKey key);
-        //bool Update(TValue value);
+        bool Update(TValue value);
         event EventHandler<TValue> OnAdd;
         event EventHandler<TValue> OnRemoved;
         event EventHandler<TValue> OnUpdated;
