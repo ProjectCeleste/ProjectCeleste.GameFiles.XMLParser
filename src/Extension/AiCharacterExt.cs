@@ -10,7 +10,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
 {
     public static class AiCharacterExt
     {
-        public static bool AddOrUpdate(this IList<AiCharacterXmlTech> techs, string techId, TechStatusEnum techStatus)
+        public static bool AddOrUpdate(this AiCharacterXmlTechs techs, string techId, TechStatusEnum techStatus)
         {
             if (string.IsNullOrWhiteSpace(techId))
                 throw new ArgumentNullException(nameof(techId));
@@ -27,7 +27,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                 return true;
             }
 
-            var newTech = new AiCharacterXmlTech
+            var newTech = new AiCharacterXmlTechsTech
             {
                 TechId = techId,
                 Status = techStatus,
