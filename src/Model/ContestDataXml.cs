@@ -184,7 +184,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Required]
         [JsonProperty(PropertyName = "contests", Required = Required.Always)]
-        [XmlArray("contest")]
+        [XmlArray("contests")]
         [XmlArrayItem("contest", typeof(ContestDataXmlContest))]
         public ContestDataXmlContest[] ContestsXmlArray
         {
