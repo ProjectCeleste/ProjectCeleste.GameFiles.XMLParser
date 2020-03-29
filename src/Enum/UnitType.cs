@@ -304,6 +304,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("UnitUpgradeLevel33")] [EnumMember(Value = "UnitUpgradeLevel33")] UnitUpgradeLevel33 = 199,
         [XmlEnum("UnitUpgradeLevel43")] [EnumMember(Value = "UnitUpgradeLevel43")] UnitUpgradeLevel43 = 200,
         [XmlEnum("ValidIdleVillager")] [EnumMember(Value = "ValidIdleVillager")] ValidIdleVillager = 201,
-        [XmlEnum("Wood")] [EnumMember(Value = "Wood")] Wood = 202
+        [XmlEnum("Wood")] [EnumMember(Value = "Wood")] Wood = 202,
+        [XmlEnum("CapitolBldgRoman")] [EnumMember(Value = "CapitolBldgRoman")] CapitolBldgRoman = 203,
+        [XmlEnum("Ro_Civ_Engineer")] [EnumMember(Value = "Ro_Civ_Engineer")] RoCivEngineer = 204
     }
 }
