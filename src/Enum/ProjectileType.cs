@@ -34,6 +34,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("Proj_SpearGaesatae")] [EnumMember(Value = "Proj_SpearGaesatae")] ProjSpearGaesatae = 18,
         [XmlEnum("Proj_SpearVillager")] [EnumMember(Value = "Proj_SpearVillager")] ProjSpearVillager = 19,
         [XmlEnum("Proj_TridentArchimedes")] [EnumMember(Value = "Proj_TridentArchimedes")] ProjTridentArchimedes = 20,	
-        [XmlEnum("Proj_Snowball")] [EnumMember(Value = "Proj_Snowball")] ProjSnowball = 21
+        [XmlEnum("Proj_Snowball")] [EnumMember(Value = "Proj_Snowball")] ProjSnowball = 21,
+        [XmlEnum("Proj_ScorpioBolt")] [EnumMember(Value = "Proj_ScorpioBolt")] ProjScorpioBolt = 22
     }
 }
