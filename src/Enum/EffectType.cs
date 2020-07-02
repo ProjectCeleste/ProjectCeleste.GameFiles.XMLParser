@@ -85,6 +85,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("MeleeAttack")] [EnumMember(Value = "MeleeAttack")] MeleeAttack = 7,
         [XmlEnum("RangedAttack")] [EnumMember(Value = "RangedAttack")] RangedAttack = 8,
         [XmlEnum("SelfHeal")] [EnumMember(Value = "SelfHeal")] SelfHeal = 9,
-        [XmlEnum("Trade")] [EnumMember(Value = "Trade")] Trade = 10
+        [XmlEnum("Trade")] [EnumMember(Value = "Trade")] Trade = 10,
+        [XmlEnum("AreaHeal")] [EnumMember(Value = "AreaHeal")] AreaHeal = 11
     }
 }
