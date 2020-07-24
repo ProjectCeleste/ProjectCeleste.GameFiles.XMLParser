@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <PackageId>ProjectCeleste.GameFiles.XMLParser</PackageId>
+    <PackageId>Celeste.GameFiles.XMLParser</PackageId>
     <PackageLicenseUrl>https://github.com/ProjectCeleste/ProjectCeleste.GameFiles.XMLParser/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://www.projectceleste.com</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/ProjectCeleste/ProjectCeleste.GameFiles.XMLParser/master/icon.ico</PackageIconUrl>
@@ -16,9 +16,9 @@ Visit Us: https://www.projectceleste.com/
 
 Age of Empires Online © Microsoft Corporation. Celeste Fan Project was created under Microsoft's Game Content Usage Rules using assets from Age of Empires Online, and it is not endorsed by or affiliated with Microsoft (See: https://www.xbox.com/en-us/developers/rules).</Description>
     <PackageTags>projectceleste aoeo ageofempires</PackageTags>
-    <Authors>ProjectCeleste</Authors>
+    <Authors>Project Celeste</Authors>
     <Company />
-    <Product>ProjectCeleste.GameFiles.XMLParser</Product>
+    <Product>Celeste.GameFiles.XMLParser</Product>
     <Version>2.7.7.9</Version>
     <AssemblyVersion>2.7.7.9</AssemblyVersion>
     <FileVersion>2.7.7.9</FileVersion>

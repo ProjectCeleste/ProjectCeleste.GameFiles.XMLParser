@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectCeleste.GameFiles.XMLParser", "src\ProjectCeleste.GameFiles.XMLParser.csproj", "{6878B2FD-9A41-489A-8ED4-6032392D4732}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Celeste.GameFiles.XMLParser", "src\Celeste.GameFiles.XMLParser.csproj", "{6878B2FD-9A41-489A-8ED4-6032392D4732}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
