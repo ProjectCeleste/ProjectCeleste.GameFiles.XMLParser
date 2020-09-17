@@ -307,6 +307,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("Wood")] [EnumMember(Value = "Wood")] Wood = 202,
         [XmlEnum("CapitolBldgRoman")] [EnumMember(Value = "CapitolBldgRoman")] CapitolBldgRoman = 203,
         [XmlEnum("Ro_Civ_Engineer")] [EnumMember(Value = "Ro_Civ_Engineer")] RoCivEngineer = 204,
-        [XmlEnum("EtruscanUnit")] [EnumMember(Value = "EtruscanUnit")] EtruscanUnit = 205
+        [XmlEnum("EtruscanUnit")] [EnumMember(Value = "EtruscanUnit")] EtruscanUnit = 205,
+        [XmlEnum("LifespanUnit")] [EnumMember(Value = "LifespanUnit")] LifespanUnit = 206
     }
 }
