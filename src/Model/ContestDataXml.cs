@@ -118,17 +118,17 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [Required]
         [JsonProperty(PropertyName = "runningtime", Required = Required.Always)]
         [XmlElement(ElementName = "runningtime", Type = typeof(XmlTimeSpan))]
-        public TimeSpan RunningTime { get; set; }
+        public XmlTimeSpan RunningTime { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "downtime", Required = Required.Always)]
         [XmlElement(ElementName = "downtime", Type = typeof(XmlTimeSpan))]
-        public TimeSpan Downtime { get; set; }
+        public XmlTimeSpan Downtime { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "expiretime", Required = Required.Always)]
         [XmlElement(ElementName = "expiretime", Type = typeof(XmlTimeSpan))]
-        public TimeSpan ExpireTime { get; set; }
+        public XmlTimeSpan ExpireTime { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]
@@ -178,7 +178,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [Required]
         [JsonProperty(PropertyName = "participationbonustime", Required = Required.Always)]
         [XmlElement(ElementName = "participationbonustime", Type = typeof(XmlTimeSpan))]
-        public TimeSpan ParticipationBonusTime { get; set; }
+        public XmlTimeSpan ParticipationBonusTime { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

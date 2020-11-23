@@ -244,12 +244,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [Required]
         [JsonProperty(PropertyName = "expirytime", Required = Required.Always)]
         [XmlElement(ElementName = "expirytime", Type = typeof(XmlTimeSpan))]
-        public TimeSpan ExpiryTime { get; set; }
+        public XmlTimeSpan ExpiryTime { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "calculationinterval", Required = Required.Always)]
         [XmlElement(ElementName = "calculationinterval", Type = typeof(XmlTimeSpan))]
-        public TimeSpan CalculationInterval { get; set; }
+        public XmlTimeSpan CalculationInterval { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]

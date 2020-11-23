@@ -1,6 +1,7 @@
 ﻿using System;
 using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
+using ProjectCeleste.GameFiles.XMLParser.Helpers;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Interface
 {
@@ -33,8 +34,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
 
     public interface IAllianceDataRank
     {
-        TimeSpan CalculationInterval { get; }
-        TimeSpan ExpiryTime { get; }
+        XmlTimeSpan CalculationInterval { get; }
+        XmlTimeSpan ExpiryTime { get; }
         int MinApContribution { get; }
     }
 
