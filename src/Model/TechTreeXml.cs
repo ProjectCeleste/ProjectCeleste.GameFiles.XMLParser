@@ -175,9 +175,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "DBID")]
         public int Dbid { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
-        [JsonProperty(PropertyName = "DisplayNameID", Required = Required.Always)]
+        [JsonProperty(PropertyName = "DisplayNameID")]
         [XmlElement(ElementName = "DisplayNameID")]
         public string DisplayNameId { get; set; }
 
