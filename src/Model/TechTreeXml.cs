@@ -224,8 +224,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "Status")]
         public TechStatusEnumUpper Status { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
-        [JsonProperty(PropertyName = "Icon", Required = Required.Always)]
+        [JsonProperty(PropertyName = "Icon")]
         [XmlElement(ElementName = "Icon")]
         public string Icon { get; set; }
 
@@ -246,8 +245,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "Flag")]
         public HashSet<string> Flag { get; set; }
 
-        [Required]
-        [JsonProperty(PropertyName = "Effects", Required = Required.Always)]
+        [JsonProperty(PropertyName = "Effects")]
         [XmlElement(ElementName = "Effects")]
         public TechTreeXmlEffects Effects { get; set; }
 
