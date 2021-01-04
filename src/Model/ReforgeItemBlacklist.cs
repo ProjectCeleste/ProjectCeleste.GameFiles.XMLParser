@@ -1,4 +1,5 @@
 ﻿using ProjectCeleste.GameFiles.XMLParser.Helpers;
+using ProjectCeleste.Misc.Utils;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
@@ -19,7 +20,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public static ReforgeItemBlacklist FomXmlFile(string xmlLocation)
         {
-            return XmlUtils.FromXmlFile<ReforgeItemBlacklist>(xmlLocation);
+            return XmlUtils.DeserializeFromFile<ReforgeItemBlacklist>(xmlLocation);
         }
     }
 }

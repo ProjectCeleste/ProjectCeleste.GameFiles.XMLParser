@@ -14,6 +14,7 @@ using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
+using ProjectCeleste.Misc.Utils;
 
 #endregion
 
@@ -458,12 +459,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void SaveToXmlFile(string file)
         {
-            this.ToXmlFile(file);
+            this.SerializeToXmlFile(file);
         }
 
         public static INuggetDataXml FromXmlFile(string file)
         {
-            return XmlUtils.FromXmlFile<NuggetDataXml>(file);
+            return XmlUtils.DeserializeFromFile<NuggetDataXml>(file);
         }
     }
 }

@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using ProjectCeleste.GameFiles.XMLParser.Container;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
+using ProjectCeleste.Misc.Utils;
 
 #endregion
 
@@ -257,7 +258,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public static StringTableXml FromXmlFile(string file)
         {
-            var languageXml = XmlUtils.FromXmlFile<StringTableXml>(file);
+            var languageXml = XmlUtils.DeserializeFromFile<StringTableXml>(file);
 
             var filename = Path.GetFileNameWithoutExtension(file)?.ToLower();
 

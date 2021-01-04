@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using ProjectCeleste.GameFiles.XMLParser.Container;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
+using ProjectCeleste.Misc.Utils;
 
 #endregion
 
@@ -125,7 +126,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void SaveToXmlFile(string file)
         {
-            this.ToXmlFile(file);
+            this.SerializeToXmlFile(file);
         }
 
         public void SetMaxAge(int maxAge)
@@ -142,7 +143,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public static ITechTreeOverridesXml FromXmlFile(string file)
         {
-            return XmlUtils.FromXmlFile<TechTreeOverridesXml>(file);
+            return XmlUtils.DeserializeFromFile<TechTreeOverridesXml>(file);
         }
     }
 }

@@ -13,6 +13,7 @@ using ProjectCeleste.GameFiles.XMLParser.Container;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
+using ProjectCeleste.Misc.Utils;
 
 #endregion
 
@@ -298,7 +299,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public static AiCharacterXml FromXmlFile(string file, string baseFolder)
         {
-            var aiCharacter = XmlUtils.FromXmlFile<AiCharacterXml>(file);
+            var aiCharacter = XmlUtils.DeserializeFromFile<AiCharacterXml>(file);
 
             if (!baseFolder.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.OrdinalIgnoreCase))
                 baseFolder += Path.DirectorySeparatorChar;
@@ -314,7 +315,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void SaveToXmlFile(string file)
         {
-            this.ToXmlFile(file);
+            this.SerializeToXmlFile(file);
         }
     }
 

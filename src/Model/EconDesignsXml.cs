@@ -14,6 +14,7 @@ using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
 using ProjectCeleste.GameFiles.XMLParser.Model.Common;
+using ProjectCeleste.Misc.Utils;
 
 #endregion
 
@@ -554,12 +555,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void SaveToXmlFile(string file)
         {
-            this.ToXmlFile(file);
+            this.SerializeToXmlFile(file);
         }
 
         public static IEconDesignsXml FromXmlFile(string file)
         {
-            return XmlUtils.FromXmlFile<EconDesignsXml>(file);
+            return XmlUtils.DeserializeFromFile<EconDesignsXml>(file);
         }
     }
 }

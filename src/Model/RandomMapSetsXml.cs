@@ -10,8 +10,8 @@ using System.Xml.Serialization;
 using Newtonsoft.Json;
 using ProjectCeleste.GameFiles.XMLParser.Container;
 using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
-using ProjectCeleste.GameFiles.XMLParser.Helpers;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
+using ProjectCeleste.Misc.Utils;
 
 #endregion
 
@@ -137,7 +137,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public static RandomMapSetXml FromXmlFile(string file)
         {
-            var randomMapSetXml = XmlUtils.FromXmlFile<RandomMapSetXml>(file);
+            var randomMapSetXml = XmlUtils.DeserializeFromFile<RandomMapSetXml>(file);
 
             if (string.IsNullOrWhiteSpace(randomMapSetXml.Id))
                 randomMapSetXml.Id = Path.GetFileNameWithoutExtension(file);
@@ -147,7 +147,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void SaveToXmlFile(string file)
         {
-            this.ToXmlFile(file);
+            this.SerializeToXmlFile(file);
         }
     }
 

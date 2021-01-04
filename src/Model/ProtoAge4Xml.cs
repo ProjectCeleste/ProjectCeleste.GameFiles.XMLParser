@@ -13,6 +13,7 @@ using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
+using ProjectCeleste.Misc.Utils;
 
 #endregion
 
@@ -1291,7 +1292,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void SaveToXmlFile(string file)
         {
-            this.ToXmlFile(file);
+            this.SerializeToXmlFile(file);
         }
 
         public bool TryGet(string key, out IProtoAge4Unit value)
@@ -1312,7 +1313,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public static IProtoAge4Xml FromXmlFile(string file)
         {
-            return XmlUtils.FromXmlFile<ProtoAge4Xml>(file);
+            return XmlUtils.DeserializeFromFile<ProtoAge4Xml>(file);
         }
     }
 }

@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using ProjectCeleste.GameFiles.XMLParser.Container;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
+using ProjectCeleste.Misc.Utils;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
@@ -198,12 +199,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void SaveToXmlFile(string file)
         {
-            this.ToXmlFile(file);
+            this.SerializeToXmlFile(file);
         }
 
         public static IContestDataXml FromXmlFile(string file)
         {
-            return XmlUtils.FromXmlFile<ContestDataXml>(file);
+            return XmlUtils.DeserializeFromFile<ContestDataXml>(file);
         }
     }
 }

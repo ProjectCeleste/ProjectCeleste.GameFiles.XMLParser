@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using ProjectCeleste.GameFiles.XMLParser.Container;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
+using ProjectCeleste.Misc.Utils;
 
 #endregion
 
@@ -69,12 +70,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void SaveToXmlFile(string file)
         {
-            this.ToXmlFile(file);
+            this.SerializeToXmlFile(file);
         }
 
         public static IProtoUnitOverridesXml FromXmlFile(string file)
         {
-            return XmlUtils.FromXmlFile<ProtoUnitOverridesXml>(file);
+            return XmlUtils.DeserializeFromFile<ProtoUnitOverridesXml>(file);
         }
     }
 }

@@ -10,6 +10,7 @@ using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
+using ProjectCeleste.Misc.Utils;
 
 namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
@@ -312,12 +313,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public void SaveToXmlFile(string file)
         {
-            this.ToXmlFile(file);
+            this.SerializeToXmlFile(file);
         }
 
         public static IAllianceDataXml FromXmlFile(string file)
         {
-            return XmlUtils.FromXmlFile<AllianceDataXml>(file);
+            return XmlUtils.DeserializeFromFile<AllianceDataXml>(file);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ProjectCeleste.GameFiles.XMLParser.Helpers;
+using ProjectCeleste.Misc.Utils;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -24,7 +25,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
             foreach (var tacticsFile in tacticFiles)
             {
-                var tactic = XmlUtils.FromXmlFile<Tactics>(tacticsFile);
+                var tactic = XmlUtils.DeserializeFromFile<Tactics>(tacticsFile);
                 tactics.Add(tactic);
             }
 

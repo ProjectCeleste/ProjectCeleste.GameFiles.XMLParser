@@ -13,6 +13,7 @@ using ProjectCeleste.GameFiles.XMLParser.Container;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Helpers;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
+using ProjectCeleste.Misc.Utils;
 
 #endregion
 
@@ -173,14 +174,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         public static RegionXml FromXmlFile(string file)
         {
-            var newClass = XmlUtils.FromXmlFile<RegionXml>(file);
+            var newClass = XmlUtils.DeserializeFromFile<RegionXml>(file);
             newClass.FileName = Path.GetFileNameWithoutExtension(file);
             return newClass;
         }
 
         public void SaveToXmlFile(string file)
         {
-            this.ToXmlFile(file);
+            this.SerializeToXmlFile(file);
         }
     }
 
