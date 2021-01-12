@@ -18,15 +18,15 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "packsandunpacks")]
         public bool PacksAndUnpacks { get; set; }
 
-        public static List<Tactics> FromXmlFiles(string xmlLocation)
+        public static Dictionary<string, Tactics> FromXmlFiles(string xmlLocation)
         {
-            var tactics = new List<Tactics>();
+            var tactics = new Dictionary<string, Tactics>();
             var tacticFiles = Directory.EnumerateFiles(xmlLocation);
 
             foreach (var tacticsFile in tacticFiles)
             {
                 var tactic = XmlUtils.DeserializeFromFile<Tactics>(tacticsFile);
-                tactics.Add(tactic);
+                tactics.Add(tacticsFile, tactic);
             }
 
             return tactics;

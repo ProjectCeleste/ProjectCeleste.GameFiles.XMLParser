@@ -12,8 +12,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
     public interface ITechTreeTech
     {
         int ContentPack { get; }
-        IDictionaryContainer<ResourceTypeEnum, TechTreeXmCost> Cost { get; }
-        TechTreeXmCost[] CostArray { get; }
+        List<TechTreeXmCost> Cost { get; }
         int Dbid { get; }
         string DisplayNameId { get; }
         TechTreeXmlEffects Effects { get; }

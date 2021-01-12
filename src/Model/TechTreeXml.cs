@@ -9,18 +9,12 @@ using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using ProjectCeleste.GameFiles.XMLParser.Container;
-using ProjectCeleste.GameFiles.XMLParser.Container.Interface;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
-using ProjectCeleste.GameFiles.XMLParser.Helpers;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
 using ProjectCeleste.Misc.Utils;
 
 #endregion
 
-//TODO ORDER
-//TODO JsonConstructor
-//TODO JsonProperty
-//TODO C# Attribute
 namespace ProjectCeleste.GameFiles.XMLParser.Model
 {
     [XmlRoot(ElementName = "Cost")]
@@ -154,11 +148,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "Tech")]
     public class TechTreeXmlTech : ITechTreeTech
     {
-        public TechTreeXmlTech()
-        {
-            Cost = new DictionaryContainer<ResourceTypeEnum, TechTreeXmCost>(key => key.ResourceType);
-        }
-
         [Key]
         [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
@@ -180,38 +169,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "DisplayNameID")]
         public string DisplayNameId { get; set; }
 
-        [JsonIgnore]
-        [XmlIgnore]
-        public IDictionaryContainer<ResourceTypeEnum, TechTreeXmCost> Cost { get; }
-
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DefaultValue(null)]
         [JsonIgnore]
         [JsonProperty(PropertyName = "Cost", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Cost")]
-        public TechTreeXmCost[] CostArray
-        {
-            get => Cost.Count > 0 ? Cost.Gets().ToArray() : null;
-            set
-            {
-                Cost.Clear();
-                if (value == null)
-                    return;
-                var excs = new List<Exception>();
-                foreach (var item in value)
-                    try
-                    {
-                        Cost.Add(item);
-                    }
-                    catch (Exception e)
-                    {
-                        excs.Add(new Exception($"Item '{item.ResourceType}'", e));
-                    }
-                if (excs.Count > 0)
-                    throw new AggregateException(excs);
-            }
-        }
+        public List<TechTreeXmCost> Cost { get; set; }
 
         [DefaultValue(0)]
         [Range(0, int.MaxValue)]
