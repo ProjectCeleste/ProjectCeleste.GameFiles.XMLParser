@@ -26,7 +26,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             foreach (var tacticsFile in tacticFiles)
             {
                 var tactic = XmlUtils.DeserializeFromFile<Tactics>(tacticsFile);
-                tactics.Add(tacticsFile, tactic);
+                tactics.Add(Path.GetFileName(tacticsFile), tactic);
             }
 
             return tactics;
