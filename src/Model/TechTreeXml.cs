@@ -172,7 +172,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DefaultValue(null)]
-        [JsonIgnore]
         [JsonProperty(PropertyName = "Cost", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Cost")]
         public List<TechTreeXmCost> Cost { get; set; }
