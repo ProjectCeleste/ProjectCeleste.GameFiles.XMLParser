@@ -17,6 +17,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("Shield")] [EnumMember(Value = "Shield")] Shield = 2,
         [XmlEnum("Weapon")] [EnumMember(Value = "Weapon")] Weapon = 3,
         [XmlEnum("Helmet")] [EnumMember(Value = "Helmet")] Helmet = 4,
+        [XmlEnum("Banner")] [EnumMember(Value = "Banner")] Banner = 5,
         [XmlEnum("VanityShield")] [EnumMember(Value = "VanityShield")] VanityShield = 11,
         [XmlEnum("VanityWeapon")] [EnumMember(Value = "VanityWeapon")] VanityWeapon = 12,
         [XmlEnum("VanityHelmet")] [EnumMember(Value = "VanityHelmet")] VanityHelmet = 13
