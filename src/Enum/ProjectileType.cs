@@ -28,13 +28,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("Proj_Axe")] [EnumMember(Value = "Proj_Axe")] ProjAxe = 13,
         [XmlEnum("Proj_BoltSmallFire")] [EnumMember(Value = "Proj_BoltSmallFire")] ProjBoltSmallFire = 14,
         [XmlEnum("Proj_CatRock_Giant")] [EnumMember(Value = "Proj_CatRock_Giant")] ProjCatRockGiant = 15,
-        [XmlEnum("Proj_SpearCelticWarChariot")] [EnumMember(Value = "Proj_SpearCelticWarChariot")]
-        ProjSpearCelticWarChariot = 16,
+        [XmlEnum("Proj_SpearCelticWarChariot")] [EnumMember(Value = "Proj_SpearCelticWarChariot")] ProjSpearCelticWarChariot = 16,
         [XmlEnum("Proj_SpearChef")] [EnumMember(Value = "Proj_SpearChef")] ProjSpearChef = 17,
         [XmlEnum("Proj_SpearGaesatae")] [EnumMember(Value = "Proj_SpearGaesatae")] ProjSpearGaesatae = 18,
         [XmlEnum("Proj_SpearVillager")] [EnumMember(Value = "Proj_SpearVillager")] ProjSpearVillager = 19,
-        [XmlEnum("Proj_TridentArchimedes")] [EnumMember(Value = "Proj_TridentArchimedes")] ProjTridentArchimedes = 20,	
+        [XmlEnum("Proj_TridentArchimedes")] [EnumMember(Value = "Proj_TridentArchimedes")] ProjTridentArchimedes = 20,
         [XmlEnum("Proj_Snowball")] [EnumMember(Value = "Proj_Snowball")] ProjSnowball = 21,
-        [XmlEnum("Proj_ScorpioBolt")] [EnumMember(Value = "Proj_ScorpioBolt")] ProjScorpioBolt = 22
+        [XmlEnum("Proj_ScorpioBolt")] [EnumMember(Value = "Proj_ScorpioBolt")] ProjScorpioBolt = 22,
+        [XmlEnum("Proj_BoltClusterLarge")] [EnumMember(Value = "Proj_BoltClusterLarge")] ProjBoltClusterLarge = 23
     }
 }
