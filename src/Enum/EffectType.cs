@@ -43,7 +43,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("Ship")] [EnumMember(Value = "Ship")] Ship = 21,
         [XmlEnum("Stone")] [EnumMember(Value = "Stone")] Stone = 22,
         [XmlEnum("Tree")] [EnumMember(Value = "Tree")] Tree = 23,
-        [XmlEnum("UnitTypeBldgWatchPost")] [EnumMember(Value = "UnitTypeBldgWatchPost")] UnitTypeBldgWatchPost = 24
+        [XmlEnum("UnitTypeBldgWatchPost")] [EnumMember(Value = "UnitTypeBldgWatchPost")] UnitTypeBldgWatchPost = 24,
+        [XmlEnum("AbstractPet")] [EnumMember(Value = "AbstractPet")] AbstractPet = 25
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
