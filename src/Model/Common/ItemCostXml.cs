@@ -2,7 +2,6 @@
 
 using System;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -30,15 +29,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model.Common
             Quantity = quantity;
         }
 
-        [Key]
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "type", Required = Required.Always)]
         [XmlText]
         public GameCurrencyTypeEnum Type { get; set; }
 
-        [Required]
-        [Range(0, double.MaxValue)]
         [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
         [XmlAttribute(AttributeName = "quantity")]
         public double Quantity { get; set; }
@@ -62,15 +57,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model.Common
             Quantity = quantity;
         }
 
-        [Key]
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "type", Required = Required.Always)]
         [XmlText]
         public CapitalResourceTypeEnum Type { get; set; }
 
-        [Required]
-        [Range(0, double.MaxValue)]
         [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
         [XmlAttribute(AttributeName = "quantity")]
         public double Quantity { get; set; }

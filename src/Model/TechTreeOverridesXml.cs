@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -36,13 +35,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                 : throw new ArgumentOutOfRangeException(nameof(@override), @override, null);
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "override", Required = Required.Always)]
         [XmlText]
         public string Override { get; set; }
@@ -86,7 +82,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "Tech", Required = Required.Always)]
         [XmlElement(ElementName = "Tech")]
         public TechTreeOverridesXmlTech[] TechArray
@@ -113,13 +108,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        [Required]
         [JsonProperty(PropertyName = "unlockFullTechTree", Required = Required.Always)]
         [XmlAttribute(AttributeName = "unlockFullTechTree")]
         public bool UnlockFullTechTree { get; set; }
 
-        [Required]
-        [Range(1, 4)]
         [JsonProperty(PropertyName = "maxAge", Required = Required.Always)]
         [XmlAttribute(AttributeName = "maxAge")]
         public int MaxAge { get; set; }

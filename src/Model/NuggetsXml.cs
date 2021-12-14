@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
@@ -30,7 +29,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "unit")]
         public string Unit { get; set; }
 
-        [Key]
         [XmlElement(ElementName = "attachdummy")]
         public string Attachdummy { get; set; }
     }
@@ -45,7 +43,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                     StringComparer.OrdinalIgnoreCase);
         }
 
-        [Required]
         [XmlElement(ElementName = "nuggetunit")]
         public string Nuggetunit { get; set; }
 
@@ -58,7 +55,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "guardianunit", Required = Required.Always)]
         [XmlElement(ElementName = "guardianunit")]
         public NuggetXmlAnimNuggetGuardianUnit[] GuardianUnitArray
@@ -97,7 +93,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "nugget")]
     public class NuggetXml
     {
-        [Key]
         [XmlElement(ElementName = "dbid")]
         public int Dbid { get; set; }
 
@@ -134,7 +129,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "nugget", Required = Required.Always)]
         [XmlElement(ElementName = "nugget")]
         public NuggetXml[] NuggetArray
@@ -165,7 +159,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "questlevel")]
     public class NuggetLogicXmlQuestlevel
     {
-        [Key]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [JsonIgnore]
@@ -192,7 +185,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                     StringComparer.OrdinalIgnoreCase);
         }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
@@ -203,7 +195,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "questlevel", Required = Required.Always)]
         [XmlElement(ElementName = "questlevel")]
         public NuggetLogicXmlQuestlevel[] QuestLevelArray
@@ -234,8 +225,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "override")]
     public class NuggetLogicXmlEventNuggetOverrideOverride
     {
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlText]
         public string Id { get; set; }
@@ -245,7 +234,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlAttribute(AttributeName = "isBoss")]
         public bool IsBoss { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "weight", Required = Required.Always)]
         [XmlAttribute(AttributeName = "weight")]
         public int Weight { get; set; }
@@ -275,8 +263,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlAttribute(AttributeName = "rewardloottable")]
         public LootTableEnum Rewardloottable { get; set; }
 
-        [Required]
-        [Range(0.0, 1.0)]
         [JsonProperty(PropertyName = "chance", Required = Required.Always)]
         [XmlAttribute(AttributeName = "chance")]
         public double OverrideChance { get; set; }
@@ -287,7 +273,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "nuggetoverride", Required = Required.Always)]
         [XmlElement(ElementName = "nuggetoverride")]
         public NuggetLogicXmlEventNuggetOverrideOverride[] NuggetOverrideArray
@@ -346,7 +331,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "randommapregion", Required = Required.Always)]
         [XmlElement(ElementName = "randommapregion")]
         public NuggetLogicXmlRandomMapRegion[] RandomMapRegionArray
@@ -375,7 +359,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "eventnuggetoverride", Required = Required.Always)]
         [XmlElement(ElementName = "eventnuggetoverride")]
         public NuggetLogicXmlEventNuggetOverride[] EventNuggetOverrideArray
@@ -439,12 +422,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             NuggetLogic = nuggetLogic ?? throw new ArgumentNullException(nameof(nuggetLogic));
         }
 
-        [Required]
         [JsonProperty(PropertyName = "nuggets", Required = Required.Always, Order = 1)]
         [XmlElement(ElementName = "nuggets")]
         public NuggetsXml Nuggets { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "nuggetlogic", Required = Required.Always, Order = 2)]
         [XmlElement(ElementName = "nuggetlogic")]
         public NuggetLogicXml NuggetLogic { get; set; }

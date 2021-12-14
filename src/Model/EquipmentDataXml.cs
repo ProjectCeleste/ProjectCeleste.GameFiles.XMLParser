@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -23,22 +22,16 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "equipment")]
     public class EquipmentDataXmlEquipment : IEquipment
     {
-        [Key]
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlAttribute(AttributeName = "id")]
         public int Id { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "version", Required = Required.Always)]
         [XmlAttribute(AttributeName = "version")]
         public int Version { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required(AllowEmptyStrings = false)]
         [JsonIgnore]
         [XmlElement(ElementName = "civ")]
         public string CivilizationStr
@@ -47,86 +40,67 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             set => Civilization = (CivilizationEnum) System.Enum.Parse(typeof(CivilizationEnum), value, true);
         }
 
-        [Required]
         [JsonProperty(PropertyName = "civ", Required = Required.Always)]
         [XmlIgnore]
         public CivilizationEnum Civilization { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "maxrank", Required = Required.Always)]
         [XmlElement(ElementName = "maxrank")]
         public int MaxRank { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "icon", Required = Required.Always)]
         [XmlElement(ElementName = "icon")]
         public string Icon { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "largeicon", Required = Required.Always)]
         [XmlElement(ElementName = "largeicon")]
         public bool LargeIcon { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "bldorunit", Required = Required.Always)]
         [XmlElement(ElementName = "bldorunit")]
         public bool BldOrUnit { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "questreward", Required = Required.Always)]
         [XmlElement(ElementName = "questreward")]
         public bool QuestReward { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "suppresseffects", Required = Required.Always)]
         [XmlElement(ElementName = "suppresseffects")]
         public bool SuppressEffects { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "displaynameid", Required = Required.Always)]
         [XmlElement(ElementName = "displaynameid")]
         public int DisplaynameId { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "uipanel", Required = Required.Always)]
         [XmlElement(ElementName = "uipanel")]
         public string UiPanel { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "uirow", Required = Required.Always)]
         [XmlElement(ElementName = "uirow")]
         public double Uirow { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "uicol", Required = Required.Always)]
         [XmlElement(ElementName = "uicol")]
         public double UiCol { get; set; }
 
-        [Required]
-        [Range(1, 4)]
         [JsonProperty(PropertyName = "agerequirement", Required = Required.Always)]
         [XmlElement(ElementName = "agerequirement")]
         public int AgeRequirement { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "grantedatlevel", Required = Required.Always)]
         [XmlElement(ElementName = "grantedatlevel")]
         public bool GrantedAtLevel { get; set; }
 
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "grantinglevel", Required = Required.Always)]
         [XmlElement(ElementName = "grantinglevel")]
         public int GrantingLevel { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "reward", Required = Required.Always)]
         [XmlElement(ElementName = "ranks")]
         public EquipmentDataXmlRanks Ranks { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "prereq", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "prereq")]
         public int Prereq { get; set; } = -1;
@@ -149,7 +123,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "rank", Required = Required.Always)]
         [XmlElement(ElementName = "rank")]
         public EquipmentDataXmlEqRank[] RankArray
@@ -186,14 +159,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlAttribute(AttributeName = "tech")]
         public string Tech { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "cost", Required = Required.Always)]
         [XmlAttribute(AttributeName = "cost")]
         public int Cost { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "descid", Required = Required.Always)]
         [XmlAttribute(AttributeName = "descid")]
         public int DescId { get; set; }
@@ -216,7 +185,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "equipment", Required = Required.Always)]
         [XmlElement(ElementName = "equipment")]
         public EquipmentDataXmlEquipment[] EquipmentArray

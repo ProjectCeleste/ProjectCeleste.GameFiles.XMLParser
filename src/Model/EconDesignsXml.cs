@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -123,14 +122,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Quantity = quantity;
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlText]
         public string Id { get; set; }
 
-        [Required]
-        [Range(1, 1)]
         [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
         [XmlAttribute(AttributeName = "quantity")]
         public int Quantity { get; set; }
@@ -158,14 +153,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Quantity = quantity;
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlText]
         public string Id { get; set; }
 
-        [Required]
-        [Range(1, 1)]
         [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
         [XmlAttribute(AttributeName = "quantity")]
         public int Quantity { get; set; }
@@ -198,20 +189,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Level = level;
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlText]
         public string Id { get; set; }
 
-        [Required]
-        [Range(1, 1)]
         [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
         [XmlAttribute(AttributeName = "quantity")]
         public int Quantity { get; set; }
 
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "level", Required = Required.Always)]
         [XmlAttribute(AttributeName = "level")]
         public int Level { get; set; }
@@ -239,14 +224,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Quantity = quantity;
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlText]
         public string Id { get; set; }
 
-        [Required]
-        [Range(1, 1)]
         [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
         [XmlAttribute(AttributeName = "quantity")]
         public int Quantity { get; set; }
@@ -273,14 +254,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Quantity = quantity;
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlText]
         public string Id { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
         [XmlAttribute(AttributeName = "quantity")]
         public int Quantity { get; set; }
@@ -311,7 +288,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "material", Required = Required.Always)]
         [XmlElement(ElementName = "material")]
         public EconDesignXmlMaterial[] MaterialArray
@@ -338,63 +314,47 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Event = EventEnum.None;
         }
 
-        [Required]
         [JsonProperty(PropertyName = "tradeable", Required = Required.Always)]
         [XmlElement(ElementName = "tradeable")]
         public bool Tradeable { get; set; } = true;
 
-        [Required]
         [JsonProperty(PropertyName = "destroyable", Required = Required.Always)]
         [XmlElement(ElementName = "destroyable")]
         public bool Destroyable { get; set; } = true;
 
-        [Required]
         [JsonProperty(PropertyName = "sellcostoverride", Required = Required.AllowNull)]
         [XmlElement(ElementName = "sellcostoverride")]
         public ItemCostXml SellCostOverride { get; set; }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "icon", Required = Required.Always)]
         [XmlElement(ElementName = "icon")]
         public string Icon { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "rollovertextid", Required = Required.Always)]
         [XmlElement(ElementName = "rollovertextid")]
         public int RollOverTextId { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "displaynameid", Required = Required.Always)]
         [XmlElement(ElementName = "displaynameid")]
         public int DisplayNameId { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "stacksize", Required = Required.Always)]
         [XmlElement(ElementName = "stacksize")]
         public int StackSize { get; set; }
 
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "offertype", Required = Required.Always)]
         [XmlElement(ElementName = "offertype")]
         public EOfferTypeEnum OfferType { get; set; }
 
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "itemlevel", Required = Required.Always)]
         [XmlElement(ElementName = "itemlevel")]
         public int ItemLevel { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "sellable", Required = Required.Always)]
         [XmlElement(ElementName = "sellable")]
         public bool Sellable { get; set; } = true;
@@ -403,67 +363,52 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlIgnore]
         IItemCost IEconDesign.SellCostOverride => SellCostOverride;
 
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "rarity", Required = Required.Always)]
         [XmlElement(ElementName = "rarity")]
         public CRarityEnum Rarity { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "productionpoints", Required = Required.Always)]
-        [Range(0, double.MaxValue)]
         [XmlElement(ElementName = "productionpoints")]
         public double ProductionPoints { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "input", Required = Required.Always)]
         [XmlElement(ElementName = "input")]
         public EconDesignXmlInput Input { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "output", Required = Required.Always)]
         [XmlElement(ElementName = "output")]
         public EconDesignXmlOutput Output { get; set; }
 
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "outputtraitlevel", Required = Required.Always)]
         [XmlElement(ElementName = "outputtraitlevel")]
         public int OutputTraitLevel { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "autolearn", Required = Required.Always)]
         [XmlElement(ElementName = "autolearn")]
         public bool AutoLearn { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "autorepeat", Required = Required.Always)]
         [XmlElement(ElementName = "autorepeat")]
         public bool AutoRepeat { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "tohopper", Required = Required.Always)]
         [XmlElement(ElementName = "tohopper")]
         public bool ToHopper { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "ignoreschool", Required = Required.Always)]
         [XmlElement(ElementName = "ignoreschool")]
         public bool IgnoreSchool { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "advanced", Required = Required.Always)]
         [XmlElement(ElementName = "advanced")]
         public bool Advanced { get; set; }
 
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "tag", Required = Required.Always)]
         [XmlElement(ElementName = "tag")]
         public SchoolTagEnum Tag { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "budgetmodifier", Required = Required.Always)]
         [XmlElement(ElementName = "budgetmodifier")]
         public double BudgetModifier { get; set; }
@@ -526,7 +471,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "econdesign", Required = Required.Always)]
         [XmlElement(ElementName = "econdesign")]
         public EconDesignXml[] DesignArray

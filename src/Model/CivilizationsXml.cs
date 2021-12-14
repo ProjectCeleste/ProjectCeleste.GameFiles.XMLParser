@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -463,7 +462,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "civ", Required = Required.Always)]
         [XmlElement(ElementName = "civ")]
         public CivilizationXml[] CivilizationArray

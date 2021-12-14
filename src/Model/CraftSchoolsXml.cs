@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -24,13 +23,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "gear")]
     public class CraftSchoolGearXml
     {
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "stringid", Required = Required.Always)]
         [XmlAttribute(AttributeName = "stringid")]
         public int StringId { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "icon", Required = Required.Always)]
         [XmlText]
         public string Icon { get; set; }
@@ -40,7 +36,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "gearicons")]
     public class CraftSchoolGearIconsXml
     {
-        [Required]
         [JsonProperty(PropertyName = "gear", Required = Required.Always)]
         [XmlElement(ElementName = "gear")]
         public List<CraftSchoolGearXml> Gear { get; set; }
@@ -65,8 +60,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "school")]
     public class CraftSchoolXml : ICraftSchool
     {
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "tag", Required = Required.Always)]
         [XmlElement(ElementName = "tag")]
@@ -80,32 +73,26 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "description")]
         public int Description { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "startingblueprint", Required = Required.Always)]
         [XmlElement(ElementName = "startingblueprint")]
         public string StartingBlueprint { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "icon", Required = Required.Always)]
         [XmlElement(ElementName = "icon")]
         public string Icon { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "gearicons", Required = Required.Always)]
         [XmlElement(ElementName = "gearicons")]
         public CraftSchoolGearIconsXml GearIcons { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "items", Required = Required.Always)]
         [XmlElement(ElementName = "items")]
         public CraftSchoolItemsXml Items { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "design", Required = Required.Always)]
         [XmlElement(ElementName = "design")]
         public string Design { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "craftingsound", Required = Required.Always)]
         [XmlElement(ElementName = "craftingsound")]
         public string CraftingSound { get; set; }
@@ -120,7 +107,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "allowedcapitals")]
     public class CraftschoolAllowedCapitalsXml
     {
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "capital", Required = Required.Always)]
         [XmlElement(ElementName = "capital")]
         public string Capital { get; set; }
@@ -143,7 +129,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "school", Required = Required.Always)]
         [XmlElement(ElementName = "school")]
         public CraftSchoolXml[] SchoolArray

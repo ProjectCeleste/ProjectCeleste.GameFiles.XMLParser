@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -33,8 +32,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             SetEmpirePoints(empirePoints);
         }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "empirepoints", Required = Required.Always)]
         [XmlElement(ElementName = "empirepoints")]
         public int EmpirePoints { get; set; }
@@ -62,8 +59,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             SetSkillPoints(skillPoints);
         }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "skillpoints", Required = Required.Always)]
         [XmlElement(ElementName = "skillpoints")]
         public int SkillPoints { get; set; }
@@ -91,8 +86,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             SetEnableAge(enableAge);
         }
 
-        [Required]
-        [Range(0, 4)]
         [JsonProperty(PropertyName = "enableage", Required = Required.Always)]
         [XmlElement(ElementName = "enableage")]
         public int EnableAge { get; set; }
@@ -118,8 +111,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             SetId(id);
         }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlElement(ElementName = "id")]
         public int Id { get; set; }
@@ -164,8 +155,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             UnlockRegionEffect = unlockRegionEffect;
         }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "xp", Required = Required.Always)]
         [XmlElement(ElementName = "xp")]
         public int Xp { get; set; }
@@ -202,9 +191,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             set => _unlockRegionEffect = value;
         }
 
-        [Key]
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "level", Required = Required.Always)]
         [XmlIgnore]
         public int Level { get; set; }
@@ -300,15 +286,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             SetMaxLevel(maxLevel);
         }
 
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "maxlevel", Required = Required.Always)]
         [XmlElement(ElementName = "maxlevel")]
         public int MaxLevel { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "level", Required = Required.Always)]
         [XmlElement(ElementName = "level")]
         public CharacterLevelXml[] Level

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -30,7 +29,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             TechStatusEnum techStatus,
             [JsonProperty(PropertyName = "persistentcitytechstatus", Required = Required.Always)]
             TechStatusEnum persistentCityTechStatus,
-            [Range(0, 99)] [JsonProperty(PropertyName = "level", Required = Required.Always)]
+            [JsonProperty(PropertyName = "level", Required = Required.Always)]
             int level)
         {
             Tech = tech;
@@ -39,24 +38,18 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Level = level;
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "tech", Required = Required.Always)]
         [XmlElement(ElementName = "tech")]
         public string Tech { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "techstatus", Required = Required.Always)]
         [XmlElement(ElementName = "techstatus")]
         public TechStatusEnum TechStatus { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "persistentcitytechstatus", Required = Required.Always)]
         [XmlElement(ElementName = "persistentcitytechstatus")]
         public TechStatusEnum PersistentCityTechStatus { get; set; }
 
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "level", Required = Required.Always)]
         [XmlElement(ElementName = "level")]
         public int Level { get; set; }
@@ -74,9 +67,9 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonConstructor]
         public AllianceXmlRank(
-            [Range(-1, int.MaxValue)] [JsonProperty(PropertyName = "percentileindex", Required = Required.Always)]
+            [JsonProperty(PropertyName = "percentileindex", Required = Required.Always)]
             int percentileIndex,
-            [Range(0, int.MaxValue)] [JsonProperty(PropertyName = "titleid", Required = Required.Always)]
+            [JsonProperty(PropertyName = "titleid", Required = Required.Always)]
             string titleId,
             [JsonProperty(PropertyName = "iconpath", Required = Required.Always)]
             string iconPath,
@@ -90,20 +83,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                 StringComparer.OrdinalIgnoreCase);
         }
 
-        [Key]
-        [Required]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "percentileindex", Required = Required.Always)]
         [XmlAttribute(AttributeName = "percentileindex")]
         public int PercentileIndex { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "titleid", Required = Required.Always)]
         [XmlAttribute(AttributeName = "titleid")]
         public string TitleId { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "iconpath", Required = Required.Always)]
         [XmlAttribute(AttributeName = "iconpath")]
         public string IconPath { get; set; }
@@ -114,7 +101,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "passives", Required = Required.Always)]
         [XmlArray("passives")]
         [XmlArrayItem("passive", typeof(AllianceXmlPassive))]
@@ -144,13 +130,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             EAllianceEnum allianceType,
             [JsonProperty(PropertyName = "chatchannelinternalname", Required = Required.Always)]
             string chatChannelInternalName,
-            [Range(0, int.MaxValue)] [JsonProperty(PropertyName = "displaynameid", Required = Required.Always)]
+            [JsonProperty(PropertyName = "displaynameid", Required = Required.Always)]
             int displayNameId,
-            [Range(0, int.MaxValue)] [JsonProperty(PropertyName = "descriptionid", Required = Required.Always)]
+            [JsonProperty(PropertyName = "descriptionid", Required = Required.Always)]
             int descriptionId,
-            [Range(0, int.MaxValue)] [JsonProperty(PropertyName = "homeregionid", Required = Required.Always)]
+            [JsonProperty(PropertyName = "homeregionid", Required = Required.Always)]
             int homeRegionId,
-            [Range(0, int.MaxValue)] [JsonProperty(PropertyName = "leadernameid", Required = Required.Always)]
+            [JsonProperty(PropertyName = "leadernameid", Required = Required.Always)]
             int leaderNameId,
             [JsonProperty(PropertyName = "ranks", Required = Required.Always)]
             IEnumerable<AllianceXmlRank> ranks)
@@ -164,37 +150,26 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Ranks = new DictionaryContainer<int, AllianceXmlRank>(ranks, key => key.PercentileIndex);
         }
 
-        [Key]
-        [Required]
         [JsonProperty(PropertyName = "alliancetype", Required = Required.Always)]
         [XmlElement(ElementName = "alliancetype")]
         public EAllianceEnum AllianceType { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "chatchannelinternalname", Required = Required.Always)]
         [XmlElement(ElementName = "chatchannelinternalname")]
         public string ChatChannelInternalName { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "displaynameid", Required = Required.Always)]
         [XmlElement(ElementName = "displaynameid")]
         public int DisplayNameId { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "descriptionid", Required = Required.Always)]
         [XmlElement(ElementName = "descriptionid")]
         public int DescriptionId { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "homeregionid", Required = Required.Always)]
         [XmlElement(ElementName = "homeregionid")]
         public int HomeRegionId { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "leadernameid", Required = Required.Always)]
         [XmlElement(ElementName = "leadernameid")]
         public int LeaderNameId { get; set; }
@@ -205,7 +180,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "ranks", Required = Required.Always)]
         [XmlArray("ranks")]
         [XmlArrayItem("rank", typeof(AllianceXmlRank))]
@@ -234,7 +208,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             TimeSpan expiryTime,
             [JsonProperty(PropertyName = "calculationinterval", Required = Required.Always)]
             TimeSpan calculationInterval,
-            [Range(0, int.MaxValue)] [JsonProperty(PropertyName = "minapcontribution", Required = Required.Always)]
+            [JsonProperty(PropertyName = "minapcontribution", Required = Required.Always)]
             int minApContribution)
         {
             ExpiryTime = expiryTime;
@@ -242,18 +216,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             MinApContribution = minApContribution;
         }
 
-        [Required]
         [JsonProperty(PropertyName = "expirytime", Required = Required.Always)]
         [XmlElement(ElementName = "expirytime", Type = typeof(XmlTimeSpan))]
         public XmlTimeSpan ExpiryTime { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "calculationinterval", Required = Required.Always)]
         [XmlElement(ElementName = "calculationinterval", Type = typeof(XmlTimeSpan))]
         public XmlTimeSpan CalculationInterval { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "minapcontribution", Required = Required.Always)]
         [XmlElement(ElementName = "minapcontribution")]
         public int MinApContribution { get; set; }
@@ -269,7 +239,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonConstructor]
         public AllianceDataXml(
-            [Range(0, 99)] [JsonProperty(PropertyName = "mincharacterlevel", Required = Required.Always)]
+            [JsonProperty(PropertyName = "mincharacterlevel", Required = Required.Always)]
             int minCharacterLevel,
             [JsonProperty(PropertyName = "rankdata", Required = Required.Always)]
             AllianceDataXmlRank rankData,
@@ -280,13 +250,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             RankData = rankData;
         }
 
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "mincharacterlevel", Required = Required.Always)]
         [XmlElement(ElementName = "mincharacterlevel")]
         public int MinCharacterLevel { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "rankdata", Required = Required.Always)]
         [XmlElement("rankdata", typeof(AllianceDataXmlRank))]
         public AllianceDataXmlRank RankData { get; set; }
@@ -297,7 +264,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "alliances", Required = Required.Always)]
         [XmlArray("alliances")]
         [XmlArrayItem("alliance", typeof(AllianceXml))]

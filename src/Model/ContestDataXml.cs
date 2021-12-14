@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -22,10 +21,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonConstructor]
         public AllianceContestXmlReward(
-            [Range(0, int.MaxValue)]
             [JsonProperty(PropertyName = "placement", Required = Required.Always)]
             int placement,
-            [Range(0, int.MaxValue)]
             [JsonProperty(PropertyName = "baseep", Required = Required.Always)]
             int baseEp)
         {
@@ -33,15 +30,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             BaseEp = baseEp;
         }
 
-        [Key]
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "placement", Required = Required.Always)]
         [XmlAttribute(AttributeName = "placement")]
         public int Placement { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "baseep", Required = Required.Always)]
         [XmlAttribute(AttributeName = "baseep")]
         public int BaseEp { get; set; }
@@ -57,10 +49,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [JsonConstructor]
         public AllianceContestXmlScaledReward(
-            [Range(0, int.MaxValue)]
             [JsonProperty(PropertyName = "percentileasindex", Required = Required.Always)]
             int percentileAsIndex,
-            [Range(0, int.MaxValue)]
             [JsonProperty(PropertyName = "ep", Required = Required.Always)]
             int ep)
         {
@@ -68,15 +58,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Ep = ep;
         }
 
-        [Key]
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "percentileasindex", Required = Required.Always)]
         [XmlAttribute(AttributeName = "percentileasindex")]
         public int PercentileAsIndex { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "ep", Required = Required.Always)]
         [XmlAttribute(AttributeName = "ep")]
         public int Ep { get; set; }
@@ -109,49 +94,36 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Names = names;
         }
 
-        [Key]
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "type", Required = Required.Always)]
         [XmlAttribute(AttributeName = "type")]
         public string Type { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "runningtime", Required = Required.Always)]
         [XmlElement(ElementName = "runningtime", Type = typeof(XmlTimeSpan))]
         public XmlTimeSpan RunningTime { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "downtime", Required = Required.Always)]
         [XmlElement(ElementName = "downtime", Type = typeof(XmlTimeSpan))]
         public XmlTimeSpan Downtime { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "expiretime", Required = Required.Always)]
         [XmlElement(ElementName = "expiretime", Type = typeof(XmlTimeSpan))]
         public XmlTimeSpan ExpireTime { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "minimumap", Required = Required.Always)]
         [XmlElement(ElementName = "minimumap")]
         public int MinimumAp { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "rewards", Required = Required.Always)]
         [XmlArray("rewards")]
         [XmlArrayItem("reward")]
         public List<AllianceContestXmlReward> Rewards { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "scaledrewards", Required = Required.Always)]
         [XmlArray("scaledrewards")]
         [XmlArrayItem("scaledreward")]
         public List<AllianceContestXmlScaledReward> ScaledRewards { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "names", Required = Required.Always)]
         [XmlArray("names")]
         [XmlArrayItem("nameindex")]
@@ -176,14 +148,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             ParticipationBonusTime = participationBonusTime;
         }
 
-        [Required]
         [JsonProperty(PropertyName = "participationbonustime", Required = Required.Always)]
         [XmlElement(ElementName = "participationbonustime", Type = typeof(XmlTimeSpan))]
         public XmlTimeSpan ParticipationBonusTime { get; set; }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "contests", Required = Required.Always)]
         [XmlArray("contests")]
         [XmlArrayItem("contest", typeof(ContestDataXmlContest))]

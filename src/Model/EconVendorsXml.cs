@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -22,20 +21,15 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [JsonObject(Title = "iteminfo", Description = "")]
     public class EconVendorXmlItemInfo
     {
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlText]
         public string Id { get; set; }
 
-        [Required]
-        [Range(1, int.MaxValue)]
         [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
         [XmlAttribute(AttributeName = "quantity")]
         public int Quantity { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "level", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "level")]
         public int Level { get; set; }
@@ -135,12 +129,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "item")]
     public class EconVendorXmlItem
     {
-        [Required]
         [JsonProperty(PropertyName = "purchase", Required = Required.Always)]
         [XmlElement(ElementName = "purchase")]
         public EconVendorXmlPurchase Purchase { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "cost", Required = Required.Always)]
         [XmlElement(ElementName = "cost")]
         public ItemCostXml Cost { get; set; }
@@ -163,7 +155,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "item", Required = Required.Always)]
         [XmlElement(ElementName = "item")]
         public EconVendorXmlItem[] ItemArray
@@ -196,13 +187,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "itemset")]
     public class EconVendorXmlItemset
     {
-        [Required]
         [JsonProperty(PropertyName = "items", Required = Required.AllowNull)]
         [XmlElement(ElementName = "items")]
         public EconVendorXmlItems Items { get; set; }
 
-        [Required]
-        [Range(0, 255)]
         [JsonProperty(PropertyName = "regionid", Required = Required.Always)]
         [XmlAttribute(AttributeName = "regionid")]
         public int Regionid { get; set; }
@@ -212,7 +200,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "itemsets")]
     public class EconVendorXmlItemsets : IEconVendorItemsets
     {
-        [Required]
         [JsonProperty(PropertyName = "itemset", Required = Required.Always)]
         [XmlElement(ElementName = "itemset")]
         public EconVendorXmlItemset Itemset { get; set; }
@@ -222,18 +209,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "vendor")]
     public class EconVendorXml : IEconVendor
     {
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "protounit", Required = Required.Always)]
         [XmlElement(ElementName = "protounit")]
         public string Protounit { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "itemsets", Required = Required.Always)]
         [XmlElement(ElementName = "itemsets")]
         public EconVendorXmlItemsets Itemsets { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
@@ -262,7 +245,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "vendor", Required = Required.Always)]
         [XmlElement(ElementName = "vendor")]
         public EconVendorXml[] VendorArray

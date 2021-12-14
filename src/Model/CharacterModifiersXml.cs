@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -25,15 +24,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "modifiertype")]
     public class CharacterModifierXmlModifierType
     {
-        [Key]
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "type", Required = Required.Always)]
         [XmlAttribute(AttributeName = "type")]
         public CharacterModifierTypeEnum Type { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "tooltipstringid", Required = Required.Always)]
         [XmlElement(ElementName = "tooltipstringid")]
         public int TooltipStringId { get; set; }
@@ -57,7 +52,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "modifiertype", Required = Required.Always)]
         [XmlElement(ElementName = "modifiertype")]
         public CharacterModifierXmlModifierType[] ModifierType
@@ -88,25 +82,20 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "modify")]
     public class CharacterModifierXmlModify
     {
-        [Key]
         [JsonIgnore]
         [XmlIgnore]
         internal string UnikId => string.IsNullOrWhiteSpace(Category) ? $"{Type}" : $"{Type}-{Category}";
 
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "type", Required = Required.Always)]
         [XmlAttribute(AttributeName = "type")]
         public CharacterModifierTypeEnum Type { get; set; }
 
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "relativity", Required = Required.Always)]
         [XmlAttribute(AttributeName = "relativity")]
         public CharacterModifierRelativityEnum Relativity { get; set; }
 
-        [Required]
-        [Range(double.MinValue, double.MaxValue)]
         [JsonProperty(PropertyName = "amount", Required = Required.Always)]
         [XmlAttribute(AttributeName = "amount")]
         public double Amount { get; set; }
@@ -135,26 +124,21 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "modifier")]
     public class CharacterModifierXml
     {
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlAttribute(AttributeName = "id")]
         public string Id { get; set; }
 
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "category", Required = Required.Always)]
         [XmlElement(ElementName = "category")]
         public CharacterModifierCategoryEnum Category { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "descriptionid", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "descriptionid")]
         public int Descriptionid { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "displaynameid", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "displaynameid")]
         public int Displaynameid { get; set; }
@@ -170,7 +154,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             set => Duration = string.IsNullOrWhiteSpace(value) ? TimeSpan.Zero : TimeSpan.Parse(value);
         }
 
-        [Required]
         [JsonProperty(PropertyName = "duration", Required = Required.Always)]
         [XmlIgnore]
         public TimeSpan Duration { get; set; }
@@ -196,7 +179,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "modify", Required = Required.Always)]
         [XmlElement(ElementName = "modify")]
         public CharacterModifierXmlModify[] ModifyArray
@@ -242,7 +224,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "modifier", Required = Required.Always)]
         [XmlElement(ElementName = "modifier")]
         public CharacterModifierXml[] Modifier
@@ -290,12 +271,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Modifiers = modifiers;
         }
 
-        [Required]
         [JsonProperty(PropertyName = "modifiertypedata", Required = Required.Always)]
         [XmlElement(ElementName = "modifiertypedata")]
         public CharacterModifierXmlModifierTypeData ModifierTypeData { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "modifiers", Required = Required.Always)]
         [XmlElement(ElementName = "modifiers")]
         public CharacterModifiersModifiersXml Modifiers { get; set; }

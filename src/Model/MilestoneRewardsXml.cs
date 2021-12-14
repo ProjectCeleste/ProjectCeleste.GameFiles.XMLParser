@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -23,23 +22,18 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "reward")]
     public class MilestoneRewardDataXmlReward
     {
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlElement(ElementName = "id")]
         public string Id { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "largeicon", Required = Required.Always)]
         [XmlElement(ElementName = "largeicon")]
         public string LargeIcon { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "smallicon", Required = Required.Always)]
         [XmlElement(ElementName = "smallicon")]
         public string SmallIcon { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "tech", Required = Required.Always)]
         [XmlElement(ElementName = "tech")]
         public string Tech { get; set; }
@@ -64,7 +58,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "reward", Required = Required.Always)]
         [XmlElement(ElementName = "reward")]
         public MilestoneRewardDataXmlReward[] ModifierArrayDoNotUse
@@ -97,7 +90,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "rewardids")]
     public class MilestoneRewardDataXmlRewardIds
     {
-        [Required]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlElement(ElementName = "id")]
         public HashSet<string> Id { get; set; }
@@ -107,18 +99,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "tier")]
     public class MilestoneRewardDataXmlTier
     {
-        [Required]
         [JsonProperty(PropertyName = "civid", Required = Required.Always)]
         [XmlElement(ElementName = "civid")]
         public CivilizationEnum CivId { get; set; }
 
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "level", Required = Required.Always)]
         [XmlElement(ElementName = "level")]
         public int Level { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "rewardids", Required = Required.Always)]
         [XmlElement(ElementName = "rewardids")]
         public MilestoneRewardDataXmlRewardIds RewardIds { get; set; }
@@ -143,7 +131,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "tier", Required = Required.Always)]
         [XmlElement(ElementName = "tier")]
         public MilestoneRewardDataXmlTier[] TierArrayDoNotUse
@@ -176,12 +163,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "milestonerewarddata")]
     public class MilestoneRewardDataXml : IMilestoneRewardDataXml
     {
-        [Required]
         [JsonProperty(PropertyName = "rewards", Required = Required.Always)]
         [XmlElement(ElementName = "rewards")]
         public MilestoneRewardDataXmlRewards Rewards { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "tiers", Required = Required.Always)]
         [XmlElement(ElementName = "tiers")]
         public MilestoneRewardDataXmlTiers Tiers { get; set; }

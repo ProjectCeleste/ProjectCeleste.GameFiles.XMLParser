@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -39,7 +38,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "displayNameID", Required = Required.Always, Order = 1)]
         public int DisplayNameId { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [XmlText]
         [JsonProperty(PropertyName = "path", Required = Required.Always, Order = 2)]
         public string Path { get; set; }
@@ -77,7 +75,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "map", Required = Required.Always, Order = 6)]
         [XmlElement(ElementName = "map")]
         public RandomMapSetXmlMap[] MapArray
@@ -103,30 +100,22 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "id", Required = Required.Always, Order = 1)]
         [XmlIgnore]
         public string Id { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "displayNameID", Required = Required.Always, Order = 2)]
         [XmlAttribute(AttributeName = "displayNameID")]
         public int DisplayNameId { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "imagepath", Required = Required.Always, Order = 3)]
         [XmlAttribute(AttributeName = "imagepath")]
         public string ImagePath { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "helpTextID", Required = Required.Always, Order = 4)]
         [XmlAttribute(AttributeName = "helpTextID")]
         public int HelpTextId { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "cannotReplace", Required = Required.Always, Order = 5)]
         [XmlAttribute(AttributeName = "cannotReplace")]
         public bool CannotReplace { get; set; }
@@ -168,7 +157,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "randomMaps", Required = Required.Always, Order = 1)]
         [XmlElement(ElementName = "randomMaps")]
         public RandomMapSetXml[] RmArrayDoNotUse

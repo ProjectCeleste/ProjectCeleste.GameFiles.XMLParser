@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -34,7 +33,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             StringId = stringId;
         }
 
-        [Required]
         [JsonProperty(PropertyName = "stringid", Required = Required.Always)]
         [XmlElement(ElementName = "stringid")]
         public HashSet<string> StringId { get; set; }
@@ -85,65 +83,48 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Event = @event;
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "questid", Required = Required.Always)]
         [XmlElement(ElementName = "questid")]
         public int QuestId { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "icon", Required = Required.Always)]
         [XmlElement(ElementName = "icon")]
         public string Icon { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "icontexturecoords", Required = Required.Always)]
         [XmlElement(ElementName = "icontexturecoords")]
         public string IconTextureCoords { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "rollovertextid", Required = Required.Always)]
         [XmlElement(ElementName = "rollovertextid")]
         public int RollOverTextId { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "displaynameid", Required = Required.Always)]
         [XmlElement(ElementName = "displaynameid")]
         public int DisplayNameId { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "typeid", Required = Required.Always)]
         [XmlElement(ElementName = "typeid")]
         public int TypeId { get; set; }
 
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "itemlevel", Required = Required.Always)]
         [XmlElement(ElementName = "itemlevel")]
         public int ItemLevel { get; set; }
 
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "offertype", Required = Required.Always)]
         [XmlElement(ElementName = "offertype")]
         public EOfferTypeEnum OfferType { get; set; }
 
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "rarity", Required = Required.Always)]
         [XmlElement(ElementName = "rarity")]
         public CRarityEnum Rarity { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "summary", Required = Required.Always)]
         [XmlElement(ElementName = "summary")]
         public EconQuestXmlSummary Summary { get; set; }
@@ -178,7 +159,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "quest", Required = Required.Always)]
         [XmlElement(ElementName = "quest")]
         public EconQuestXml[] EconQuestArrayDoNotUse

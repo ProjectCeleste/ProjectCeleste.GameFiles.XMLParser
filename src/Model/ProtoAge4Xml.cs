@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -24,14 +23,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "Decay")]
     public class ProtoAge4XmlUnitDecay
     {
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "delay", Required = Required.Always)]
         [XmlAttribute(AttributeName = "delay")]
         public double Delay { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "duration", Required = Required.Always)]
         [XmlAttribute(AttributeName = "duration")]
         public double Duration { get; set; }
@@ -40,15 +35,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "InitialResource")]
     public class ProtoAge4XmlUnitInitialResource
     {
-        [Key]
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "resourcetype", Required = Required.Always)]
         [XmlAttribute(AttributeName = "resourcetype")]
         public ResourceTypeEnum Resourcetype { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
         [XmlText]
         public double Quantity { get; set; }
@@ -57,20 +48,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "MinimapColor")]
     public class ProtoAge4XmlUnitMinimapColor
     {
-        [Required]
-        [Range(0, 1.0)]
         [JsonProperty(PropertyName = "red", Required = Required.Always)]
         [XmlAttribute(AttributeName = "red")]
         public double Red { get; set; }
 
-        [Required]
-        [Range(0, 1.0)]
         [JsonProperty(PropertyName = "blue", Required = Required.Always)]
         [XmlAttribute(AttributeName = "blue")]
         public double Blue { get; set; }
 
-        [Required]
-        [Range(0, 1.0)]
         [JsonProperty(PropertyName = "green", Required = Required.Always)]
         [XmlAttribute(AttributeName = "green")]
         public double Green { get; set; }
@@ -79,14 +64,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "Event")]
     public class ProtoAge4XmlUnitEvent
     {
-        [Key]
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlAttribute(AttributeName = "name")]
         public EventEnum Name { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "AnimFile", Required = Required.Always)]
         [XmlElement(ElementName = "AnimFile")]
         public string AnimFile { get; set; }
@@ -95,21 +77,17 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "ProtoAction")]
     public class ProtoAge4XmlUnitProtoAction
     {
-        [Key]
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "Name", Required = Required.Always)]
         [XmlElement(ElementName = "Name")]
         public ProtoActionNameEnum Name { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "Damage", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Damage")]
         public double Damage { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "ROF", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "ROF")]
         public double Rof { get; set; }
@@ -132,7 +110,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public ProjectileTypeEnum Projectile { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "MaxHeight", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "MaxHeight")]
         public double MaxHeight { get; set; }
@@ -158,13 +135,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public List<ProtoAge4XmlUnitDamageBonus> DamageBonus { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "MinRange", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "MinRange")]
         public double MinRange { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "DamageArea", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "DamageArea")]
         public double DamageArea { get; set; }
@@ -181,43 +156,36 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public List<double> Accuracy { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "TrackRating", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "TrackRating")]
         public double TrackRating { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, 1)]
         [JsonProperty(PropertyName = "Active", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Active")]
         public int Active { get; set; } = -1;
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "DamageCap", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "DamageCap")]
         public double DamageCap { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, 1)]
         [JsonProperty(PropertyName = "HandLogic", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "HandLogic")]
         public int HandLogic { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, 1)]
         [JsonProperty(PropertyName = "Poison", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Poison")]
         public int Poison { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "DamageOverTimeDuration", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "DamageOverTimeDuration")]
         public double DamageOverTimeDuration { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "DamageOverTimeRate", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "DamageOverTimeRate")]
         public double DamageOverTimeRate { get; set; }
@@ -242,14 +210,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Value = value;
         }
 
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "type", Required = Required.Always)]
         [XmlAttribute(AttributeName = "type")]
         public DamageTypeEnum Type { get; set; }
 
-        [Required]
-        [Range(double.MinValue, double.MaxValue)]
         [JsonProperty(PropertyName = "value", Required = Required.Always)]
         [XmlAttribute(AttributeName = "value")]
         public double Value { get; set; }
@@ -258,15 +223,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "Cost")]
     public class ProtoAge4XmlUnitCost
     {
-        [Key]
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "resourcetype", Required = Required.Always)]
         [XmlAttribute(AttributeName = "resourcetype")]
         public ResourceTypeEnum ResourceType { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
         [XmlText]
         public double Quantity { get; set; }
@@ -275,15 +236,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "CarryCapacity")]
     public class ProtoAge4XmlUnitCarryCapacity
     {
-        [Key]
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "resourcetype", Required = Required.Always)]
         [XmlAttribute(AttributeName = "resourcetype")]
         public ResourceTypeEnum ResourceType { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
         [XmlText]
         public double Quantity { get; set; }
@@ -299,27 +256,22 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Row = -1;
         }
 
-        [Key]
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlText]
         public UnitCommandEnum Name { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "row", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "row")]
         public int Row { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "page", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "page")]
         public int Page { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "column", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "column")]
         public int Column { get; set; }
@@ -334,26 +286,21 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Column = -1;
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlText]
         public string Name { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "row", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "row")]
         public int Row { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "page", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "page")]
         public int Page { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "column", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "column")]
         public int Column { get; set; }
@@ -362,14 +309,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "Rate")]
     public class ProtoAge4XmlUnitRate
     {
-        [Key]
-        [Required]
         [JsonProperty(PropertyName = "type", Required = Required.Always)]
         [XmlAttribute(AttributeName = "type")]
         public string Type { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "amount", Required = Required.Always)]
         [XmlText]
         public double Amount { get; set; }
@@ -378,14 +321,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "DamageBonus")]
     public class ProtoAge4XmlUnitDamageBonus
     {
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "type", Required = Required.Always)]
         [XmlAttribute(AttributeName = "type")]
         public string Type { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "amount", Required = Required.Always)]
         [XmlText]
         public double Amount { get; set; }
@@ -394,14 +333,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "HeightBob")]
     public class ProtoAge4XmlUnitHeightBob
     {
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "period", Required = Required.Always)]
         [XmlAttribute(AttributeName = "period")]
         public double Period { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "magnitude", Required = Required.Always)]
         [XmlAttribute(AttributeName = "magnitude")]
         public double Magnitude { get; set; }
@@ -609,7 +544,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public DictionaryContainer<EventEnum, ProtoAge4XmlUnitEvent> Event { get; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "WanderDistance", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "WanderDistance")]
         public int WanderDistance { get; set; }
@@ -776,7 +710,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public DictionaryContainer<string, ProtoAge4XmlRowPageColumn> Tech { get; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "RepairPoints", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "RepairPoints")]
         public double RepairPoints { get; set; }
@@ -816,7 +749,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public DictionaryContainer<string, ProtoAge4XmlRowPageColumn> Train { get; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "MaxContained", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "MaxContained")]
         public int MaxContained { get; set; }
@@ -856,68 +788,56 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "id", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "id")]
         public int Id { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "DBID", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "DBID")]
         public int Dbid { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "DisplayNameID", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "DisplayNameID")]
         public int DisplayNameId { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "EditorNameID", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "EditorNameID")]
         public int EditorNameId { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "RolloverTextID", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "RolloverTextID")]
         public int RolloverTextId { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "ShortRolloverTextID", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "ShortRolloverTextID")]
         public int ShortRolloverTextId { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "ObstructionRadiusX", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "ObstructionRadiusX")]
         public double ObstructionRadiusX { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "ObstructionRadiusZ", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "ObstructionRadiusZ")]
         public double ObstructionRadiusZ { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "MaxVelocity", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "MaxVelocity")]
         public double MaxVelocity { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "MaxRunVelocity", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "MaxRunVelocity")]
         public double MaxRunVelocity { get; set; }
@@ -928,13 +848,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public string MovementType { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "Lifespan", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Lifespan")]
         public double Lifespan { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "LOS", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "LOS")]
         public double Los { get; set; }
@@ -960,7 +878,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public string AnimFile { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "VisualScale", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "VisualScale")]
         public double VisualScale { get; set; }
@@ -987,19 +904,16 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public string PortraitIcon { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "InitialHitpoints", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "InitialHitpoints")]
         public double InitialHitpoints { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "MaxHitpoints", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "MaxHitpoints")]
         public double MaxHitpoints { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "Bounty", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "Bounty")]
         public double Bounty { get; set; }
@@ -1021,13 +935,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public ProtoAge4XmlUnitMinimapColor MinimapColor { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "GathererLimit", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "GathererLimit")]
         public int GathererLimit { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "TurnRate", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "TurnRate")]
         public double TurnRate { get; set; }
@@ -1044,7 +956,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public PhysicsInfoEnum PhysicsInfo { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "SelectionPriority", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "SelectionPriority")]
         public int SelectionPriority { get; set; }
@@ -1065,7 +976,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public List<ProtoAge4XmlUnitProtoAction> ProtoAction { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "PopulationCapAddition", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "PopulationCapAddition")]
         public int PopulationCapAddition { get; set; }
@@ -1076,31 +986,26 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public string PlacementFile { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "BuildPoints", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "BuildPoints")]
         public double BuildPoints { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "BuildingWorkRate", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "BuildingWorkRate")]
         public double BuildingWorkRate { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, 3)]
         [JsonProperty(PropertyName = "AllowedAge", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "AllowedAge")]
         public int AllowedAge { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "BuilderLimit", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "BuilderLimit")]
         public int BuilderLimit { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "UnitLevel", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "UnitLevel")]
         public int UnitLevel { get; set; }
@@ -1136,7 +1041,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public string VanTrait1 { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "IdleTimeout", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "IdleTimeout")]
         public double IdleTimeout { get; set; }
@@ -1147,7 +1051,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public string SocketUnitType { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "AllowedHeightVariance", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "AllowedHeightVariance")]
         public double AllowedHeightVariance { get; set; }
@@ -1163,37 +1066,31 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public string ProjectileProtoUnit { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "BuildLimit", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "BuildLimit")]
         public int BuildLimit { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "PopulationCount", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "PopulationCount")]
         public int PopulationCount { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "CorpseDecalTime", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "CorpseDecalTime")]
         public double CorpseDecalTime { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "TrainPoints", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "TrainPoints")]
         public double TrainPoints { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "AutoAttackRange", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "AutoAttackRange")]
         public double AutoAttackRange { get; set; }
 
         [DefaultValue(-1)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "TurnRadius", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "TurnRadius")]
         public double TurnRadius { get; set; }
@@ -1257,7 +1154,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "Unit", Required = Required.Always, Order = 2)]
         [XmlElement(ElementName = "Unit")]
         public ProtoAge4XmlUnit[] UnitArray
@@ -1284,8 +1180,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "version", Required = Required.Always, Order = 1)]
         [XmlAttribute(AttributeName = "version")]
         public int Version { get; set; }

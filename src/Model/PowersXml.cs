@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -143,8 +142,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "power")]
     public class PowerXml : IPower
     {
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
 
@@ -265,7 +262,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "power", Required = Required.Always)]
         [XmlElement(ElementName = "power")]
         public PowerXml[] PowerArray

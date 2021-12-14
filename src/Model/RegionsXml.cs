@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -78,14 +77,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlIgnore]
         public string FileName { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "Name", Required = Required.Always)]
         [XmlElement(ElementName = "Name")]
         public string Name { get; set; }
 
-        [Key]
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "Id", Required = Required.Always)]
         [XmlAttribute(AttributeName = "ID")]
         public int Id { get; set; }
@@ -112,41 +107,30 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "MapName")]
         public string MapName { get; set; }
 
-        [Required]
-        [Range(0, double.MaxValue)]
         [JsonProperty(PropertyName = "MapLocationX", Required = Required.Always)]
         [XmlElement(ElementName = "MapLocationX")]
         public double MapLocationX { get; set; }
 
-        [Required]
-        [Range(0, double.MaxValue)]
         [JsonProperty(PropertyName = "MapLocationY", Required = Required.Always)]
         [XmlElement(ElementName = "MapLocationY")]
         public double MapLocationY { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "MapMarker", Required = Required.AllowNull)]
         [XmlElement(ElementName = "MapMarker")]
         public string MapMarker { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "MapPage", Required = Required.Always)]
         [XmlElement(ElementName = "MapPage")]
         public string MapPage { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "LoadScreen", Required = Required.AllowNull)]
         [XmlElement(ElementName = "LoadScreen")]
         public string LoadScreen { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "DescriptionStringID", Required = Required.Always)]
         [XmlElement(ElementName = "DescriptionStringID")]
         public int DescriptionStringId { get; set; }
 
-        [Required]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "DisplayNameStringID", Required = Required.Always)]
         [XmlElement(ElementName = "DisplayNameStringID")]
         public int DisplayNameStringId { get; set; }
@@ -202,7 +186,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "Region", Required = Required.Always, Order = 1)]
         [XmlElement(ElementName = "Region")]
         public RegionXml[] RegionArray

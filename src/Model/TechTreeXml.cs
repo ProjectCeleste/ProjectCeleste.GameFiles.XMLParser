@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -20,15 +19,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "Cost")]
     public class TechTreeXmCost
     {
-        [Key]
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "resourcetype", Required = Required.Always)]
         [XmlAttribute(AttributeName = "resourcetype")]
         public ResourceTypeEnum ResourceType { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "value", Required = Required.Always)]
         [XmlText]
         public double Value { get; set; }
@@ -148,19 +143,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "Tech")]
     public class TechTreeXmlTech : ITechTreeTech
     {
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "type", Required = Required.Always)]
         [XmlAttribute(AttributeName = "type")]
         public string Type { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "DBID", Required = Required.Always)]
         [XmlElement(ElementName = "DBID")]
         public int Dbid { get; set; }
@@ -177,12 +167,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public List<TechTreeXmCost> Cost { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "ResearchPoints", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "ResearchPoints")]
         public double ResearchPoints { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "Status", Required = Required.Always)]
         [XmlElement(ElementName = "Status")]
@@ -193,13 +181,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public string Icon { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "RolloverTextID", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "RolloverTextID")]
         public int RolloverTextId { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "ContentPack", Required = Required.Always)]
         [XmlElement(ElementName = "ContentPack")]
         public int ContentPack { get; set; }
@@ -236,7 +221,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "Tech", Required = Required.Always)]
         [XmlElement(ElementName = "Tech")]
         public TechTreeXmlTech[] TechArray
@@ -263,8 +247,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "version", Required = Required.Always)]
         [XmlAttribute(AttributeName = "version")]
         public int Version { get; set; }

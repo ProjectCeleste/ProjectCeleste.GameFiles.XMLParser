@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -41,27 +40,21 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             CapitalResource = capitalResource;
         }
 
-        [Key]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [JsonIgnore]
         [XmlIgnore]
         internal string Key => $"{Minlevel}-{Maxlevel}";
 
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "minlevel", Required = Required.Always, Order = 1)]
         [XmlAttribute(AttributeName = "minlevel")]
         public int Minlevel { get; set; }
 
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "maxlevel", Required = Required.Always, Order = 2)]
         [XmlAttribute(AttributeName = "maxlevel")]
         public int Maxlevel { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "xp", DefaultValueHandling = DefaultValueHandling.Ignore, Order = 3)]
         [XmlElement(ElementName = "xp")]
         public int Xp { get; set; }
@@ -94,7 +87,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "rewards", Required = Required.Always, Order = 2)]
         [XmlElement(ElementName = "rewards")]
         public RewardTableXmlRewards[] RewardArray
@@ -120,8 +112,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always, Order = 1)]
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
@@ -151,20 +141,15 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Amount = amount;
         }
 
-        [Required]
         [JsonProperty(PropertyName = "visible", Required = Required.Always, Order = 1)]
         [XmlAttribute(AttributeName = "visible")]
         public bool Visible { get; set; }
 
-        [Key]
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "capitalresource", Required = Required.Always, Order = 2)]
         [XmlElement(ElementName = "capitalresource")]
         public CapitalResourceTypeEnum Capitalresource { get; set; }
 
-        [Required]
-        [Range(0, double.MaxValue)]
         [JsonProperty(PropertyName = "amount", Required = Required.Always, Order = 3)]
         [XmlElement(ElementName = "amount")]
         public double Amount { get; set; }
@@ -188,7 +173,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "rewardtable", Required = Required.Always, Order = 1)]
         [XmlElement(ElementName = "rewardtable")]
         public RewardTableXml[] RewardTableArray

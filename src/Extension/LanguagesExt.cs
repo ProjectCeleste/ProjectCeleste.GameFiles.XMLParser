@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using ProjectCeleste.GameFiles.XMLParser.Enum;
 using ProjectCeleste.GameFiles.XMLParser.Interface;
 
@@ -7,7 +6,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
 {
     public static class LanguagesExt
     {
-        public static string GetAgeLocalizedString(ILanguages languages, [Range(0, 3)] int age,
+        public static string GetAgeLocalizedString(ILanguages languages, int age,
             string language = "English")
         {
             switch (age)

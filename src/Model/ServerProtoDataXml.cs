@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -46,8 +45,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             BuildingLimitType = buildingLimitType;
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always, Order = 1)]
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
@@ -58,14 +55,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         public bool IsMainInventory { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "numinventoryslots", DefaultValueHandling = DefaultValueHandling.Ignore,
             Order = 3)]
         [XmlElement(ElementName = "numinventoryslots")]
         public int NumInventorySlots { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "maxstacksize", DefaultValueHandling = DefaultValueHandling.Ignore, Order = 4)]
         [XmlElement(ElementName = "maxstacksize")]
         public int MaxStackSize { get; set; }
@@ -97,7 +92,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "protounit", Required = Required.Always, Order = 1)]
         [XmlElement(ElementName = "protounit", Order = 1)]
         public ServerProtoDataXmlProtoUnit[] ProtoUnitArrayDoNotUse

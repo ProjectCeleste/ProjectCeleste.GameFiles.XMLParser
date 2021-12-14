@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -42,8 +41,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             Text = text;
         }
 
-        [Key]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "_locid", Required = Required.Always)]
         [XmlAttribute(AttributeName = "_locid")]
         public int LocId { get; set; }
@@ -58,7 +55,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlAttribute(AttributeName = "comment")]
         public string Comment { get; set; }
 
-        [Required(AllowEmptyStrings = true)]
         [JsonProperty(PropertyName = "text", Required = Required.AllowNull)]
         [XmlText]
         public string Text { get; set; }
@@ -110,7 +106,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "string", Required = Required.Always)]
         [XmlElement(ElementName = "string")]
         public LanguageStringXml[] LanguageStringArrayDoNotUse
@@ -136,8 +131,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
@@ -175,7 +168,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "language", Required = Required.Always)]
         [XmlElement(ElementName = "language")]
         public LanguageXml[] LanguageArrayDoNotUse
@@ -201,32 +193,25 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             }
         }
 
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "id", Required = Required.Always)]
         [XmlIgnore]
         public string Id { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "version", Required = Required.Always)]
         [XmlAttribute(AttributeName = "version")]
         public int Version { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "locstart", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "locstart")]
         public int LocStart { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "locend", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "locend")]
         public int LocEnd { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "loccurrent", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "loccurrent")]
         public int LocCurrent { get; set; }
@@ -306,7 +291,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "stringtable", Required = Required.Always)]
         [XmlElement(ElementName = "stringtable")]
         public StringTableXml[] LanguageArray

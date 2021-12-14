@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -25,29 +24,23 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "trait")]
     public class AiCharacterXmlTraitsTrait
     {
-        [Required]
         [JsonProperty(PropertyName = "used", Required = Required.Always)]
         [XmlAttribute(AttributeName = "used")]
         public bool Used { get; set; }
 
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "level", Required = Required.Always)]
         [XmlAttribute(AttributeName = "level")]
         public int Level { get; set; }
 
         [DefaultValue(0)]
-        [Range(-1, int.MaxValue)]
         [JsonProperty(PropertyName = "seed", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlAttribute(AttributeName = "seed")]
         public int Seed { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "protounit", Required = Required.Always)]
         [XmlAttribute(AttributeName = "protounit")]
         public string ProtoUnit { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "name", Required = Required.Always)]
         [XmlText]
         public string Name { get; set; }
@@ -57,7 +50,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "traits")]
     public class AiCharacterXmlTraits
     {
-        [Required]
         [JsonProperty(PropertyName = "trait", Required = Required.Always)]
         [XmlElement(ElementName = "trait")]
         public List<AiCharacterXmlTraitsTrait> Trait { get; set; } = new List<AiCharacterXmlTraitsTrait>();
@@ -67,19 +59,15 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "tech")]
     public class AiCharacterXmlTechsTech
     {
-        [Key]
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "techid", Required = Required.Always)]
         [XmlText]
         public string TechId { get; set; }
 
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "status", Required = Required.Always)]
         [XmlAttribute(AttributeName = "status")]
         public TechStatusEnum Status { get; set; }
 
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty(PropertyName = "persistentcitystatus", Required = Required.Always)]
         [XmlAttribute(AttributeName = "persistentcitystatus")]
@@ -104,7 +92,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "tech", Required = Required.Always)]
         [XmlElement(ElementName = "tech")]
         public AiCharacterXmlTechsTech[] TechArrayDoNotUse
@@ -152,8 +139,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                 : null;
         }
 
-        [Required]
-        [MaxLength(4)]
         [JsonProperty(PropertyName = "assignedadvisor", Required = Required.Always)]
         [XmlElement(ElementName = "assignedadvisor")]
         public HashSet<string> AssignedAdvisor { get; set; }
@@ -178,7 +163,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
                 : null;
         }
 
-        [Required]
         [JsonProperty(PropertyName = "availableadvisor", Required = Required.Always)]
         [XmlElement(ElementName = "availableadvisor")]
         public HashSet<string> AvailableAdvisor { get; set; }
@@ -200,7 +184,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             ProtoUnit = protoUnit != null ? new HashSet<string>(protoUnit, StringComparer.OrdinalIgnoreCase) : null;
         }
 
-        [Required]
         [JsonProperty(PropertyName = "protounit", Required = Required.AllowNull)]
         [XmlElement(ElementName = "protounit")]
         public HashSet<string> ProtoUnit { get; set; }
@@ -210,18 +193,14 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
     [XmlRoot(ElementName = "character")]
     public class AiCharacterXml : IAiCharacter
     {
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "version", Required = Required.Always)]
         [XmlAttribute(AttributeName = "version")]
         public int Version { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [JsonProperty(PropertyName = "FileName", Required = Required.Always)]
         [XmlElement(ElementName = "FileName")]
         public string FileName { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "CivId", Required = Required.Always)]
         [XmlElement(ElementName = "CivId")]
         public CivilizationEnum CivId { get; set; }
@@ -231,68 +210,51 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [XmlElement(ElementName = "name")]
         public string Name { get; set; }
 
-        [Required]
-        [Range(0, 99)]
         [JsonProperty(PropertyName = "level", Required = Required.Always)]
         [XmlElement(ElementName = "level")]
         public int Level { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "xp", Required = Required.Always)]
         [XmlElement(ElementName = "xp")]
         public int Xp { get; set; }
 
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "skillpoints", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "skillpoints")]
         public int SkillPoints { get; set; }
 
-        [Required]
-        [Range(0, 4)]
         [JsonProperty(PropertyName = "currentage", Required = Required.Always)]
         [XmlElement(ElementName = "currentage")]
         public byte CurrentAge { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "activetechs", Required = Required.AllowNull)]
         [XmlElement(ElementName = "activetechs")]
         public AiCharacterXmlTechs ActiveTechs { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "protounits", Required = Required.AllowNull)]
         [XmlElement(ElementName = "protounits")]
         public AiCharacterXmlProtoUnits ProtoUnits { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "traits", Required = Required.AllowNull)]
         [XmlElement(ElementName = "traits")]
         public AiCharacterXmlTraits Traits { get; set; } = new AiCharacterXmlTraits();
 
-        [Required]
         [JsonProperty(PropertyName = "availableadvisors", Required = Required.AllowNull)]
         [XmlElement(ElementName = "availableadvisors")]
         public AiCharacterXmlAvailableAdvisors AvailableAdvisors { get; set; }
 
-        [Required]
         [JsonProperty(PropertyName = "assignedadvisors", Required = Required.AllowNull)]
         [XmlElement(ElementName = "assignedadvisors")]
         public AiCharacterXmlAssignedAdvisors AssignedAdvisors { get; set; }
 
-        [Required(AllowEmptyStrings = true)]
         [JsonProperty(PropertyName = "unlockedregions", Required = Required.Always)]
         [XmlElement(ElementName = "unlockedregions")]
         public string UnlockedRegion { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "currentregion", Required = Required.Always)]
         [XmlElement(ElementName = "currentregion")]
         public int CurrentRegion { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
         [JsonProperty(PropertyName = "nextscenarioid", Required = Required.Always)]
         [XmlElement(ElementName = "nextscenarioid")]
         public int NextScenarioId { get; set; }
@@ -337,7 +299,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Required]
         [JsonProperty(PropertyName = "characters", Required = Required.Always)]
         [XmlElement(ElementName = "characters")]
         public AiCharacterXml[] Characters
