@@ -12,6 +12,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
     [JsonConverter(typeof(StringEnumConverter))]
     public enum EOfferTypeEnum
     {
+        [XmlEnum("eOfferCivIndian")] [EnumMember(Value = "eOfferCivIndian")] EOfferCivIndian = 49,
         [XmlEnum("eOfferCelesteDev")] [EnumMember(Value = "eOfferCelesteDev")] EOfferCelesteDev = 48,
         [XmlEnum("eOfferCeleste1")] [EnumMember(Value = "eOfferCeleste1")] EOfferCeleste1 = 47,
         [XmlEnum("eOfferEnd")] [EnumMember(Value = "eOfferEnd")] EOfferEnd = 46,
@@ -66,26 +67,40 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
     [JsonConverter(typeof(StringEnumConverter))]
     public enum COfferTypeEnum
     {
-        [XmlEnum("cOfferCivNorse")] [EnumMember(Value = "cOfferCivNorse")] COfferCivNorse =
-            EOfferTypeEnum.EOfferCivNorse,
+        [XmlEnum("cOfferCivNorse")]
+        [EnumMember(Value = "cOfferCivNorse")]
+        COfferCivNorse = EOfferTypeEnum.EOfferCivNorse,
 
-        [XmlEnum("cOfferCivBabylonian")] [EnumMember(Value = "cOfferCivBabylonian")] COfferCivBabylonian =
-            EOfferTypeEnum.EOfferCivBabylonian,
+        [XmlEnum("cOfferCivBabylonian")]
+        [EnumMember(Value = "cOfferCivBabylonian")]
+        COfferCivBabylonian = EOfferTypeEnum.EOfferCivBabylonian,
 
-        [XmlEnum("cOfferCivRoman")] [EnumMember(Value = "cOfferCivRoman")] COfferCivRoman =
-            EOfferTypeEnum.EOfferCivRoman,
+        [XmlEnum("cOfferCivRoman")]
+        [EnumMember(Value = "cOfferCivRoman")]
+        COfferCivRoman = EOfferTypeEnum.EOfferCivRoman,
 
-        [XmlEnum("cOfferCivPersian")] [EnumMember(Value = "cOfferCivPersian")] COfferCivPersian =
-            EOfferTypeEnum.EOfferCivPersian,
+        [XmlEnum("cOfferCivPersian")]
+        [EnumMember(Value = "cOfferCivPersian")]
+        COfferCivPersian = EOfferTypeEnum.EOfferCivPersian,
 
-        [XmlEnum("cOfferCivCeltic")] [EnumMember(Value = "cOfferCivCeltic")] COfferCivCeltic =
-            EOfferTypeEnum.EOfferCivCeltic,
+        [XmlEnum("cOfferCivCeltic")]
+        [EnumMember(Value = "cOfferCivCeltic")]
+        COfferCivCeltic = EOfferTypeEnum.EOfferCivCeltic,
 
-        [XmlEnum("cOfferCivEgyptian")] [EnumMember(Value = "cOfferCivEgyptian")] COfferCivEgyptian =
-            EOfferTypeEnum.EOfferCivEgyptian,
+        [XmlEnum("cOfferCivEgyptian")]
+        [EnumMember(Value = "cOfferCivEgyptian")]
+        COfferCivEgyptian = EOfferTypeEnum.EOfferCivEgyptian,
 
-        [XmlEnum("cOfferCivGreek")] [EnumMember(Value = "cOfferCivGreek")] COfferCivGreek =
-            EOfferTypeEnum.EOfferCivGreek,
-        [XmlEnum("cOfferNone")] [EnumMember(Value = "cOfferNone")] COfferNone = EOfferTypeEnum.EOfferNone
+        [XmlEnum("cOfferCivGreek")]
+        [EnumMember(Value = "cOfferCivGreek")]
+        COfferCivGreek = EOfferTypeEnum.EOfferCivGreek,
+
+        [XmlEnum("cOfferNone")]
+        [EnumMember(Value = "cOfferNone")]
+        COfferNone = EOfferTypeEnum.EOfferNone,
+
+        [XmlEnum("cOfferCivIndian")]
+        [EnumMember(Value = "cOfferCivIndian")]
+        COfferCivIndian = EOfferTypeEnum.EOfferCivIndian,
     }
 }
