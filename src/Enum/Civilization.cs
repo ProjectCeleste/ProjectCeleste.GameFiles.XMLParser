@@ -19,7 +19,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("8")] [EnumMember(Value = "Persian")] Persian = 8,
         [XmlEnum("22")] [EnumMember(Value = "Babylonian")] Babylonian = 22,
         [XmlEnum("24")] [EnumMember(Value = "Norse")] Norse = 24,
-        [XmlEnum("11")] [EnumMember(Value = "Roman")] Roman = 11
+        [XmlEnum("11")] [EnumMember(Value = "Roman")] Roman = 11,
+        [XmlEnum("25")][EnumMember(Value = "Indian")] Indian = 25
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
@@ -40,6 +41,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("eCivMatchingTypeBabylonian")] [EnumMember(Value = "eCivMatchingTypeBabylonian")] Babylonian =
             CivilizationEnum.Babylonian,
         [XmlEnum("eCivMatchingTypeNorse")] [EnumMember(Value = "eCivMatchingTypeNorse")] Norse = CivilizationEnum.Norse,
-        [XmlEnum("eCivMatchingTypeRoman")] [EnumMember(Value = "eCivMatchingTypeRoman")] Roman = CivilizationEnum.Roman
+        [XmlEnum("eCivMatchingTypeRoman")] [EnumMember(Value = "eCivMatchingTypeRoman")] Roman = CivilizationEnum.Roman,
+        [XmlEnum("eCivMatchingTypeIndian")][EnumMember(Value = "eCivMatchingTypeIndian")] Indian = CivilizationEnum.Indian
     }
 }
