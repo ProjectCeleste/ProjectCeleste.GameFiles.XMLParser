@@ -55,6 +55,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
 
         //
         [XmlEnum("celeste_legendary")] CelesteLegendary,
+        [XmlEnum("celeste_legendary_1star")] CelesteLegendary1Star,
+        [XmlEnum("celeste_legendary_2star")] CelesteLegendary2Star,
+        [XmlEnum("celeste_legendary_3star")] CelesteLegendary3Star,
+        [XmlEnum("celeste_legendary_4star")] CelesteLegendary4Star,
+        [XmlEnum("celeste_legendary_5star")] CelesteLegendary5Star,
+
         [XmlEnum("celeste_newathens_uprissing")] CelesteNewAthensUprissing,
 
         //
