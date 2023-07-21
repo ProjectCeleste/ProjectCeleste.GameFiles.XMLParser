@@ -54,7 +54,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     {
                         //return languages["stringtablex"][language][64947].Text + languages["stringtablex"][language][66918].Text;
                         // ReSharper disable once SwitchStatementMissingSomeCases
-                        switch (effect.UnitType)
+                        switch (effect.Resource)
                         {
                             //ResourceTypeEnum is taken from Resource.cs
                             //Will this work as it is?
@@ -106,7 +106,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     }
                 case EffectSubTypeEnum.HitPercent:
                     {
-                        switch (effect.UnitType)
+                        switch (effect.Action)
                         {
                             //Should show what unit receives the Critical Chance
                             case EffectActionTypeEnum.MeleeAttack:
@@ -131,7 +131,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     }
                 case EffectSubTypeEnum.MaximumRange:
                     {
-                        switch (effect.UnitType)
+                        switch (effect.Action)
                         {
                             //Should show what type of Max range bonus is applied
                             case EffectActionTypeEnum.RsangedAttack:
