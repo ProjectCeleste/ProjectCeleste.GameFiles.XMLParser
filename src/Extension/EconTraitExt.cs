@@ -67,10 +67,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                             case ResourceTypeEnum.Stone:
                                 return
                                     languages["stringtablex"][language][28529].Text + " " + languages["stringtablex"][language][64947].Text + " " + languages["stringtablex"][language][66918].Text;
-                            case ResourceTypeEnum.stone:
-                                return
-                                    languages["stringtablex"][language][28529].Text + " " + languages["stringtablex"][language][64947].Text + " " + languages["stringtablex"][language][66918].Text;
-                            case ResourceTypeEnum.Tree:
+                            case ResourceTypeEnum.Wood:
                                 return
                                     languages["stringtablex"][language][18899].Text + " " + languages["stringtablex"][language][64947].Text + " " + languages["stringtablex"][language][66918].Text;
                             default:
@@ -134,7 +131,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                         switch (effect.Action)
                         {
                             //Should show what type of Max range bonus is applied
-                            case EffectActionTypeEnum.RsangedAttack:
+                            case EffectActionTypeEnum.RangedAttack:
                                 return
                                     languages["stringtablex"][language][58250].Text + " " + languages["stringtablex"][language][58203].Text;
                             case EffectActionTypeEnum.RangedAttack2:
@@ -183,9 +180,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                             case EffectUnitTypeEnum.AbstractFish:
                                 return
                                     $"{languages["stringtablex"][language][65870].Text}:";
-                            case EffectUnitTypeEnum.AbstractFruit:
-                                return
-                                    $"{languages["stringtablex"][language][65866].Text}:";
                             case EffectUnitTypeEnum.Fish:
                                 return
                                     $"{languages["stringtablex"][language][65870].Text}:";
@@ -225,9 +219,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                             case EffectUnitTypeEnum.ActionBuild:
                                 return
                                     languages["stringtablex"][language][56285].Text + " " + languages["stringtablex"][language][56287].Text;
-                            case EffectUnitTypeEnum.SelfHeal:
-                                return
-                                    $"{languages["stringtablex"][language][57824].Text}:";
                             case EffectUnitTypeEnum.ConvertableCavalry:
                                 return
                                     languages["stringtablex"][language][38214].Text + " " + languages["stringtablex"][language][65459].Text;
