@@ -391,6 +391,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                 {
                     case RelativityEnum.Absolute:
                         return result + 1;
+                    case RelativityEnum.Assign:
+                        return result + 1;
                     default:
                         return result;
                 }
@@ -408,6 +410,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             switch (effect.Relativity)
             {
                 case RelativityEnum.Absolute:
+                    return result + 1;
+                case RelativityEnum.Assign:
                     return result + 1;
                 default:
                     return result;
