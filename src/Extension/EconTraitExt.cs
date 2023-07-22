@@ -386,7 +386,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             var result = effect.Scaling * lvl + effect.Amount;
             
             //if (finalSeed <= 0 && (result <= 1 || result > 4))
-            if (finalSeed <= 0 && effect.Relativity = "Absolute")
+            if (finalSeed <= 0 && effect.Relativity = RelativityEnum.Absolute)
                 return result + 1;
 
             if (finalSeed <= 0)
@@ -398,7 +398,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                 result = 1.0 - result + 1.0;
 
             //Ignore Armor and maybe if regen becomes a stat that 
-            if (effect.Relativity = "Absolute")
+            if (effect.Relativity = RelativityEnum.Absolute)
                 return result + 1;
             
             return result;
