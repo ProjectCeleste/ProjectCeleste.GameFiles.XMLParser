@@ -385,10 +385,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
 
             var result = effect.Scaling * lvl + effect.Amount;
             
-            //1 or below means that it is not a multiplier and over 4 means it is talking about regen... better would be to identify the enum from above... you decide
-            //1 is an action, below 1 is a additive (e.g. Ignore Armor)
-            //above 4 is not normal for a percentage multiplier. cos that would be 400% times the gear. This is the Regen bonus for example Zahhak and that is also a static number.
-            if (finalSeed <= 0 && (result <= 1 || result > 4))
+            //if (finalSeed <= 0 && (result <= 1 || result > 4))
+            if (finalSeed <= 0 && effect.Relativity = "Absolute")
                 return result + 1;
 
             if (finalSeed <= 0)
@@ -398,6 +396,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             result = modifier * (result - 1.0) + 1.0;
             if (effect.IsBonus && result < 1)
                 result = 1.0 - result + 1.0;
+
+            //Ignore Armor and maybe if regen becomes a stat that 
+            if (effect.Relativity = "Absolute")
+                return result + 1;
             
             return result;
         }
