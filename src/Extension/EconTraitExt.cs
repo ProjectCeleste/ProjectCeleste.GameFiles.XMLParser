@@ -137,7 +137,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                                     languages["stringtablex"][language][58250].Text + " " + languages["stringtablex"][language][58203].Text;
                             case EffectActionTypeEnum.RangedAttack2:
                                 return
-                                    languages["stringtablex"][language][58250].Text + "2 " + languages["stringtablex"][language][58203].Text;
+                                    languages["stringtablex"][language][58250].Text + " " + languages["stringtablex"][language][58203].Text;
                             //This is either burning pitch or is now for Set priest for AOE convert... there is no string showing other
                             case EffectActionTypeEnum.BurningAttack:
                                 return
