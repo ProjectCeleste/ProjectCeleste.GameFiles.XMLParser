@@ -366,6 +366,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             string language = "English")
         {
             var modifiers = item.Effects.GetEffectsModifier(lvl, seed);
+            //would be better if we can split this differently but it is fine enough like this
+            /*
             switch (effect.Relativity)
             {
                 case RelativityEnum.Absolute:
@@ -389,6 +391,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                         (current, modifier) => current +
                                             $"{GetDisplayNameLocalized(modifier.Key, languages, language)} {Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero)}%\r\n");;
             }
+            */
+            return modifiers.Aggregate(string.Empty,
+                (current, modifier) => current +
+                                    $"{GetDisplayNameLocalized(modifier.Key, languages, language)} {Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero)}%\r\n");;
         }
 
         public static IEnumerable<KeyValuePair<EconTraitXmlEffect, double>> GetEffectsModifier(
@@ -434,7 +440,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                 result = 1.0 - result + 1.0;
 
             //Ignore Armor and maybe if regen becomes a stat that 
-            /*switch (effect.Relativity)
+            switch (effect.Relativity)
             {
                 case RelativityEnum.Absolute:
                     return result + 1;
@@ -442,7 +448,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     return result + 1;
                 default:
                     return result;
-            }*/
+            }
             return result;
         }
     }
