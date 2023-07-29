@@ -297,8 +297,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     return languages["stringtablex"][language][58250].Text;
                 case EffectActionTypeEnum.RangedAttack2:
                     return languages["stringtablex"][language][58250].Text;
-                case EffectActionTypeEnum.BurningAttack:
-                    return languages["stringtablex"][language][58250].Text;
                 case EffectActionTypeEnum.SelfHeal:
                     return languages["stringtablex"][language][57824].Text;
                 case EffectActionTypeEnum.Trade:
@@ -486,7 +484,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                 default:
                     return result;
             }
-            return result;
+            //return result;
         }
     }
 }
