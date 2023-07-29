@@ -389,6 +389,32 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
+        
+        public static string GetEnding(this EconTraitXmlEffect effect, ILanguages languages,
+            string language = "English", string ending = "end")
+        {
+            switch (effect.SubType)
+            { 
+                case EffectSubTypeEnum.ActionEnable:
+                    {
+                        return "\r\n";
+                    }
+                case EffectUnitTypeEnum.LogicalTypeHealed:
+                    switch (effect.Action)
+                    {
+                        case EffectActionTypeEnum.SelfHeal:
+                            return modifier.Value.ToString() + "Health per Second\r\n";
+                        default: 
+                            return Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
+                    }
+                case EffectSubTypeEnum.ArmorVulnerability:
+                    {
+                        return Math.Round((2 - modifier.Value) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
+                    }
+                default:
+                    return Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
+            }
+        }
 
         public static string GetStatsLocalized(this IEconTrait item, ILanguages languages, int lvl,
             int seed = 0,
@@ -421,9 +447,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                                             $"{GetDisplayNameLocalized(modifier.Key, languages, language)} {Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero)}%\r\n");;
             }
             */
+
+
             return modifiers.Aggregate(string.Empty,
-                (current, modifier) => current +
-                                    $"{GetDisplayNameLocalized(modifier.Key, languages, language)} {Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero)}%\r\n");;
+                        (current, modifier) => current +
+                                            //$"{GetDisplayNameLocalized(modifier.Key, languages, language)} {Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero)}%\r\n");;
+                                            //GetDisplayNameLocalized(modifier.Key, languages, language) + " " + Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n");;
+                                            GetDisplayNameLocalized(modifier.Key, languages, language) + " " + GetEnding(modifier.Key, languages, language, "end"));;
         }
 
         public static IEnumerable<KeyValuePair<EconTraitXmlEffect, double>> GetEffectsModifier(
@@ -449,7 +479,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             
             //if (finalSeed <= 0 && (result <= 1 || result > 4))
             if (finalSeed <= 0) {
-                switch (effect.Relativity)
+                /*switch (effect.Relativity)
                 {
                     case RelativityEnum.Absolute:
                         return result + 1;
@@ -459,17 +489,18 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                         return result;
                 }
             }                
-/*
+            */
+
             if (finalSeed <= 0)
                 return result;
-*/
+
             var modifier = ((int)(finalSeed * 0.078431375) - 10.0) * 0.004999999888241291 + 1.0;
             result = modifier * (result - 1.0) + 1.0;
             if (effect.IsBonus && result < 1)
                 result = 1.0 - result + 1.0;
 
             //Ignore Armor and maybe if regen becomes a stat that 
-            switch (effect.Relativity)
+            /*switch (effect.Relativity)
             {
                 case RelativityEnum.Absolute:
                     switch (effect.SubType)
@@ -483,8 +514,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     return result + 1;
                 default:
                     return result;
-            }
-            //return result;
+            }*/
+            return result;
         }
     }
 }
