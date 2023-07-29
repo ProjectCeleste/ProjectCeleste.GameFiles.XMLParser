@@ -407,7 +407,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                         switch (effect.Action)
                         {
                             case EffectActionTypeEnum.SelfHeal:
-                                return modifierValue.ToString() + "Health/s \r\n";
+                                return modifierValue.ToString() + languages["stringtablex"][language][300001].Text.Replace(languages["stringtablex"][language][300031].Text + ": %s%.1f",string.Empty) + "\r\n";
                             default: 
                                 return Math.Round((modifierValue - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
                         }
