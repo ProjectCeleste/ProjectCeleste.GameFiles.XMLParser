@@ -187,7 +187,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     }
                 case EffectSubTypeEnum.Haste:
                     {
-                        return languages["stringtablex"][language][300002].Text.Replace(" %s%.1f%%", "");;
+                        return languages["stringtablex"][language][300002].Text.Replace(" %s%.1f%%", string.Empty);
                     }
                 case EffectSubTypeEnum.WorkRate:
                     {
@@ -390,8 +390,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             }
         }
         
-        public static string GetEnding(this EconTraitXmlEffect effect, ILanguages languages,
-            string language = "English", int modifierValue)
+        public static string GetEnding(this EconTraitXmlEffect effect, ILanguages languages, int modifierValue,
+            string language = "English")
         {
             switch (effect.SubType)
             { 
@@ -407,7 +407,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                         switch (effect.Action)
                         {
                             case EffectActionTypeEnum.SelfHeal:
-                                return modifierValue.ToString() + "Health per Second\r\n";
+                                return modifierValue.ToString() + "Health/s \r\n";
                             default: 
                                 return Math.Round((modifierValue - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
                         }
@@ -461,7 +461,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                         (current, modifier) => current +
                                             //$"{GetDisplayNameLocalized(modifier.Key, languages, language)} {Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero)}%\r\n");;
                                             //GetDisplayNameLocalized(modifier.Key, languages, language) + " " + Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n");;
-                                            GetDisplayNameLocalized(modifier.Key, languages, language) + " " + GetEnding(modifier.Key, languages, language, modifier.Value));;
+                                            GetDisplayNameLocalized(modifier.Key, languages, language) + " " + GetEnding(modifier.Key, languages, modifier.Value, language));;
         }
 
         public static IEnumerable<KeyValuePair<EconTraitXmlEffect, double>> GetEffectsModifier(
