@@ -476,20 +476,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             var finalSeed = seed > 0 && seedoffset < 4 ? (seed & (255 << (8 * seedoffset))) >> (8 * seedoffset) : 0;
 
             var result = effect.Scaling * lvl + effect.Amount;
-            
-            //if (finalSeed <= 0 && (result <= 1 || result > 4))
-            /*if (finalSeed <= 0) {
-                switch (effect.Relativity)
-                {
-                    case RelativityEnum.Absolute:
-                        return result + 1;
-                    case RelativityEnum.Assign:
-                        return result + 1;
-                    default:
-                        return result;
-                }
-            }                
-            */
 
             if (finalSeed <= 0)
                 return result;
@@ -499,22 +485,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             if (effect.IsBonus && result < 1)
                 result = 1.0 - result + 1.0;
 
-            //Ignore Armor and maybe if regen becomes a stat that 
-            /*switch (effect.Relativity)
-            {
-                case RelativityEnum.Absolute:
-                    switch (effect.SubType)
-                    {
-                    case EffectSubTypeEnum.ArmorVulnerability:
-                            return 3 - result;
-                        default:
-                            return result + 1;
-                    }
-                case RelativityEnum.Assign:
-                    return result + 1;
-                default:
-                    return result;
-            }*/
             return result;
         }
     }
