@@ -129,6 +129,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     }
                 case EffectSubTypeEnum.MaximumRange:
                     {
+                        /*
                         switch (effect.Action)
                         {
                             //Should show what type of Max range bonus is applied
@@ -148,8 +149,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                             default:
                                 return 
                                     languages["stringtablex"][language][58203].Text;
-                        }
-                        //return languages["stringtablex"][language][58203].Text;
+                        }*/
+                        return languages["stringtablex"][language][58203].Text;
                     }
                 case EffectSubTypeEnum.MaximumVelocity:
                     {
@@ -157,7 +158,20 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     }
                 case EffectSubTypeEnum.TargetSpeedBoost:
                     {
-                        return languages["stringtablex"][language][57584].Text;
+                        switch (effect.Action)
+                        {
+                            //Should show what unit receives the Critical Chance
+                            case EffectActionTypeEnum.MeleeAttack:
+                                return
+                                    languages["stringtablex"][language][58251].Text + " " + languages["stringtablex"][language][57584].Text;
+                            case EffectActionTypeEnum.RangedAttack:
+                                return
+                                    languages["stringtablex"][language][58250].Text + " " + languages["stringtablex"][language][57584].Text;
+                            default:
+                                return 
+                                    languages["stringtablex"][language][57584].Text;
+                        }
+                        //return languages["stringtablex"][language][57584].Text;
                     }
                 case EffectSubTypeEnum.TargetSpeedBoostResist:
                     {
@@ -171,6 +185,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     {
                         return languages["stringtablex"][language][300021].Text;
                     }
+                case EffectSubTypeEnum.Haste:
+                    {
+                        return languages["stringtablex"][language][300002].Text.Replace(" %s%.1f%%", "");;
+                    }
                 case EffectSubTypeEnum.WorkRate:
                     {
                         switch (effect.UnitType)
@@ -178,27 +196,30 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                             case EffectUnitTypeEnum.AbstractFruit:
                                 return
                                     $"{languages["stringtablex"][language][65866].Text}:";
+                            case EffectUnitTypeEnum.AbstractFarm:
+                                return
+                                    $"{languages["stringtablex"][language][65869].Text}:";
                             case EffectUnitTypeEnum.AbstractFish:
                                 return
                                     $"{languages["stringtablex"][language][65870].Text}:";
                             case EffectUnitTypeEnum.Fish:
                                 return
                                     $"{languages["stringtablex"][language][65870].Text}:";
-                            case EffectUnitTypeEnum.Gold:
-                                return
-                                    $"{languages["stringtablex"][language][65872].Text}:";
                             case EffectUnitTypeEnum.Herdable:
                                 return
                                     $"{languages["stringtablex"][language][65867].Text}:";
                             case EffectUnitTypeEnum.Huntable:
                                 return
                                     $"{languages["stringtablex"][language][65868].Text}:";
-                            case EffectUnitTypeEnum.Stone:
-                                return
-                                    $"{languages["stringtablex"][language][65873].Text}:";
                             case EffectUnitTypeEnum.Tree:
                                 return
                                     $"{languages["stringtablex"][language][65871].Text}:";
+                            case EffectUnitTypeEnum.Gold:
+                                return
+                                    $"{languages["stringtablex"][language][65872].Text}:";
+                            case EffectUnitTypeEnum.Stone:
+                                return
+                                    $"{languages["stringtablex"][language][65873].Text}:";
                             case EffectUnitTypeEnum.Building:
                                 return
                                     $"{languages["stringtablex"][language][55353].Text}:";
@@ -228,13 +249,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                                     languages["stringtablex"][language][56285].Text + " " + languages["stringtablex"][language][56287].Text + ":";
                             case EffectUnitTypeEnum.ConvertableCavalry:
                                 return
-                                    languages["stringtablex"][language][38214].Text + " " + languages["stringtablex"][language][65459].Text + ":";
+                                    languages["stringtablex"][language][65459].Text + " " + languages["stringtablex"][language][38214].Text + ":";
                             case EffectUnitTypeEnum.ConvertableSiege:
                                 return
-                                    languages["stringtablex"][language][42026].Text + " " + languages["stringtablex"][language][65459].Text + ":";
+                                    languages["stringtablex"][language][65459].Text + " " + languages["stringtablex"][language][42026].Text + ":";
                             case EffectUnitTypeEnum.ConvertableInfantry:
                                 return
-                                    languages["stringtablex"][language][42167].Text + " " + languages["stringtablex"][language][65459].Text + ":";
+                                    languages["stringtablex"][language][65459].Text + " " + languages["stringtablex"][language][42167].Text + ":";
                             default:
                                 //Instead of throw excemption, I put a default text.
                                 return languages["stringtablex"][language][66811].Text.Replace(" +%1.1f", string.Empty) + ":";
@@ -259,6 +280,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     return languages["stringtablex"][language][55353].Text;
                 case EffectActionTypeEnum.Convert:
                     return languages["stringtablex"][language][57342].Text;
+                case EffectActionTypeEnum.Convert2:
+                    return languages["stringtablex"][language][57342].Text;
                 case EffectActionTypeEnum.Empower:
                     return languages["stringtablex"][language][56285].Text;
                 case EffectActionTypeEnum.FishGather:
@@ -272,9 +295,15 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     return languages["stringtablex"][language][58251].Text;
                 case EffectActionTypeEnum.RangedAttack:
                     return languages["stringtablex"][language][58250].Text;
+                case EffectActionTypeEnum.RangedAttack2:
+                    return languages["stringtablex"][language][58250].Text;
+                case EffectActionTypeEnum.BurningAttack:
+                    return languages["stringtablex"][language][58250].Text;
                 case EffectActionTypeEnum.SelfHeal:
                     return languages["stringtablex"][language][57824].Text;
                 case EffectActionTypeEnum.Trade:
+                    return languages["stringtablex"][language][55355].Text;
+                case EffectActionTypeEnum.AreaHeal:
                     return languages["stringtablex"][language][55355].Text;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -336,6 +365,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     return languages["stringtablex"][language][22203].Text;
                 case EffectUnitTypeEnum.UnitTypeBldgWatchPost:
                     return languages["stringtablex"][language][55099].Text;
+                case EffectUnitTypeEnum.AbstractPet:
+                    return languages["stringtablex"][language][42231].Text;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -443,7 +474,13 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             switch (effect.Relativity)
             {
                 case RelativityEnum.Absolute:
-                    return result + 1;
+                    switch (effect.SubType)
+                    {
+                    case EffectSubTypeEnum.ArmorVulnerability:
+                            return 3 - result;
+                        default:
+                            return result + 1;
+                    }
                 case RelativityEnum.Assign:
                     return result + 1;
                 default:
