@@ -390,7 +390,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             }
         }
         
-        public static string GetEnding(this EconTraitXmlEffect effect, ILanguages languages, int modifierValue,
+        public static string GetEnding(this EconTraitXmlEffect effect, ILanguages languages, double modifierValue,
             string language = "English")
         {
             switch (effect.SubType)
