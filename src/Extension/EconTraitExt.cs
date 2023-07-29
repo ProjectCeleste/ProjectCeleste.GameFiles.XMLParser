@@ -391,7 +391,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
         }
         
         public static string GetEnding(this EconTraitXmlEffect effect, ILanguages languages,
-            string language = "English", string ending = "end")
+            string language = "English", int modifierValue)
         {
             switch (effect.SubType)
             { 
@@ -399,20 +399,28 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     {
                         return "\r\n";
                     }
-                case EffectUnitTypeEnum.LogicalTypeHealed:
-                    switch (effect.Action)
+                case EffectSubTypeEnum.WorkRate:
                     {
-                        case EffectActionTypeEnum.SelfHeal:
-                            return modifier.Value.ToString() + "Health per Second\r\n";
+                    switch (effect.UnitType)
+                    {
+                    case EffectUnitTypeEnum.LogicalTypeHealed:
+                        switch (effect.Action)
+                        {
+                            case EffectActionTypeEnum.SelfHeal:
+                                return modifierValue.ToString() + "Health per Second\r\n";
+                            default: 
+                                return Math.Round((modifierValue - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
+                        }
                         default: 
-                            return Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
+                            return Math.Round((modifierValue - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
                     }
+                }
                 case EffectSubTypeEnum.ArmorVulnerability:
                     {
-                        return Math.Round((2 - modifier.Value) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
+                        return Math.Round((2 - modifierValue) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
                     }
                 default:
-                    return Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
+                    return Math.Round((modifierValue - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
             }
         }
 
@@ -453,7 +461,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                         (current, modifier) => current +
                                             //$"{GetDisplayNameLocalized(modifier.Key, languages, language)} {Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero)}%\r\n");;
                                             //GetDisplayNameLocalized(modifier.Key, languages, language) + " " + Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n");;
-                                            GetDisplayNameLocalized(modifier.Key, languages, language) + " " + GetEnding(modifier.Key, languages, language, "end"));;
+                                            GetDisplayNameLocalized(modifier.Key, languages, language) + " " + GetEnding(modifier.Key, languages, language, modifier.Value));;
         }
 
         public static IEnumerable<KeyValuePair<EconTraitXmlEffect, double>> GetEffectsModifier(
