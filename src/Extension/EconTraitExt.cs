@@ -478,8 +478,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             var result = effect.Scaling * lvl + effect.Amount;
             
             //if (finalSeed <= 0 && (result <= 1 || result > 4))
-            if (finalSeed <= 0) {
-                /*switch (effect.Relativity)
+            /*if (finalSeed <= 0) {
+                switch (effect.Relativity)
                 {
                     case RelativityEnum.Absolute:
                         return result + 1;
