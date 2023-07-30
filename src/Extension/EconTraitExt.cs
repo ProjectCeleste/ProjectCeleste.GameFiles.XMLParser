@@ -408,6 +408,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                         {
                             case EffectActionTypeEnum.SelfHeal:
                                 return modifierValue.ToString() + languages["stringtablex"][language][300001].Text.Replace(languages["stringtablex"][language][300031].Text + ": %s%.1f",string.Empty) + "\r\n";
+                            case EffectUnitTypeEnum.Dropsite:
+                                return Math.Round((modifierValue - 1.0) * 1100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
+                            case EffectUnitTypeEnum.ActionTrain:
+                                return Math.Round((modifierValue - 1.0) * 1100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
+                            case EffectUnitTypeEnum.ActionBuild:
+                                return Math.Round((modifierValue - 1.0) * 1100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
                             default: 
                                 return Math.Round((modifierValue - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
                         }
@@ -417,7 +423,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                 }
                 case EffectSubTypeEnum.ArmorVulnerability:
                     {
-                        return Math.Round((2 - modifierValue) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
+                        return Math.Round((modifierValue) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
                     }
                 default:
                     return Math.Round((modifierValue - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
@@ -429,34 +435,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             string language = "English")
         {
             var modifiers = item.Effects.GetEffectsModifier(lvl, seed);
-            //would be better if we can split this differently but it is fine enough like this
-            /*
-            switch (effect.Relativity)
-            {
-                case RelativityEnum.Absolute:
-                    switch (effect.Action)
-                    {
-                        case EffectActionTypeEnum.SelfHeal:
-                            return modifiers.Aggregate(string.Empty,
-                                (current, modifier) => current +
-                                                    $"{GetDisplayNameLocalized(modifier.Key, languages, language)} {Math.Round((modifier.Value), 2, MidpointRounding.AwayFromZero)}/s\r\n");;
-                        default:
-                            return modifiers.Aggregate(string.Empty,
-                                (current, modifier) => current +
-                                                    $"{GetDisplayNameLocalized(modifier.Key, languages, language)} {Math.Round((modifier.Value) * 100, 2, MidpointRounding.AwayFromZero)}%\r\n");;
-                    }
-                case RelativityEnum.Assign:
-                    return modifiers.Aggregate(string.Empty,
-                        (current, modifier) => current +
-                                            $"{GetDisplayNameLocalized(modifier.Key, languages, language)} {Math.Round((modifier.Value), 2, MidpointRounding.AwayFromZero)}\r\n");;
-                default:
-                    return modifiers.Aggregate(string.Empty,
-                        (current, modifier) => current +
-                                            $"{GetDisplayNameLocalized(modifier.Key, languages, language)} {Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero)}%\r\n");;
-            }
-            */
-
-
             return modifiers.Aggregate(string.Empty,
                         (current, modifier) => current +
                                             //$"{GetDisplayNameLocalized(modifier.Key, languages, language)} {Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero)}%\r\n");;
@@ -493,7 +471,16 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             if (effect.IsBonus && result < 1)
                 result = 1.0 - result + 1.0;
 
-            return result;
+            switch (effect.SubType)
+            { 
+                case EffectSubTypeEnum.ArmorVulnerability:
+                    {
+                        return 2 - result;
+                    }
+                default:
+                    return result;
+            }
+            //return result;
         }
     }
 }
