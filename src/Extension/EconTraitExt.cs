@@ -403,17 +403,17 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     {
                     switch (effect.UnitType)
                     {
+                    case EffectUnitTypeEnum.Dropsite:
+                        return Math.Round((modifierValue - 1.0) * 1100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
+                    case EffectUnitTypeEnum.ActionTrain:
+                        return Math.Round((modifierValue - 1.0) * 1100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
+                    case EffectUnitTypeEnum.ActionBuild:
+                        return Math.Round((modifierValue - 1.0) * 1100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
                     case EffectUnitTypeEnum.LogicalTypeHealed:
                         switch (effect.Action)
                         {
                             case EffectActionTypeEnum.SelfHeal:
                                 return modifierValue.ToString() + languages["stringtablex"][language][300001].Text.Replace(languages["stringtablex"][language][300031].Text + ": %s%.1f",string.Empty) + "\r\n";
-                            case EffectUnitTypeEnum.Dropsite:
-                                return Math.Round((modifierValue - 1.0) * 1100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
-                            case EffectUnitTypeEnum.ActionTrain:
-                                return Math.Round((modifierValue - 1.0) * 1100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
-                            case EffectUnitTypeEnum.ActionBuild:
-                                return Math.Round((modifierValue - 1.0) * 1100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
                             default: 
                                 return Math.Round((modifierValue - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n";
                         }
