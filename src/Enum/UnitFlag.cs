@@ -181,6 +181,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("VisibleUnderFogOnlyAfterSeen")] [EnumMember(Value = "VisibleUnderFogOnlyAfterSeen")]
         VisibleUnderFogOnlyAfterSeen = 118,
         [XmlEnum("wallBuild")] [EnumMember(Value = "wallBuild")] WallBuild = 119,
-        [XmlEnum("Wanders")] [EnumMember(Value = "Wanders")] Wanders = 120
+        [XmlEnum("Wanders")] [EnumMember(Value = "Wanders")] Wanders = 120,
+
+        [XmlEnum("CivSpecificText")] [EnumMember(Value = "CivSpecificText")] CivSpecificText = 121
     }
 }
