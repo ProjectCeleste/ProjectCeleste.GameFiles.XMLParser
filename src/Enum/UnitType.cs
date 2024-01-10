@@ -312,6 +312,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("InvasionWonderBuilding")] [EnumMember(Value = "InvasionWonderBuilding")] InvasionWonderBuilding = 207,
 
         [XmlEnum("AbstractPet")] [EnumMember(Value = "AbstractPet")] AbstractPet = 208,
-        [XmlEnum("AbstractShrine")] [EnumMember(Value = "AbstractShrine")] AbstractShrine = 209
+        [XmlEnum("AbstractShrine")] [EnumMember(Value = "AbstractShrine")] AbstractShrine = 209,
+        [XmlEnum("In_Civ_GathererElephant")] [EnumMember(Value = "In_Civ_GathererElephant")] In_Civ_GathererElephant = 210
     }
 }
