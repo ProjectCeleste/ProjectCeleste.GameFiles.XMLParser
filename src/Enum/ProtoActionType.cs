@@ -14,6 +14,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
     {
         [XmlEnum("AutoGather")] [EnumMember(Value = "AutoGather")] AutoGather = 0,
         [XmlEnum("Build")] [EnumMember(Value = "Build")] Build = 1,
-        [XmlEnum("Repair")] [EnumMember(Value = "Repair")] Repair = 2
+        [XmlEnum("Repair")] [EnumMember(Value = "Repair")] Repair = 2,
+        [XmlEnum("Magnet")] [EnumMember(Value = "Magnet")] Magnet = 3
     }
 }
