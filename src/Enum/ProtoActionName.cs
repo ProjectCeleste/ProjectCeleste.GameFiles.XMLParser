@@ -37,6 +37,6 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("RangedAttack2")] [EnumMember(Value = "RangedAttack2")] RangedAttack2 = 22,
         [XmlEnum("Convert2")] [EnumMember(Value = "Convert2")] Convert2 = 23,
         [XmlEnum("ShrineGather")] [EnumMember(Value = "ShrineGather")] ShrineGather = 24,
-        [XmlEnum("Magnet")] [EnumMember(Value = "Magnet")] ShrineGather = 25
+        [XmlEnum("Magnet")] [EnumMember(Value = "Magnet")] Magnet = 25
     }
 }
