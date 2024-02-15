@@ -72,7 +72,8 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("TrainPoints")] [EnumMember(Value = "TrainPoints")] TrainPoints = 19,
         [XmlEnum("WorkRate")] [EnumMember(Value = "WorkRate")] WorkRate = 20,
         [XmlEnum("Haste")] [EnumMember(Value = "Haste")] Haste = 21,
-        [XmlEnum("ArmorVulnerability")] [EnumMember(Value = "ArmorVulnerability")] ArmorVulnerability = 22
+        [XmlEnum("ArmorVulnerability")] [EnumMember(Value = "ArmorVulnerability")] ArmorVulnerability = 22,
+        [XmlEnum("Yield")] [EnumMember(Value = "Yield")] Yield = 23
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
