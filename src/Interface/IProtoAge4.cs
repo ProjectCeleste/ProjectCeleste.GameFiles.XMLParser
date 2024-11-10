@@ -75,6 +75,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Interface
         IDictionaryContainer<string, ProtoAge4XmlRowPageColumn> Tech { get; }
         IDictionaryContainer<string, ProtoAge4XmlRowPageColumn> Train { get; }
         double TrainPoints { get; }
+        double TargetSpeedBoostResist { get; }
         string Trait1 { get; }
         string Trait2 { get; }
         string Trait3 { get; }
