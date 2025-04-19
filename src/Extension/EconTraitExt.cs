@@ -441,12 +441,12 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
             var modifiers = item.Effects.GetEffectsModifier(lvl, seed);
             return modifiers.Aggregate(string.Empty,
                         (current, modifier) => current + 
-                                       modifier.Key.Visible ? 
+                                       (modifier.Key.Visible ? 
                                             //$"{GetDisplayNameLocalized(modifier.Key, languages, language)} {Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero)}%\r\n");;
                                             //GetDisplayNameLocalized(modifier.Key, languages, language) + " " + Math.Round((modifier.Value - 1.0) * 100, 2, MidpointRounding.AwayFromZero).ToString() + "%\r\n");;
-                                            GetDisplayNameLocalized(modifier.Key, languages, language) + " " + GetEnding(modifier.Key, languages, modifier.Value, language)
+                                            (GetDisplayNameLocalized(modifier.Key, languages, language) + " " + GetEnding(modifier.Key, languages, modifier.Value, language))
                                           :
-                                       string.Empty
+                                       string.Empty)
                                       );
         }
 
