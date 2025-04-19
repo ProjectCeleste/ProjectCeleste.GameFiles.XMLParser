@@ -262,6 +262,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                                 //throw new ArgumentOutOfRangeException(nameof(effect.UnitType), effect.UnitType, null);
                         }
                     }
+                    case EffectSubTypeEnum.HitPercentDamageMultiplier:
+                    {
+                        return languages["stringtablex"][language][300054].Text.Replace(" %s%.1f%%", string.Empty);
+                    }
                 default:
                     {
                         throw new ArgumentOutOfRangeException(nameof(effect.SubType), effect.SubType, null);
