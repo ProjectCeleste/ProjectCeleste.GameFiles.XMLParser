@@ -264,40 +264,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     }
                 case EffectSubTypeEnum.Yield:
                     {
-                        switch (effect.UnitType)
-                        {
-                            case EffectUnitTypeEnum.AbstractFruit:
-                                return
-                                    languages["stringtablex"][language][300046].Text.Replace(" +%1.1f", string.Empty) + ":";
-                            case EffectUnitTypeEnum.AbstractFarm:
-                                return
-                                    languages["stringtablex"][language][300046].Text.Replace(" +%1.1f", string.Empty) + ":";
-                            case EffectUnitTypeEnum.AbstractFish:
-                                return
-                                    languages["stringtablex"][language][300046].Text.Replace(" +%1.1f", string.Empty) + ":";
-                            case EffectUnitTypeEnum.Fish:
-                                return
-                                    languages["stringtablex"][language][300046].Text.Replace(" +%1.1f", string.Empty) + ":";
-                            case EffectUnitTypeEnum.Herdable:
-                                return
-                                    languages["stringtablex"][language][300046].Text.Replace(" +%1.1f", string.Empty) + ":";
-                            case EffectUnitTypeEnum.Huntable:
-                                return
-                                    languages["stringtablex"][language][300046].Text.Replace(" +%1.1f", string.Empty) + ":";
-                            case EffectUnitTypeEnum.Tree:
-                                return
-                                    languages["stringtablex"][language][300046].Text.Replace(" +%1.1f", string.Empty) + ":";
-                            case EffectUnitTypeEnum.Gold:
-                                return
-                                    languages["stringtablex"][language][300046].Text.Replace(" +%1.1f", string.Empty) + ":";
-                            case EffectUnitTypeEnum.Stone:
-                                return
-                                    languages["stringtablex"][language][300046].Text.Replace(" +%1.1f", string.Empty) + ":";
-                            default:
-                                //Instead of throw excemption, I put a default text.
-                                return languages["stringtablex"][language][300046].Text.Replace(" +%1.1f", string.Empty) + ":";
-                                //throw new ArgumentOutOfRangeException(nameof(effect.UnitType), effect.UnitType, null);
-                        }
+                        return  languages["stringtablex"][language][300046].Text.Replace(" %s%.1f%%", string.Empty) + ":";
                     }
                     case EffectSubTypeEnum.HitPercentDamageMultiplier:
                     {
