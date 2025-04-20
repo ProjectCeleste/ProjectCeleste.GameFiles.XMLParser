@@ -446,6 +446,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             int populationCount,
             double corpseDecalTime,
             double trainPoints,
+            double targetSpeedBoostResist,
             double autoAttackRange,
             double turnRadius,
             ProtoAge4XmlUnitHeightBob heightBob,
@@ -532,6 +533,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
             PopulationCount = populationCount;
             CorpseDecalTime = corpseDecalTime;
             TrainPoints = trainPoints;
+            TargetSpeedBoostResist = targetSpeedBoostResist;
             AutoAttackRange = autoAttackRange;
             TurnRadius = turnRadius;
             HeightBob = heightBob;
@@ -1084,6 +1086,11 @@ namespace ProjectCeleste.GameFiles.XMLParser.Model
         [JsonProperty(PropertyName = "TrainPoints", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [XmlElement(ElementName = "TrainPoints")]
         public double TrainPoints { get; set; }
+
+        [DefaultValue(0)]
+        [JsonProperty(PropertyName = "TargetSpeedBoostResist", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [XmlElement(ElementName = "TargetSpeedBoostResist")]
+        public double TargetSpeedBoostResist { get; set; }
 
         [DefaultValue(0)]
         [JsonProperty(PropertyName = "AutoAttackRange", DefaultValueHandling = DefaultValueHandling.Ignore)]

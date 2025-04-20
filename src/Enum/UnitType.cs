@@ -311,6 +311,10 @@ namespace ProjectCeleste.GameFiles.XMLParser.Enum
         [XmlEnum("LifespanUnit")] [EnumMember(Value = "LifespanUnit")] LifespanUnit = 206,
         [XmlEnum("InvasionWonderBuilding")] [EnumMember(Value = "InvasionWonderBuilding")] InvasionWonderBuilding = 207,
 
-        [XmlEnum("AbstractPet")] [EnumMember(Value = "AbstractPet")] AbstractPet = 208
+        [XmlEnum("AbstractPet")] [EnumMember(Value = "AbstractPet")] AbstractPet = 208,
+        [XmlEnum("AbstractShrine")] [EnumMember(Value = "AbstractShrine")] AbstractShrine = 209,
+        [XmlEnum("In_Civ_GathererElephant")] [EnumMember(Value = "In_Civ_GathererElephant")] In_Civ_GathererElephant = 210,
+        [XmlEnum("UnitTypeCavalryHeavy1")] [EnumMember(Value = "UnitTypeCavalryHeavy1")] UnitTypeCavalryHeavy1 = 211,
+        [XmlEnum("CapitolBldgIndian")] [EnumMember(Value = "CapitolBldgIndian")] CapitolBldgIndian = 212
     }
 }
