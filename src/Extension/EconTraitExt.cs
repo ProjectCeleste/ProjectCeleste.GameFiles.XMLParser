@@ -264,7 +264,7 @@ namespace ProjectCeleste.GameFiles.XMLParser.Extension
                     }
                 case EffectSubTypeEnum.Yield:
                     {
-                        return  languages["stringtablex"][language][300046].Text.Replace(" %s%.1f%%", string.Empty) + ":";
+                        return languages["stringtablex"][language][300046].Text.Replace(" %s%.1f%%", string.Empty);
                     }
                     case EffectSubTypeEnum.HitPercentDamageMultiplier:
                     {
